@@ -1,0 +1,30 @@
+name: Sync labels
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - labels.yml
+      - .github/workflows/sync-labels.yml
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v5
+        id: search
+        with:
+          result-encoding: string
+          github-token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+          script: |
+            const { data: { items } } = await github.rest.search.repos({
+              q: 'user:getbranches'
+            });
+            return items.map(i => i.full_name).join('\n');
+      - run: echo '${{ steps.search.outputs.result }}'
+      - uses: micnncim/action-label-syncer@v1
+        with:
+          manifest: labels.yml
+          repository: ${{ steps.search.outputs.result }}
+          token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
