@@ -7,6 +7,8 @@ permissions:
 on:
   pull_request:
 
+run-name: Preview branches/branches-main/main by @${{ github.actor }}
+
 jobs:
   apply-infra:
     name: Apply infrastructure

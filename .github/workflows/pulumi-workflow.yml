@@ -17,8 +17,6 @@ on:
       PULUMI_ACCESS_TOKEN:
         required: true
 
-run-name: Apply ${{ inputs.environment }} by @${{ github.actor }}
-
 jobs:
   pulumi:
     runs-on: ubuntu-latest

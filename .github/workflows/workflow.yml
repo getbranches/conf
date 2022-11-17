@@ -9,6 +9,8 @@ on:
     branches:
       - main
 
+run-name: Apply branches/branches-main/main by @${{ github.actor }}
+
 jobs:
   apply-infra:
     name: Apply infrastructure
