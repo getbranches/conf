@@ -10,7 +10,7 @@ on:
 jobs:
   apply-infra:
     name: Apply infrastructure
-    uses: getbranches/conf/pulumi-workflow.yml@main
+    uses: getbranches/conf/pulumi-workflow.yml@boilerplate-pulumi
     with:
       environment: main
       command: preview
