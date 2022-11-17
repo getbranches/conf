@@ -3,6 +3,7 @@ name: Preview changes
 permissions:
   id-token: write
   contents: read
+  pull-requests: write
 
 on:
   pull_request:
@@ -10,8 +11,8 @@ on:
 run-name: Preview branches/branches-main/main by @${{ github.actor }}
 
 jobs:
-  apply-infra:
-    name: Apply infrastructure
+  preview-infra:
+    name: Preview infrastructure
     uses: getbranches/conf/.github/workflows/pulumi-workflow.yml@boilerplate-pulumi
     with:
       environment: main
