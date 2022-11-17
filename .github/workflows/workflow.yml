@@ -7,12 +7,12 @@ permissions:
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   apply-infra:
     name: Apply infrastructure
-    uses: getbranches/conf/pulumi-workflow.yml@main
+    uses: getbranches/conf/.github/workflows/pulumi-workflow.yml@main
     with:
       environment: main
     secrets: inherit
