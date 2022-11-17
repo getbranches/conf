@@ -1,0 +1,11 @@
+{
+  "name": "branches-main",
+  "main": "resources/index.ts",
+  "devDependencies": {
+    "@bjerk/eslint-config": "^2.2.2",
+    "@types/node": "^18"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.0.0"
+  }
+}

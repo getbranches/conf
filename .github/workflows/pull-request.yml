@@ -1,0 +1,17 @@
+name: Workflow
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  pull_request:
+
+jobs:
+  apply-infra:
+    name: Apply infrastructure
+    uses: getbranches/conf/pulumi-workflow.yml@main
+    with:
+      environment: main
+      command: preview
+    secrets: inherit

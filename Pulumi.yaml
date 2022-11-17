@@ -1,0 +1,3 @@
+name: branches-main
+description: Branches main Pulumi-config
+runtime: nodejs
