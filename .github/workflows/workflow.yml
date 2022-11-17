@@ -1,4 +1,4 @@
-name: Workflow
+name: Apply changes
 
 permissions:
   id-token: write
