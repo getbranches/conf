@@ -1,9 +1,31 @@
 {
   "name": "branches-main",
   "main": "resources/index.ts",
+  "scripts": {
+    "format": "prettier --write . --ignore-path .gitignore ",
+    "format:check": "prettier --check . --ignore-path .gitignore",
+    "lint": "eslint . --ext .ts,.tsx"
+  },
+  "prettier": "@cobraz/prettier",
+  "eslintConfig": {
+    "extends": "@bjerk/eslint-config"
+  },
   "devDependencies": {
-    "@bjerk/eslint-config": "^2.2.2",
-    "@types/node": "^18"
+    "@bjerk/eslint-config": "^3.0.1",
+    "@cobraz/prettier": "^2.0.1",
+    "@types/eslint": "^8",
+    "@types/node": "^18",
+    "@types/prettier": "^2",
+    "@typescript-eslint/eslint-plugin": "5.43.1-alpha.21",
+    "@typescript-eslint/parser": "5.43.1-alpha.21",
+    "eslint": "8.27.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-eslint-comments": "3.2.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-promise": "6.1.1",
+    "eslint-plugin-unicorn": "44.0.2",
+    "prettier": "2.7.1"
   },
   "dependencies": {
     "@pulumi/pulumi": "^3.0.0"
