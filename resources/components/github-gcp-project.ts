@@ -131,5 +131,15 @@ export class GithubGCPProject extends pulumi.ComponentResource {
       },
       { provider: githubProvider, parent: this, deleteBeforeReplace: true },
     );
+
+    new github.ActionsSecret(
+      `${name}-service-account`,
+      {
+        repository: repo,
+        secretName: 'SERVICE_ACCOUNT_EMAIL',
+        plaintextValue: this.serviceAccount.email,
+      },
+      { provider: githubProvider, parent: this, deleteBeforeReplace: true },
+    );
   }
 }
