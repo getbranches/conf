@@ -7,7 +7,3 @@ config:
   google:service-account: conf-deployer@bjerk-core.iam.gserviceaccount.com
   google:folder-id: 89785497175
   gcp:project: do-not-use-default-provider
-  github:token-expires-at:
-    type: string
-    description: When the token needs to be manually refreshed
-  github:token:
