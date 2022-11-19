@@ -1,0 +1,4 @@
+config:
+  github:token:
+    secure: AAABAMxPrTWahDcKerfkOdplNqF4qZ4XSE5RuWr0tV5QtQibaLZH+nMxTan9gwkkOI5oMXMhjLv9+JHP9Sw+78QQanzumz+UczFEuoNuQtZYOs2pEWjjSXGf+cnyXy+Yammxd3clwmEn2ZJoltC4hA9gmh0Eh7i3iviqkhY=
+  github:token-expires-at: "2023-02-15"

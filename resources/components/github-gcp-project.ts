@@ -1,7 +1,8 @@
 import * as gcp from '@pulumi/gcp';
+import * as github from '@pulumi/github';
 import * as pulumi from '@pulumi/pulumi';
 import { interpolate } from '@pulumi/pulumi';
-import { getIdentityPoolMember } from '../identity-pool';
+import { getIdentityPoolMember, identityPoolProvider } from '../identity-pool';
 import { mainClassicProvider } from '../main-project';
 import { nullProvider } from '../utils';
 
@@ -22,8 +23,8 @@ export class GithubGCPProject extends pulumi.ComponentResource {
     args: GithubGCPProjectProps,
     opts?: pulumi.ComponentResourceOptions,
   ) {
-    super('bjerkio:github:GithubIdentityPoolIamMember', name, {}, opts);
-    const { projectId, developers = [] } = args;
+    super('bjerkio:github:GithubGCPProject', name, {}, opts);
+    const { projectId, developers = [], repo, owner } = args;
 
     this.project = new gcp.organizations.Project(
       name,
@@ -31,19 +32,23 @@ export class GithubGCPProject extends pulumi.ComponentResource {
         name: projectId,
         projectId,
       },
-      { provider: nullProvider },
+      { provider: nullProvider, parent: this },
     );
 
-    this.provider = new gcp.Provider(name, {
-      project: this.project.projectId,
-    });
+    this.provider = new gcp.Provider(
+      name,
+      {
+        project: this.project.projectId,
+      },
+      { parent: this },
+    );
 
     this.serviceAccount = new gcp.serviceaccount.Account(
       name,
       {
         accountId: name,
       },
-      { provider: this.provider },
+      { provider: this.provider, parent: this },
     );
 
     new gcp.projects.IAMMember(
@@ -53,7 +58,7 @@ export class GithubGCPProject extends pulumi.ComponentResource {
         role: 'roles/owner',
         project: this.project.projectId,
       },
-      { provider: this.provider },
+      { provider: this.provider, parent: this },
     );
 
     developers.map(developer => [
@@ -64,7 +69,7 @@ export class GithubGCPProject extends pulumi.ComponentResource {
           role: 'roles/viewer',
           project: this.project.projectId,
         },
-        { provider: this.provider },
+        { provider: this.provider, parent: this },
       ),
     ]);
 
@@ -75,7 +80,11 @@ export class GithubGCPProject extends pulumi.ComponentResource {
         role: 'roles/iam.workloadIdentityUser',
         member: getIdentityPoolMember(args.owner, args.repo),
       },
-      { provider: mainClassicProvider, deleteBeforeReplace: true },
+      {
+        provider: mainClassicProvider,
+        deleteBeforeReplace: true,
+        parent: this,
+      },
     );
 
     new gcp.serviceaccount.IAMMember(
@@ -86,6 +95,30 @@ export class GithubGCPProject extends pulumi.ComponentResource {
         member: getIdentityPoolMember(args.owner, args.repo),
       },
       { provider: mainClassicProvider, deleteBeforeReplace: true },
+    );
+
+    const githubProvider = new github.Provider(name, {
+      owner,
+    });
+
+    new github.ActionsSecret(
+      `${name}-google-projects`,
+      {
+        repository: repo,
+        secretName: 'GOOGLE_PROJECT_ID',
+        plaintextValue: projectId,
+      },
+      { provider: githubProvider, parent: this, deleteBeforeReplace: true },
+    );
+
+    new github.ActionsSecret(
+      `${name}-identity-provider`,
+      {
+        repository: repo,
+        secretName: 'WORKLOAD_IDENTITY_PROVIDER',
+        plaintextValue: identityPoolProvider.name,
+      },
+      { provider: githubProvider, parent: this, deleteBeforeReplace: true },
     );
   }
 }

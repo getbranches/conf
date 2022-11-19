@@ -312,6 +312,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pulumi/github@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@pulumi/github@npm:5.1.0"
+  dependencies:
+    "@pulumi/pulumi": ^3.0.0
+  checksum: 25f82e7c7a96f338fef866313a0547240f9b8fc62f5030c21d94c47d234cff77b832f8c7cb8ff9235ea9a4b920649d41939340ac09c9b4eb04f28d0ef7efed63
+  languageName: node
+  linkType: hard
+
 "@pulumi/google-native@npm:^0.27.0":
   version: 0.27.0
   resolution: "@pulumi/google-native@npm:0.27.0"
@@ -774,6 +783,7 @@ __metadata:
     "@bjerk/eslint-config": ^3.0.1
     "@cobraz/prettier": ^2.0.1
     "@pulumi/gcp": ^6.43.0
+    "@pulumi/github": ^5.1.0
     "@pulumi/google-native": ^0.27.0
     "@pulumi/pulumi": ^3.0.0
     "@types/eslint": ^8
