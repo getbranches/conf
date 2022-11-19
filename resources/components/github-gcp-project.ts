@@ -2,6 +2,7 @@ import * as gcp from '@pulumi/gcp';
 import * as github from '@pulumi/github';
 import * as pulumi from '@pulumi/pulumi';
 import { interpolate } from '@pulumi/pulumi';
+import { folderId } from '../config';
 import {
   getIdentityPoolMember,
   identityPoolProvider,
@@ -10,7 +11,7 @@ import { mainClassicProvider } from '../main-project/main-project';
 import { nullProvider } from '../utils';
 
 export interface GithubGCPProjectProps {
-  owner: string;
+  owner?: string;
   repo: string;
   projectId: string;
   developers?: string[];
@@ -27,13 +28,14 @@ export class GithubGCPProject extends pulumi.ComponentResource {
     opts?: pulumi.ComponentResourceOptions,
   ) {
     super('bjerkio:github:GithubGCPProject', name, {}, opts);
-    const { projectId, developers = [], repo, owner } = args;
+    const { projectId, developers = [], repo, owner = 'getbranches' } = args;
 
     this.project = new gcp.organizations.Project(
       name,
       {
         name: projectId,
         projectId,
+        folderId,
       },
       { provider: nullProvider, parent: this },
     );
@@ -81,7 +83,7 @@ export class GithubGCPProject extends pulumi.ComponentResource {
       {
         serviceAccountId: this.serviceAccount.id,
         role: 'roles/iam.workloadIdentityUser',
-        member: getIdentityPoolMember(args.owner, args.repo),
+        member: getIdentityPoolMember(owner, repo),
       },
       {
         provider: mainClassicProvider,
@@ -95,16 +97,18 @@ export class GithubGCPProject extends pulumi.ComponentResource {
       {
         serviceAccountId: this.serviceAccount.id,
         role: 'roles/iam.serviceAccountTokenCreator',
-        member: getIdentityPoolMember(args.owner, args.repo),
+        member: getIdentityPoolMember(owner, repo),
       },
-      { parent: this, provider: mainClassicProvider, deleteBeforeReplace: true },
+      {
+        parent: this,
+        provider: mainClassicProvider,
+        deleteBeforeReplace: true,
+      },
     );
 
     const githubProvider = new github.Provider(
       name,
-      {
-        owner,
-      },
+      { owner },
       { parent: this },
     );
 
