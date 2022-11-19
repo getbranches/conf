@@ -2,7 +2,7 @@ import * as gcp from '@pulumi/gcp';
 import * as github from '@pulumi/github';
 import * as pulumi from '@pulumi/pulumi';
 import { interpolate } from '@pulumi/pulumi';
-import { folderId } from '../config';
+import { folderId, githubToken } from '../config';
 import {
   getIdentityPoolMember,
   identityPoolProvider,
@@ -108,7 +108,7 @@ export class GithubGCPProject extends pulumi.ComponentResource {
 
     const githubProvider = new github.Provider(
       name,
-      { owner },
+      { owner, token: githubToken },
       { parent: this },
     );
 
