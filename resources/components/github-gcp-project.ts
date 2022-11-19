@@ -2,8 +2,11 @@ import * as gcp from '@pulumi/gcp';
 import * as github from '@pulumi/github';
 import * as pulumi from '@pulumi/pulumi';
 import { interpolate } from '@pulumi/pulumi';
-import { getIdentityPoolMember, identityPoolProvider } from '../identity-pool';
-import { mainClassicProvider } from '../main-project';
+import {
+  getIdentityPoolMember,
+  identityPoolProvider,
+} from '../main-project/identity-pool';
+import { mainClassicProvider } from '../main-project/main-project';
 import { nullProvider } from '../utils';
 
 export interface GithubGCPProjectProps {
@@ -94,12 +97,16 @@ export class GithubGCPProject extends pulumi.ComponentResource {
         role: 'roles/iam.serviceAccountTokenCreator',
         member: getIdentityPoolMember(args.owner, args.repo),
       },
-      { provider: mainClassicProvider, deleteBeforeReplace: true },
+      { parent: this, provider: mainClassicProvider, deleteBeforeReplace: true },
     );
 
-    const githubProvider = new github.Provider(name, {
-      owner,
-    });
+    const githubProvider = new github.Provider(
+      name,
+      {
+        owner,
+      },
+      { parent: this },
+    );
 
     new github.ActionsSecret(
       `${name}-google-projects`,

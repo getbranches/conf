@@ -1,3 +1,3 @@
-// import * as pulumi from '@pulumi/pulumi';
 import './config';
-import './main-project';
+import './main-project/main-project';
+import './domain/todoist-github-bot';

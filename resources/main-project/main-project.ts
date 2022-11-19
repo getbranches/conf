@@ -2,7 +2,7 @@ import * as gcp from '@pulumi/gcp';
 import * as google from '@pulumi/google-native';
 import * as pulumi from '@pulumi/pulumi';
 import { interpolate } from '@pulumi/pulumi';
-import { nullProvider } from './utils';
+import { nullProvider } from '../utils';
 
 const config = new pulumi.Config('google');
 
