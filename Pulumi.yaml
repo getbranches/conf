@@ -11,5 +11,3 @@ config:
     type: string
     description: When the token needs to be manually refreshed
   github:token:
-    type: string
-    secret: true
