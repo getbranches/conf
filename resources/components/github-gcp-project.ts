@@ -2,7 +2,7 @@ import * as gcp from '@pulumi/gcp';
 import * as github from '@pulumi/github';
 import * as pulumi from '@pulumi/pulumi';
 import { interpolate } from '@pulumi/pulumi';
-import { folderId, githubToken, region } from '../config';
+import { billingAccountId, folderId, githubToken, region } from '../config';
 import {
   getIdentityPoolMember,
   identityPoolProvider,
@@ -15,9 +15,10 @@ export interface GithubGCPProjectProps {
   repo: string;
   projectId: string;
   developers?: string[];
+  apis?: string[];
 }
 
-const apis = [
+const defaultApis = [
   'servicemanagement.googleapis.com',
   'servicecontrol.googleapis.com',
   'container.googleapis.com',
@@ -53,7 +54,13 @@ export class GithubGCPProject extends pulumi.ComponentResource {
     opts?: pulumi.ComponentResourceOptions,
   ) {
     super('bjerkio:github:GithubGCPProject', name, {}, opts);
-    const { projectId, developers = [], repo, owner = 'getbranches' } = args;
+    const {
+      projectId,
+      developers = [],
+      apis = [],
+      repo,
+      owner = 'getbranches',
+    } = args;
 
     this.project = new gcp.organizations.Project(
       name,
@@ -61,6 +68,7 @@ export class GithubGCPProject extends pulumi.ComponentResource {
         name: projectId,
         projectId,
         folderId,
+        billingAccount: billingAccountId,
       },
       { provider: nullProvider, parent: this },
     );
@@ -119,7 +127,7 @@ export class GithubGCPProject extends pulumi.ComponentResource {
       },
     );
 
-    const apiServices = apis.map(
+    const apiServices = [...apis, ...defaultApis].map(
       service =>
         new gcp.projects.Service(
           `${name}-${service}`,
