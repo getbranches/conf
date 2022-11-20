@@ -7,6 +7,11 @@ permissions:
 
 on:
   pull_request:
+    paths:
+      - resources/**
+      - Pulumi.*
+      - yarn.lock
+      - package.json
 
 run-name: Preview branches/branches-main/main by @${{ github.actor }}
 

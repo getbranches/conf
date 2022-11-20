@@ -6,10 +6,16 @@ permissions:
   pull-requests: write
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
       - epic-first-install
+    paths:
+      - resources/**
+      - Pulumi.*
+      - yarn.lock
+      - package.json
 
 run-name: Apply branches/branches-main/main by @${{ github.actor }}
 
