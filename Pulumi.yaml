@@ -6,4 +6,6 @@ config:
   google:billing-account-id: 014BE3-9C71F5-3ED088
   google:service-account: conf-deployer@bjerk-core.iam.gserviceaccount.com
   google:folder-id: 89785497175
+  google:region: europe-north1
+  google:zone: europe-north1-a
   gcp:project: do-not-use-default-provider
