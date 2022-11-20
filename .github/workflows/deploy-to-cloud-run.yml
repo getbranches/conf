@@ -1,18 +1,6 @@
 on:
   workflow_call:
     inputs:
-      docker-registry:
-        required: true
-        type: string
-      google-project-id:
-        required: true
-        type: string
-      workload-identity-provider:
-        required: true
-        type: string
-      service-account-email:
-        required: true
-        type: string
       self-url:
         required: false
         type: string
@@ -20,6 +8,15 @@ on:
         required: false
         type: string
         default: info
+    secrets:
+      DOCKER_REPOSITORY:
+        required: true
+      GOOGLE_PROJECT_ID:
+        required: true
+      WORKLOAD_IDENTITY_PROVIDER:
+        required: true
+      SERVICE_ACCOUNT_EMAIL:
+        required: true
 
 jobs:
   deploy-to-cloud-run:
@@ -33,9 +30,9 @@ jobs:
       - name: Authenticate to GCP 🔒
         uses: google-github-actions/auth@v0
         with:
-          project_id: ${{ inputs.google-project-id }}
-          workload_identity_provider: ${{ inputs.workload-identity-provider }}
-          service_account: ${{ inputs.service-account-email }}
+          project_id: ${{ secrets.GOOGLE_PROJECT_ID }}
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
 
       - name: Authorize Docker push
         run: gcloud auth configure-docker
@@ -45,7 +42,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images:
-            ${{ inputs.docker-registry }}/${{ github.event.repository.name }}
+            ${{ secrets.DOCKER_REPOSITORY }}/${{ github.event.repository.name }}
           flavor: latest=true
           tags: |
             type=sha,prefix={{branch}}-
@@ -62,7 +59,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from:
-            type=registry,ref=${{ inputs.docker-registry }}/${{
+            type=registry,ref=${{ secrets.DOCKER_REPOSITORY }}/${{
             github.event.repository.name }}:latest
           cache-to: type=inline
 
@@ -70,7 +67,7 @@ jobs:
         with:
           service: ${{ github.event.repository.name }}
           image:
-            ${{ inputs.docker-registry }}/${{ github.event.repository.name
+            ${{ secrets.DOCKER_REPOSITORY }}/${{ github.event.repository.name
             }}:${{ steps.meta.outputs.version }}
           region: europe-north1
           env_vars:
