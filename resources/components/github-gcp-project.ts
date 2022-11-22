@@ -207,7 +207,7 @@ export class GithubGCPProject extends pulumi.ComponentResource {
 
     developers.map(developer => [
       new gcp.projects.IAMMember(
-        `${developer}-viewer`,
+        `${name}-${developer}-viewer`,
         {
           member: interpolate`user:${developer}`,
           role: 'roles/viewer',
@@ -216,13 +216,13 @@ export class GithubGCPProject extends pulumi.ComponentResource {
         { provider: this.provider, parent: this },
       ),
       new gcp.artifactregistry.RepositoryIamMember(
-        `docker-registry-${developer}`,
+        `${name}-docker-registry-${developer}`,
         {
           repository: dockerRepo.id,
           member: interpolate`user:${developer}`,
           role: 'roles/artifactregistry.writer',
         },
-        { provider: this.provider },
+        { provider: this.provider, parent: this },
       ),
     ]);
   }
