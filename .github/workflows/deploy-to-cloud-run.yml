@@ -11,6 +11,10 @@ on:
         required: false
         type: string
         default: info
+      no-cache:
+        required: false
+        type: boolean
+        default: false
     secrets:
       DOCKER_REPOSITORY:
         required: true
@@ -27,7 +31,7 @@ permissions:
 
 jobs:
   deploy-to-cloud-run:
-    name: Deploy ${{ inputs.name }} to Cloud Run
+    name: ${{ inputs.name }} → Cloud Run
     runs-on: ubuntu-latest
 
     env:
@@ -74,8 +78,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          # cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:latest
-          # cache-to: type=inline
+          no-cache: ${{ inputs.no-cache }}
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:latest
+          cache-to: type=inline
 
       - name: Deploy with Google Cloud Run 🚀
         uses: google-github-actions/deploy-cloudrun@v0
