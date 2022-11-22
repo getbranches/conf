@@ -1,6 +1,9 @@
 on:
   workflow_call:
     inputs:
+      name:
+        required: true
+        type: string
       self-url:
         required: false
         type: string
@@ -24,8 +27,11 @@ permissions:
 
 jobs:
   deploy-to-cloud-run:
-    name: Deploy to Cloud Run
+    name: Deploy ${{ inputs.name }} to Cloud Run
     runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: ${{ secrets.DOCKER_REPOSITORY }}/${{ inputs.name }}
 
     steps:
       - name: Checkout 🛎️
@@ -51,8 +57,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images:
-            ${{ secrets.DOCKER_REPOSITORY }}/${{ github.event.repository.name }}
+          images: ${{ env.IMAGE_NAME }}
           flavor: latest=true
           tags: |
             type=sha,prefix={{branch}}-
@@ -69,18 +74,14 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from:
-            type=registry,ref=${{ secrets.DOCKER_REPOSITORY }}/${{
-            github.event.repository.name }}:latest
+          cache-from: type=registry,ref=${{ env.IMAGE_NAME }}:latest
           cache-to: type=inline
 
       - name: Deploy with Google Cloud Run 🚀
         uses: google-github-actions/deploy-cloudrun@v0
         with:
-          service: ${{ github.event.repository.name }}
-          image:
-            ${{ secrets.DOCKER_REPOSITORY }}/${{ github.event.repository.name
-            }}:${{ steps.meta.outputs.version }}
+          service: ${{ inputs.name }}
+          image: ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
           region: europe-north1
           env_vars:
             LOG_LEVEL=${{ inputs.log-level }},SELF_URL=${{ inputs.self-url }}
