@@ -301,6 +301,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pulumi/gcp@npm:^6.43.0":
+  version: 6.43.0
+  resolution: "@pulumi/gcp@npm:6.43.0"
+  dependencies:
+    "@pulumi/pulumi": ^3.0.0
+    "@types/express": ^4.16.0
+    read-package-json: ^2.0.13
+  checksum: 8360ffd32dafc159a90b204c39c79eda02776bbbeafa5b83f2213fe4a0d1e63e29162da1aea5e00fbb1dbb5a8881b13695f9b5eaa107c2f2e0c97aa516af27f0
+  languageName: node
+  linkType: hard
+
+"@pulumi/github@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@pulumi/github@npm:5.1.0"
+  dependencies:
+    "@pulumi/pulumi": ^3.0.0
+  checksum: 25f82e7c7a96f338fef866313a0547240f9b8fc62f5030c21d94c47d234cff77b832f8c7cb8ff9235ea9a4b920649d41939340ac09c9b4eb04f28d0ef7efed63
+  languageName: node
+  linkType: hard
+
+"@pulumi/google-native@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "@pulumi/google-native@npm:0.27.0"
+  dependencies:
+    "@pulumi/pulumi": ^3.0.0
+  checksum: eddf11fc417ab2cbb625f8e2ef720b3ced2ad6216e4d6b6f7c24def478f09a93cb94b96727cbad6b7a091f93df733a9197e3f7beeada38a666e222ef1f636bf8
+  languageName: node
+  linkType: hard
+
 "@pulumi/pulumi@npm:^3.0.0":
   version: 3.46.1
   resolution: "@pulumi/pulumi@npm:3.46.1"
@@ -339,6 +368,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/body-parser@npm:*":
+  version: 1.19.2
+  resolution: "@types/body-parser@npm:1.19.2"
+  dependencies:
+    "@types/connect": "*"
+    "@types/node": "*"
+  checksum: e17840c7d747a549f00aebe72c89313d09fbc4b632b949b2470c5cb3b1cb73863901ae84d9335b567a79ec5efcfb8a28ff8e3f36bc8748a9686756b6d5681f40
+  languageName: node
+  linkType: hard
+
+"@types/connect@npm:*":
+  version: 3.4.35
+  resolution: "@types/connect@npm:3.4.35"
+  dependencies:
+    "@types/node": "*"
+  checksum: fe81351470f2d3165e8b12ce33542eef89ea893e36dd62e8f7d72566dfb7e448376ae962f9f3ea888547ce8b55a40020ca0e01d637fab5d99567673084542641
+  languageName: node
+  linkType: hard
+
 "@types/eslint@npm:^8":
   version: 8.4.10
   resolution: "@types/eslint@npm:8.4.10"
@@ -356,6 +404,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/express-serve-static-core@npm:^4.17.18":
+  version: 4.17.31
+  resolution: "@types/express-serve-static-core@npm:4.17.31"
+  dependencies:
+    "@types/node": "*"
+    "@types/qs": "*"
+    "@types/range-parser": "*"
+  checksum: 009bfbe1070837454a1056aa710d0390ee5fb8c05dfe5a1691cc3e2ca88dc256f80e1ca27cb51a978681631d2f6431bfc9ec352ea46dd0c6eb183d0170bde5df
+  languageName: node
+  linkType: hard
+
+"@types/express@npm:^4.16.0":
+  version: 4.17.14
+  resolution: "@types/express@npm:4.17.14"
+  dependencies:
+    "@types/body-parser": "*"
+    "@types/express-serve-static-core": ^4.17.18
+    "@types/qs": "*"
+    "@types/serve-static": "*"
+  checksum: 15c1af46d02de834e4a225eccaa9d85c0370fdbb3ed4e1bc2d323d24872309961542b993ae236335aeb3e278630224a6ea002078d39e651d78a3b0356b1eaa79
+  languageName: node
+  linkType: hard
+
 "@types/json-schema@npm:*, @types/json-schema@npm:^7.0.9":
   version: 7.0.11
   resolution: "@types/json-schema@npm:7.0.11"
@@ -370,7 +441,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:>=12.12.47, @types/node@npm:^18":
+"@types/mime@npm:*":
+  version: 3.0.1
+  resolution: "@types/mime@npm:3.0.1"
+  checksum: 4040fac73fd0cea2460e29b348c1a6173da747f3a87da0dbce80dd7a9355a3d0e51d6d9a401654f3e5550620e3718b5a899b2ec1debf18424e298a2c605346e7
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:*, @types/node@npm:>=12.12.47, @types/node@npm:^18":
   version: 18.11.9
   resolution: "@types/node@npm:18.11.9"
   checksum: cc0aae109e9b7adefc32eecb838d6fad931663bb06484b5e9cbbbf74865c721b03d16fd8d74ad90e31dbe093d956a7c2c306ba5429ba0c00f3f7505103d7a496
@@ -391,10 +469,34 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/qs@npm:*":
+  version: 6.9.7
+  resolution: "@types/qs@npm:6.9.7"
+  checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
+  languageName: node
+  linkType: hard
+
+"@types/range-parser@npm:*":
+  version: 1.2.4
+  resolution: "@types/range-parser@npm:1.2.4"
+  checksum: b7c0dfd5080a989d6c8bb0b6750fc0933d9acabeb476da6fe71d8bdf1ab65e37c136169d84148034802f48378ab94e3c37bb4ef7656b2bec2cb9c0f8d4146a95
+  languageName: node
+  linkType: hard
+
 "@types/semver@npm:^7.3.12":
   version: 7.3.13
   resolution: "@types/semver@npm:7.3.13"
   checksum: 00c0724d54757c2f4bc60b5032fe91cda6410e48689633d5f35ece8a0a66445e3e57fa1d6e07eb780f792e82ac542948ec4d0b76eb3484297b79bd18b8cf1cb0
+  languageName: node
+  linkType: hard
+
+"@types/serve-static@npm:*":
+  version: 1.15.0
+  resolution: "@types/serve-static@npm:1.15.0"
+  dependencies:
+    "@types/mime": "*"
+    "@types/node": "*"
+  checksum: b6ac93d471fb0f53ddcac1f9b67572a09cd62806f7db5855244b28f6f421139626f24799392566e97d1ffc61b12f9de7f30380c39fcae3c8a161fe161d44edf2
   languageName: node
   linkType: hard
 
@@ -680,6 +782,9 @@ __metadata:
   dependencies:
     "@bjerk/eslint-config": ^3.0.1
     "@cobraz/prettier": ^2.0.1
+    "@pulumi/gcp": ^6.43.0
+    "@pulumi/github": ^5.1.0
+    "@pulumi/google-native": ^0.27.0
     "@pulumi/pulumi": ^3.0.0
     "@types/eslint": ^8
     "@types/node": ^18
@@ -2327,7 +2432,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"read-package-json@npm:^2.0.0":
+"read-package-json@npm:^2.0.0, read-package-json@npm:^2.0.13":
   version: 2.1.2
   resolution: "read-package-json@npm:2.1.2"
   dependencies:

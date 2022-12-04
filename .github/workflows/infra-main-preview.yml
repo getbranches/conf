@@ -7,6 +7,11 @@ permissions:
 
 on:
   pull_request:
+    paths:
+      - resources/**
+      - Pulumi.*
+      - yarn.lock
+      - package.json
 
 run-name: Preview branches/branches-main/main by @${{ github.actor }}
 
@@ -27,6 +32,12 @@ jobs:
 
       - name: Installing dependencies 📦️
         run: yarn install
+
+      - name: Authenticate to GCP 🔒
+        uses: google-github-actions/auth@v0
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: conf-deployer@bjerk-core.iam.gserviceaccount.com
 
       - name: Running Pulumi 🚀
         uses: pulumi/actions@v3
