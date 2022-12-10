@@ -1,9 +1,11 @@
 config:
+  branches-main:system-email:
+    secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   github:token:
     secure: AAABAGR+pQzea8+hlVkqChGkgRH1YHTHBT/yxZPsLstCxc9RN8cB2K8/AaTNjMQHN/XmiBRx/yaiFQwg9hhOKbj4othhQEi+F6CG5qaEAThpXsedvUJD2jm+XGGJB8r6KSClW4MTif4TBEOdCCbEj5AimToWZJJpKqm13QQ=
   github:token-expires-at: "2023-02-15"
-  todoist-github-bot:developers:
-  - so@bjerk.io
   procore-abax:developers:
   - so@bjerk.io
   - brage@bjerk.io
+  todoist-github-bot:developers:
+  - so@bjerk.io

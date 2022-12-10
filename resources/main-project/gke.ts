@@ -26,6 +26,7 @@ export const cluster = new google.container.v1.Cluster(
   'core-cluster',
   {
     initialClusterVersion: engineVersion,
+    location: region,
     nodePools: [
       {
         config: nodeConfig,
