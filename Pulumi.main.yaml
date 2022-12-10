@@ -1,4 +1,5 @@
 config:
+  pulumi:disable-default-providers: ["*"]
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   github:token:
