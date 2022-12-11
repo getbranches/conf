@@ -25,6 +25,7 @@ const nodeConfig: google.types.input.container.v1.NodeConfigArgs = {
 export const cluster = new google.container.v1.Cluster(
   'core-cluster',
   {
+    name: 'branches-main',
     initialClusterVersion: engineVersion,
     location: region,
     nodePools: [
