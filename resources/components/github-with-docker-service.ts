@@ -10,7 +10,7 @@ import {
 import { mainClassicProvider } from '../main-project/main-project';
 import { nullProvider } from '../utils';
 
-export interface GithubGCPProjectProps {
+export interface GithubWithDockerServiceProps {
   owner?: string;
   repo: string;
   projectId: string;
@@ -43,17 +43,17 @@ const defaultApis = [
   'cloudbilling.googleapis.com',
 ];
 
-export class GithubGCPProject extends pulumi.ComponentResource {
+export class GithubWithDockerService extends pulumi.ComponentResource {
   public readonly project: gcp.organizations.Project;
   public readonly provider: gcp.Provider;
   public readonly serviceAccount: gcp.serviceaccount.Account;
 
   constructor(
     name: string,
-    args: GithubGCPProjectProps,
+    args: GithubWithDockerServiceProps,
     opts?: pulumi.ComponentResourceOptions,
   ) {
-    super('bjerkio:github:GithubGCPProject', name, {}, opts);
+    super('bjerkio:github:github-with-docker-service', name, {}, opts);
     const {
       projectId,
       developers = [],

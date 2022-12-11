@@ -1,9 +1,9 @@
 import { Config } from '@pulumi/pulumi';
-import { GithubGCPProject } from '../components/github-gcp-project';
+import { GithubWithDockerService } from '../components/github-with-docker-service';
 
 const config = new Config('procore-abax');
 
-new GithubGCPProject('procore-abax', {
+new GithubWithDockerService('procore-abax', {
   repo: 'procore-abax',
   projectId: 'procore-abax',
   developers: config.requireObject<string[]>('developers'),
