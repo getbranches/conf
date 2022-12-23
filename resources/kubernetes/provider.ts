@@ -2,6 +2,7 @@ import * as k8s from '@pulumi/kubernetes';
 import * as pulumi from '@pulumi/pulumi';
 import { zone } from '../config';
 import { cluster } from '../main-project/gke';
+import { callerClusterIamMember } from '../main-project/iam';
 import { project } from '../main-project/main-project';
 
 export const kubeconfig = pulumi
@@ -25,15 +26,20 @@ preferences: {}
 users:
 - name: ${context}
   user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: gke-gcloud-auth-plugin
-      installHint: Install gke-gcloud-auth-plugin for use with kubectl by following
-        https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
-      provideClusterInfo: true
+    auth-provider:
+      config:
+        cmd-args: config config-helper --format=json
+        cmd-path: gcloud
+        expiry-key: '{.credential.token_expiry}'
+        token-key: '{.credential.access_token}'
+      name: gcp
 `;
   });
 
-export const provider = new k8s.Provider('k8s-provider', {
-  kubeconfig,
-});
+export const provider = new k8s.Provider(
+  'k8s-provider',
+  {
+    kubeconfig,
+  },
+  { dependsOn: [cluster, callerClusterIamMember] },
+);
