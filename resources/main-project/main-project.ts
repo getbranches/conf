@@ -18,6 +18,7 @@ export const project = new gcp.organizations.Project(
 
 export const mainClassicProvider = new gcp.Provider('google-main-provider', {
   project: project.projectId,
+  impersonateServiceAccount: config.require('service-account'),
 });
 
 export const mainProvider = new google.Provider('google-native-main-provider', {

@@ -8,3 +8,4 @@ import './domain/procore-abax';
 import './kubernetes/ingress-controller';
 import './kubernetes/postgres-operator';
 import './kubernetes/provider';
+import './kubernetes/k8s-resources';

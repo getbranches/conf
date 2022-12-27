@@ -19,13 +19,14 @@ const nodeConfig: google.types.input.container.v1.NodeConfigArgs = {
     'https://www.googleapis.com/auth/logging.write',
     'https://www.googleapis.com/auth/monitoring',
   ],
-//   preemptible: true,
+  //   preemptible: true,
 };
 
 export const cluster = new google.container.v1.Cluster(
   'core-cluster',
   {
     name: 'branches-main',
+    releaseChannel: { channel: 'REGULAR' },
     initialClusterVersion: engineVersion,
     location: region,
     nodePools: [
@@ -35,6 +36,7 @@ export const cluster = new google.container.v1.Cluster(
         initialNodeCount: 3,
         management: {
           autoRepair: false,
+          autoUpgrade: true,
         },
         name: 'initial',
       },

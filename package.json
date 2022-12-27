@@ -35,6 +35,7 @@
     "@pulumi/github": "^5.1.0",
     "@pulumi/google-native": "^0.27.0",
     "@pulumi/kubernetes": "^3.23.0",
+    "@pulumi/kubernetesx": "^0.1.6",
     "@pulumi/pulumi": "^3.0.0"
   }
 }

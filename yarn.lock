@@ -346,6 +346,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pulumi/kubernetesx@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@pulumi/kubernetesx@npm:0.1.6"
+  peerDependencies:
+    "@pulumi/kubernetes": ^3.0.0
+    "@pulumi/pulumi": ^3.0.0
+  checksum: fe309359c3bc62b8cd0d4de7bbcb6c6210e0f1bfa6ca793b6888a699543165190203be72cb1b0b63eba275f8442438d7ad0dbd7ae885619436c6e9823b854970
+  languageName: node
+  linkType: hard
+
 "@pulumi/pulumi@npm:^3.0.0":
   version: 3.46.1
   resolution: "@pulumi/pulumi@npm:3.46.1"
@@ -874,6 +884,7 @@ __metadata:
     "@pulumi/github": ^5.1.0
     "@pulumi/google-native": ^0.27.0
     "@pulumi/kubernetes": ^3.23.0
+    "@pulumi/kubernetesx": ^0.1.6
     "@pulumi/pulumi": ^3.0.0
     "@types/eslint": ^8
     "@types/node": ^18
