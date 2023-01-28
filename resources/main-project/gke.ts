@@ -42,5 +42,5 @@ export const cluster = new google.container.v1.Cluster(
       },
     ],
   },
-  { provider: mainProvider },
+  { provider: mainProvider, protect: true },
 );
