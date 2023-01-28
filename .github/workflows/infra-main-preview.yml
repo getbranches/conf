@@ -12,6 +12,7 @@ on:
       - Pulumi.*
       - yarn.lock
       - package.json
+      - .github/workflows/*.yml
 
 run-name: Preview branches/branches-main/main by @${{ github.actor }}
 
