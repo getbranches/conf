@@ -215,6 +215,24 @@ export class GithubWithDockerService extends pulumi.ComponentResource {
         },
         { provider: this.provider, parent: this },
       ),
+      new gcp.projects.IAMMember(
+        `${name}-${developer}-viewer`,
+        {
+          member: interpolate`user:${developer}`,
+          role: 'roles/firebase.admin',
+          project: this.project.projectId,
+        },
+        { provider: this.provider, parent: this },
+      ),
+      new gcp.projects.IAMMember(
+        `${name}-${developer}-viewer`,
+        {
+          member: interpolate`user:${developer}`,
+          role: 'roles/serviceusage.serviceUsageAdmin',
+          project: this.project.projectId,
+        },
+        { provider: this.provider, parent: this },
+      ),
       new gcp.artifactregistry.RepositoryIamMember(
         `${name}-docker-registry-${developer}`,
         {
