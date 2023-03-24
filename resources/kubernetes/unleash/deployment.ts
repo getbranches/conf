@@ -11,6 +11,7 @@ export const port = 4242;
 const deployment = new k8s.apps.v1.Deployment(
   `${name}-deployment`,
   {
+    metadata: { name },
     spec: {
       replicas: 1,
       selector: {
@@ -63,6 +64,7 @@ const deployment = new k8s.apps.v1.Deployment(
 export const service = new k8s.core.v1.Service(
   `${name}-service`,
   {
+    metadata: { name },
     spec: {
       ports: [{ port }],
       selector: deployment.spec.selector.matchLabels,
