@@ -10,5 +10,5 @@ export const cluster = new google.container.v1.Cluster(
     location: region,
     autopilot: { enabled: true },
   },
-  { provider: mainProvider },
+  { provider: mainProvider, protect: true },
 );
