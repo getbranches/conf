@@ -21,3 +21,7 @@ config:
   vaultwarden:host: vault.branches.no
   vaultwarden:image: vaultwarden/server
   vaultwarden:tag: 1.27.0-alpine
+  vaultwarden:yubico-client-id:
+    secure: AAABAMEW2/YTO7JMOTWb4Ab3uDwwTopWxgjzyeQNuxUX17QH5Q==
+  vaultwarden:yubico-client-secret:
+    secure: AAABADWp+a2/TVwr2dK/bULhLHyg/j1EhSvWFCWMRBb70wNwaK1WRLXugcN7sZRBt8+aTA0kj/iaEu2L

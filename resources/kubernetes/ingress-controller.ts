@@ -26,6 +26,16 @@ export const ingress = new k8s.helm.v3.Chart(
           email: systemEmail,
         },
       },
+      resources: {
+        requests: {
+          cpu: '100m',
+          memory: '128Mi',
+        },
+        limits: {
+          cpu: '100m',
+          memory: '128Mi',
+        },
+      },
     },
   },
   { provider },
