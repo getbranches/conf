@@ -12,6 +12,7 @@ on:
       - Pulumi.*
       - yarn.lock
       - package.json
+      - .github/workflows/*.yml
 
 run-name: Preview branches/branches-main/main by @${{ github.actor }}
 
@@ -40,7 +41,7 @@ jobs:
           service_account: conf-deployer@bjerk-core.iam.gserviceaccount.com
 
       - name: Running Pulumi 🚀
-        uses: pulumi/actions@v3
+        uses: pulumi/actions@v4
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
         with:

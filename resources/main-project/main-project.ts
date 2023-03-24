@@ -10,6 +10,7 @@ export const project = new gcp.organizations.Project(
   'main-project',
   {
     projectId: 'branches-org-main',
+    name: 'Branches Org Main',
     billingAccount: config.require('billing-account-id'),
     folderId: config.require('folder-id'),
   },

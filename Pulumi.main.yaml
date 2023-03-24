@@ -2,8 +2,8 @@ config:
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   github:token:
-    secure: AAABAGR+pQzea8+hlVkqChGkgRH1YHTHBT/yxZPsLstCxc9RN8cB2K8/AaTNjMQHN/XmiBRx/yaiFQwg9hhOKbj4othhQEi+F6CG5qaEAThpXsedvUJD2jm+XGGJB8r6KSClW4MTif4TBEOdCCbEj5AimToWZJJpKqm13QQ=
-  github:token-expires-at: "2023-02-15"
+    secure: AAABAB1+aHgnhW95Ajp/yUq1jqpgL7mgx0aEQKGCTXsJQMhGbQES8LFs1UoJUJf1miBUMHF9/aximsB2Jra2GWkr7n0B6PORljdaLXGr8UbxjEYe36yFQX8EE+ckkv2z1rzMHd4D9JR5Ys+9EsLoguOcoPx1WjH4iKcgDDA=
+  github:token-expires-at: "2024-01-01"
   kubernetes:cluster-developers:
     - so@bjerk.io
   lhci:host: lhci.branches.no
@@ -22,3 +22,7 @@ config:
   vaultwarden:host: vault.branches.no
   vaultwarden:image: vaultwarden/server
   vaultwarden:tag: 1.27.0-alpine
+  vaultwarden:yubico-client-id:
+    secure: AAABAMEW2/YTO7JMOTWb4Ab3uDwwTopWxgjzyeQNuxUX17QH5Q==
+  vaultwarden:yubico-client-secret:
+    secure: AAABADWp+a2/TVwr2dK/bULhLHyg/j1EhSvWFCWMRBb70wNwaK1WRLXugcN7sZRBt8+aTA0kj/iaEu2L
