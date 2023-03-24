@@ -216,7 +216,7 @@ export class GithubWithDockerService extends pulumi.ComponentResource {
         { provider: this.provider, parent: this },
       ),
       new gcp.projects.IAMMember(
-        `${name}-${developer}-viewer`,
+        `${name}-${developer}-firebase-admin`,
         {
           member: interpolate`user:${developer}`,
           role: 'roles/firebase.admin',
@@ -225,7 +225,7 @@ export class GithubWithDockerService extends pulumi.ComponentResource {
         { provider: this.provider, parent: this },
       ),
       new gcp.projects.IAMMember(
-        `${name}-${developer}-viewer`,
+        `${name}-${developer}-service-usage-admin`,
         {
           member: interpolate`user:${developer}`,
           role: 'roles/serviceusage.serviceUsageAdmin',
