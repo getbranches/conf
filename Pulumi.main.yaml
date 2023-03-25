@@ -6,6 +6,7 @@ config:
   github:token-expires-at: "2024-01-01"
   kubernetes:cluster-developers:
     - so@bjerk.io
+  lhci:host: lhci.branches.no
   procore-abax:developers:
     - so@bjerk.io
     - brage@bjerk.io
