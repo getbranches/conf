@@ -31,7 +31,7 @@
     "prettier": "2.7.1"
   },
   "dependencies": {
-    "@pulumi/gcp": "^6.43.0",
+    "@pulumi/gcp": "^6.55.1",
     "@pulumi/github": "^5.1.0",
     "@pulumi/google-native": "^0.27.0",
     "@pulumi/kubernetes": "^3.23.0",

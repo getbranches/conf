@@ -301,14 +301,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/gcp@npm:^6.43.0":
-  version: 6.43.0
-  resolution: "@pulumi/gcp@npm:6.43.0"
+"@pulumi/gcp@npm:^6.55.1":
+  version: 6.55.1
+  resolution: "@pulumi/gcp@npm:6.55.1"
   dependencies:
     "@pulumi/pulumi": ^3.0.0
     "@types/express": ^4.16.0
     read-package-json: ^2.0.13
-  checksum: 8360ffd32dafc159a90b204c39c79eda02776bbbeafa5b83f2213fe4a0d1e63e29162da1aea5e00fbb1dbb5a8881b13695f9b5eaa107c2f2e0c97aa516af27f0
+  checksum: 0c22bc9fc433ebc7442522dd09f863eff504c6ef4c6e66bd21f830e5104c8900cd94518730c2a9b10c91887c68f11769d5000792c5c4f510f23f3ebd13ec340a
   languageName: node
   linkType: hard
 
@@ -880,7 +880,7 @@ __metadata:
   dependencies:
     "@bjerk/eslint-config": ^3.0.1
     "@cobraz/prettier": ^2.0.1
-    "@pulumi/gcp": ^6.43.0
+    "@pulumi/gcp": ^6.55.1
     "@pulumi/github": ^5.1.0
     "@pulumi/google-native": ^0.27.0
     "@pulumi/kubernetes": ^3.23.0
