@@ -83,7 +83,7 @@ jobs:
           cache-to: type=inline
 
       - name: Deploy with Google Cloud Run 🚀
-        uses: google-github-actions/deploy-cloudrun@v0
+        uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: ${{ inputs.name }}
           image: ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
