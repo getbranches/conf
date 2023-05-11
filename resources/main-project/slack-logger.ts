@@ -5,6 +5,7 @@ import { project } from './main-project';
 const config = new pulumi.Config('slack');
 const name = 'branches-slack-logger';
 const slackAgentTag = 'v3.1.0';
+const channel = 'branches-notifications';
 
 const topic = new gcp.pubsub.Topic(name, {}, { parent: this });
 
@@ -34,7 +35,7 @@ const service = new gcp.cloudrunv2.Service(
             },
             {
               name: 'DEFAULT_CHANNEL',
-              value: args.channel,
+              value: channel,
             },
           ],
         },
