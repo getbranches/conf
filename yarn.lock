@@ -356,38 +356,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:^3.0.0":
-  version: 3.46.1
-  resolution: "@pulumi/pulumi@npm:3.46.1"
-  dependencies:
-    "@grpc/grpc-js": ~1.3.8
-    "@logdna/tail-file": ^2.0.6
-    "@opentelemetry/api": ^1.2.0
-    "@opentelemetry/exporter-zipkin": ^1.6.0
-    "@opentelemetry/instrumentation-grpc": ^0.32.0
-    "@opentelemetry/resources": ^1.6.0
-    "@opentelemetry/sdk-trace-base": ^1.6.0
-    "@opentelemetry/sdk-trace-node": ^1.6.0
-    "@opentelemetry/semantic-conventions": ^1.6.0
-    "@pulumi/query": ^0.3.0
-    execa: ^5.1.0
-    google-protobuf: ^3.5.0
-    ini: ^2.0.0
-    js-yaml: ^3.14.0
-    minimist: ^1.2.6
-    normalize-package-data: ^2.4.0
-    read-package-tree: ^5.3.1
-    require-from-string: ^2.0.1
-    semver: ^6.1.0
-    source-map-support: ^0.5.6
-    ts-node: ^7.0.1
-    typescript: ~3.8.3
-    upath: ^1.1.0
-  checksum: 7aa12735fcab844ae34ac20ffa169f9a528b7d42f7a5c3b6297ea20d3ce93ce5163e90a4d3a345f9a169b22dcc9cf10ccafc2dfcd8d6626a3b55b1e8ab9cec5e
-  languageName: node
-  linkType: hard
-
-"@pulumi/pulumi@npm:^3.25.0":
+"@pulumi/pulumi@npm:^3.0.0, @pulumi/pulumi@npm:^3.25.0":
   version: 3.49.0
   resolution: "@pulumi/pulumi@npm:3.49.0"
   dependencies:
@@ -892,7 +861,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": 5.43.1-alpha.21
     "@typescript-eslint/parser": 5.43.1-alpha.21
     eslint: 8.27.0
-    eslint-config-prettier: 8.5.0
+    eslint-config-prettier: 8.8.0
     eslint-plugin-eslint-comments: 3.2.0
     eslint-plugin-import: 2.26.0
     eslint-plugin-prettier: 4.2.1
@@ -1216,14 +1185,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:8.5.0":
-  version: 8.5.0
-  resolution: "eslint-config-prettier@npm:8.5.0"
+"eslint-config-prettier@npm:8.8.0":
+  version: 8.8.0
+  resolution: "eslint-config-prettier@npm:8.8.0"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: bin/cli.js
-  checksum: 0d0f5c32e7a0ad91249467ce71ca92394ccd343178277d318baf32063b79ea90216f4c81d1065d60f96366fdc60f151d4d68ae7811a58bd37228b84c2083f893
+  checksum: 1e94c3882c4d5e41e1dcfa2c368dbccbfe3134f6ac7d40101644d3bfbe3eb2f2ffac757f3145910b5eacf20c0e85e02b91293d3126d770cbf3dc390b3564681c
   languageName: node
   linkType: hard
 
