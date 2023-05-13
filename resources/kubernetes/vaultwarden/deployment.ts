@@ -2,9 +2,9 @@ import * as k8s from '@pulumi/kubernetes';
 import { interpolate } from '@pulumi/pulumi';
 import { provider } from '../provider';
 import { vaultwardenAdminTokenSecret } from './admin-token-secret';
-import { vaultwardenYubicoSecret } from './yubico-secret';
 import { host, image, tag } from './config';
 import { database, dbSecretName, serviceHostname } from './db';
+import { vaultwardenYubicoSecret } from './yubico-secret';
 
 const name = 'vaultwarden';
 

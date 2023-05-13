@@ -1,9 +1,9 @@
 import * as k8s from '@pulumi/kubernetes';
 import * as pulumi from '@pulumi/pulumi';
 import { zone } from '../config';
-import { cluster } from '../main-project/gke';
-import { callerClusterIamMember } from '../main-project/iam';
-import { project } from '../main-project/main-project';
+import { cluster } from '../google/gke';
+import { callerClusterIamMember } from '../google/iam';
+import { project } from '../google/project';
 
 export const kubeconfig = pulumi
   .all([cluster.name, cluster.endpoint, cluster.masterAuth, project.name])

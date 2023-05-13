@@ -1,8 +1,7 @@
 import './config';
-import './main-project/main-project';
-import './main-project/gke';
-import './main-project/iam';
-import './domain/todoist-github-bot';
+import './google/project';
+import './google/gke';
+import './google/iam';
 import './domain/procore-abax';
 // import './kubernetes/adminer';
 
