@@ -1,6 +1,6 @@
 import * as gcp from '@pulumi/gcp';
 import * as pulumi from '@pulumi/pulumi';
-import { mainClassicProvider } from './main-project';
+import { mainClassicProvider } from './project';
 
 const provider = mainClassicProvider;
 
@@ -30,5 +30,8 @@ export const identityPoolProvider = new gcp.iam.WorkloadIdentityPoolProvider(
   { provider },
 );
 
-export const getIdentityPoolMember = (owner: string, repo: string) =>
+export const getIdentityPoolMember = (
+  owner: string,
+  repo: string,
+): pulumi.Output<string> =>
   pulumi.interpolate`principalSet://iam.googleapis.com/${identityPool.name}/attribute.repository/${owner}/${repo}`;

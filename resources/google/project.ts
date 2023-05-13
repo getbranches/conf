@@ -26,6 +26,8 @@ export const mainProvider = new google.Provider('google-native-main-provider', {
   project: project.projectId,
 });
 
+export const googleProviders = [mainClassicProvider, mainProvider];
+
 new google.cloudresourcemanager.v3.ProjectIamMember(
   'main-project-iam-member',
   {
