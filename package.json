@@ -14,7 +14,7 @@
     }
   },
   "devDependencies": {
-    "@bjerk/eslint-config": "^3.1.0",
+    "@bjerk/eslint-config": "^4.0.0",
     "@cobraz/prettier": "^2.0.1",
     "@types/eslint": "^8.37.0",
     "@types/node": "^18.16.7",

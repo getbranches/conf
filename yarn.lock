@@ -32,24 +32,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bjerk/eslint-config@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@bjerk/eslint-config@npm:3.1.0"
+"@bjerk/eslint-config@npm:^4.0.0":
+  version: 4.1.0
+  resolution: "@bjerk/eslint-config@npm:4.1.0"
   peerDependencies:
-    "@typescript-eslint/eslint-plugin": ^5.54.0
-    "@typescript-eslint/parser": ^5.54.0
+    "@typescript-eslint/eslint-plugin": ^5.59.0
+    "@typescript-eslint/parser": ^5.59.0
     eslint: ^7.32.0 || ^8.2.0
-    eslint-config-prettier: ^8.6.0
+    eslint-config-prettier: ^8.8.0
     eslint-plugin-eslint-comments: ^3.2.0
     eslint-plugin-import: ^2.27.5
     eslint-plugin-prettier: ^4.2.1
     eslint-plugin-promise: ^6.1.1
-    eslint-plugin-unicorn: ^46.0.0
-    prettier: ^2.8.4
+    eslint-plugin-unicorn: ^47.0.0
+    prettier: ^2.8.7
   peerDependenciesMeta:
     prettier:
       optional: true
-  checksum: 75d5908f5f76295b040bca2a0fd5544fe097b818bf0ee16b01efe92c1b9c6de3565192439fd50bbed51ef133690a8719cd6407c27627c225408f5af2fee216e1
+  checksum: f30229d80103d1512669deb6dbea100eb23d6e6d33738ec43ecb0aa0ed4f130bb8f48cd68a6e88b548ff6e7982eb9437b854136ab15d517744020ed697bc231e
   languageName: node
   linkType: hard
 
@@ -1024,7 +1024,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "branches-main@workspace:."
   dependencies:
-    "@bjerk/eslint-config": ^3.1.0
+    "@bjerk/eslint-config": ^4.0.0
     "@cobraz/prettier": ^2.0.1
     "@pulumi/gcp": ^6.55.1
     "@pulumi/github": ^5.9.0
