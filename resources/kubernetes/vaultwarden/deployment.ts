@@ -68,6 +68,16 @@ const deployment = new k8s.apps.v1.Deployment(
                   value: interpolate`https://${host}`,
                 },
               ],
+              resources: {
+                requests: {
+                  cpu: '250m',
+                  memory: '512Mi',
+                },
+                limits: {
+                  cpu: '250m',
+                  memory: '512Mi',
+                },
+              },
             },
           ],
         },
