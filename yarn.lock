@@ -435,12 +435,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/google-native@npm:^0.27.0":
-  version: 0.27.0
-  resolution: "@pulumi/google-native@npm:0.27.0"
+"@pulumi/google-native@npm:^0.30.0":
+  version: 0.30.0
+  resolution: "@pulumi/google-native@npm:0.30.0"
   dependencies:
     "@pulumi/pulumi": ^3.0.0
-  checksum: eddf11fc417ab2cbb625f8e2ef720b3ced2ad6216e4d6b6f7c24def478f09a93cb94b96727cbad6b7a091f93df733a9197e3f7beeada38a666e222ef1f636bf8
+  checksum: c4b768759f0504d8ad546fe8f67039081c24c5e23ee07cbd1a30a39e5125a257b1661afb3085304d441ed338e41503ad8d2ecfc01777675a08a414b4c73051b3
   languageName: node
   linkType: hard
 
@@ -1028,7 +1028,7 @@ __metadata:
     "@cobraz/prettier": ^2.0.1
     "@pulumi/gcp": ^6.55.1
     "@pulumi/github": ^5.9.0
-    "@pulumi/google-native": ^0.27.0
+    "@pulumi/google-native": ^0.30.0
     "@pulumi/kubernetes": ^3.27.0
     "@pulumi/kubernetesx": ^0.1.6
     "@pulumi/pulumi": ^3.66.0

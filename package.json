@@ -33,7 +33,7 @@
   "dependencies": {
     "@pulumi/gcp": "^6.55.1",
     "@pulumi/github": "^5.9.0",
-    "@pulumi/google-native": "^0.27.0",
+    "@pulumi/google-native": "^0.30.0",
     "@pulumi/kubernetes": "^3.27.0",
     "@pulumi/kubernetesx": "^0.1.6",
     "@pulumi/pulumi": "^3.66.0"
