@@ -1,0 +1,68 @@
+name: Update deployment tag
+permissions:
+  id-token: write
+  contents: read
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Which tag
+        required: true
+      name:
+        description: Name of deployment
+        required: true
+  repository_dispatch:
+    types: [update-tag]
+jobs:
+  update-deployment-tag:
+    name: Update deployment tag
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [dev, prod]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: simenandre/setup-inputs@v1
+        id: inputs
+
+      - run: echo ${{ steps.vars.outputs.payload }}
+
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v0
+        with:
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+
+      - uses: simenandre/pulumi-config@v2
+        id: config
+        env:
+          GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+        with:
+          stack-name: main
+          key: ${{ steps.inputs.outputs.name }}:tag
+          value: ${{ steps.inputs.outputs.tag }}
+
+      - uses: cobraz/get-commit-changelog@v1
+        id: changelog
+        with:
+          github-token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+          repository: ${{ steps.inputs.outputs.repository }}
+          base: ${{ fromJson(steps.config.outputs.key).value }}
+          head: ${{ steps.inputs.outputs.tag }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+          commit-message:
+            bump ${{ steps.inputs.outputs.name }} to ${{
+            steps.inputs.outputs.tag }}
+          branch: bump-tag-${{ steps.inputs.outputs.name }}
+          title:
+            'chore: bump ${{ steps.inputs.outputs.name }} tag to `${{
+            steps.inputs.outputs.tag }}`'
+          body: |
+            Automated tag change. 🎉
+
+            ${{ steps.changelog.outputs.result }}
