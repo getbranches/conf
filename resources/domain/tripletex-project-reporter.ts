@@ -3,9 +3,9 @@ import { getGithubProvider } from '../github/providers';
 import { googleProviders } from '../google/project';
 
 new GithubWithDockerService(
-  'procore-abax',
+  'tripletex-project-reporter',
   {
-    repo: 'procore-abax',
+    repo: 'tripletex-project-reporter',
   },
   { providers: [getGithubProvider('getbranches'), ...googleProviders] },
 );

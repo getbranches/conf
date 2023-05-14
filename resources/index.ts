@@ -3,6 +3,7 @@ import './google/project';
 import './google/gke';
 import './google/iam';
 import './domain/procore-abax';
+import './domain/tripletex-project-reporter';
 // import './kubernetes/adminer';
 
 import './kubernetes/ingress-controller';
