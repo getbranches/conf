@@ -119,10 +119,10 @@ export class GithubWithDockerService extends pulumi.ComponentResource {
     );
 
     new github.ActionsSecret(
-      `${name}-docker-repository`,
+      `${name}-container-repository`,
       {
         repository: repo,
-        secretName: 'DOCKER_REPOSITORY',
+        secretName: 'CONTAINER_REGISTRY',
         plaintextValue: interpolate`${artifactRepository.location}-docker.pkg.dev/${project.projectId}/${artifactRepository.repositoryId}`,
       },
       { parent: this, deleteBeforeReplace: true },
