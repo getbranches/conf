@@ -1,4 +1,5 @@
 import './config';
+import './google/artifact-registry';
 import './google/project';
 import './google/gke';
 import './google/iam';

@@ -60,6 +60,7 @@ export const services = [
   'iam.googleapis.com',
   'cloudbilling.googleapis.com',
   'iamcredentials.googleapis.com',
+  'artifactregistry.googleapis.com',
 ];
 
 export const apiServices = services.map(
