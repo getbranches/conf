@@ -17,9 +17,6 @@ jobs:
   update-deployment-tag:
     name: Update deployment tag
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        env: [dev, prod]
     steps:
       - uses: actions/checkout@v3
 
