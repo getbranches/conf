@@ -45,6 +45,7 @@ jobs:
 
       - uses: cobraz/get-commit-changelog@v1
         id: changelog
+        if: steps.config.outputs.key
         with:
           github-token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
           repository: ${{ steps.inputs.outputs.repository }}
