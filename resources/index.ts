@@ -13,7 +13,7 @@ import './kubernetes/provider';
 
 // Kubernetes resources
 import './kubernetes/tripletex-project-reporter/deployment';
-// import './kubernetes/tripletex-project-reporter/ingress';
+import './kubernetes/tripletex-project-reporter/ingress';
 import './kubernetes/vaultwarden/deployment';
 import './kubernetes/vaultwarden/ingress';
 import './kubernetes/unleash/deployment';
