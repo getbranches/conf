@@ -13,6 +13,7 @@ config:
     - '*'
   todoist-github-bot:developers:
     - so@bjerk.io
+  tripletex-project-reporter:tag: main-ec0d93b
   unleash:host: unleash.branches.no
   unleash:image: unleashorg/unleash-server
   unleash:tag: "4"
