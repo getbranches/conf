@@ -39,7 +39,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
         with:
-          stack-name: main
+          stack-name: branches/branches-main/main
           key: ${{ steps.inputs.outputs.name }}:tag
           value: ${{ steps.inputs.outputs.tag }}
 
