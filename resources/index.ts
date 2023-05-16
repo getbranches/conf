@@ -10,4 +10,11 @@ import './domain/tripletex-project-reporter';
 import './kubernetes/ingress-controller';
 import './kubernetes/postgres-operator';
 import './kubernetes/provider';
-import './kubernetes/k8s-resources';
+
+// Kubernetes resources
+import './kubernetes/tripletex-project-reporter/deployment';
+import './kubernetes/tripletex-project-reporter/ingress';
+import './kubernetes/vaultwarden/deployment';
+import './kubernetes/vaultwarden/ingress';
+import './kubernetes/unleash/deployment';
+import './kubernetes/unleash/ingress';
