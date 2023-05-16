@@ -28,11 +28,13 @@ jobs:
 
       - run: echo ${{ steps.vars.outputs.payload }}
 
-      - name: Authenticate to GCP
+      - name: Authenticate to GCP 🔒
         uses: google-github-actions/auth@v1
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+          service_account: conf-deployer@bjerk-core.iam.gserviceaccount.com
+
+      - uses: simenandre/setup-gke-gcloud-auth-plugin@v1
 
       - uses: simenandre/pulumi-config@v2
         id: config
