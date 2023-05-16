@@ -23,7 +23,7 @@ jobs:
       - uses: simenandre/setup-inputs@v1
         id: inputs
 
-      - run: echo ${{ steps.vars.outputs.payload }}
+      - run: echo ${{ steps.inputs.outputs.payload }}
 
       - name: Authenticate to GCP 🔒
         uses: google-github-actions/auth@v1
