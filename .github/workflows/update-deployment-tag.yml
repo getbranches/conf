@@ -37,6 +37,7 @@ jobs:
         id: config
         env:
           GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
         with:
           stack-name: main
           key: ${{ steps.inputs.outputs.name }}:tag
