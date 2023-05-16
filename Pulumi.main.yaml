@@ -3,7 +3,7 @@ config:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   github:token:
     secure: AAABAB1+aHgnhW95Ajp/yUq1jqpgL7mgx0aEQKGCTXsJQMhGbQES8LFs1UoJUJf1miBUMHF9/aximsB2Jra2GWkr7n0B6PORljdaLXGr8UbxjEYe36yFQX8EE+ckkv2z1rzMHd4D9JR5Ys+9EsLoguOcoPx1WjH4iKcgDDA=
-  github:token-expires-at: '2024-01-01'
+  github:token-expires-at: "2024-01-01"
   kubernetes:cluster-developers:
     - so@bjerk.io
   procore-abax:developers:
@@ -18,7 +18,7 @@ config:
   tripletex-project-reporter:tag: main-ec0d93b
   unleash:host: unleash.branches.no
   unleash:image: unleashorg/unleash-server
-  unleash:tag: '4'
+  unleash:tag: "4"
   vaultwarden:admin-token:
     secure: AAABAKOVnb6v5XQY6p2ys2TEWo5W4hTpkgBEW6COucNbgdsgQ5EanrfmiEKf9j5ddJNY3BKSn4vc5uFDLGjcSt9QP3eVxxA7sODFSM4wPEV3BcZKQYWgkwJblyc+R6XQ
   vaultwarden:host: vault.branches.no
