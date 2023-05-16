@@ -10,3 +10,5 @@ stack.json
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+gha-creds-*
