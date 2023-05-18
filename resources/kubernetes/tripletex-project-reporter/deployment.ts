@@ -1,7 +1,7 @@
 import * as k8s from '@pulumi/kubernetes';
-import { interpolate } from '@pulumi/pulumi';
 import { provider } from '../provider';
-import { host, image, tag } from './config';
+import { image, tag } from './config';
+import { reportsTripletexSecret } from './tripletex-secret';
 
 const name = 'tripletex-project-reporter';
 
@@ -31,6 +31,9 @@ const deployment = new k8s.apps.v1.Deployment(
               image: `${image}:${tag}`,
               imagePullPolicy: 'IfNotPresent',
               ports: [{ containerPort: port }],
+              envFrom: [
+                { secretRef: { name: reportsTripletexSecret.metadata.name } },
+              ],
               env: [
                 {
                   name: 'PORT',
