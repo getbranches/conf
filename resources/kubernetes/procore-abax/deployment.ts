@@ -45,6 +45,16 @@ const deployment = new k8s.apps.v1.Deployment(
                   value: output(host).apply(h => `https://${h}`),
                 },
               ],
+              resources: {
+                requests: {
+                  cpu: '100m',
+                  memory: '512Mi',
+                },
+                limits: {
+                  cpu: '100m',
+                  memory: '512Mi',
+                },
+              },
             },
           ],
         },
