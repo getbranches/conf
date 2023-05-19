@@ -9,6 +9,8 @@ config:
   procore-abax:developers:
     - so@bjerk.io
     - brage@bjerk.io
+  procore-abax:host:
+    secure: AAABAIMs0/6WUdip/Zlo/GwFNfKeKkYCeeHBmik+JKC8BGN7CrrJejlSOjVurYKTybTti1ub9yo=
   pulumi:disable-default-providers:
     - '*'
   todoist-github-bot:developers:
