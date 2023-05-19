@@ -358,8 +358,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<< HEAD
-=======
 "@protobufjs/base64@npm:^1.1.2":
   version: 1.1.2
   resolution: "@protobufjs/base64@npm:1.1.2"
@@ -426,7 +424,6 @@ __metadata:
   languageName: node
   linkType: hard
 
->>>>>>> main
 "@pulumi/gcp@npm:^6.55.1":
   version: 6.55.1
   resolution: "@pulumi/gcp@npm:6.55.1"
@@ -1039,15 +1036,9 @@ __metadata:
     "@bjerk/eslint-config": ^4.0.0
     "@cobraz/prettier": ^2.0.1
     "@pulumi/gcp": ^6.55.1
-<<<<<<< HEAD
-    "@pulumi/github": ^5.1.0
-    "@pulumi/google-native": ^0.27.0
-    "@pulumi/kubernetes": ^3.23.0
-=======
     "@pulumi/github": ^5.9.0
     "@pulumi/google-native": ^0.30.0
     "@pulumi/kubernetes": ^3.27.0
->>>>>>> main
     "@pulumi/kubernetesx": ^0.1.6
     "@pulumi/pulumi": ^3.66.0
     "@types/eslint": ^8.37.0
