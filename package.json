@@ -32,15 +32,9 @@
   },
   "dependencies": {
     "@pulumi/gcp": "^6.55.1",
-<<<<<<< HEAD
-    "@pulumi/github": "^5.1.0",
-    "@pulumi/google-native": "^0.27.0",
-    "@pulumi/kubernetes": "^3.23.0",
-=======
     "@pulumi/github": "^5.9.0",
     "@pulumi/google-native": "^0.30.0",
     "@pulumi/kubernetes": "^3.27.0",
->>>>>>> main
     "@pulumi/kubernetesx": "^0.1.6",
     "@pulumi/pulumi": "^3.66.0",
     "get-pulumi-secret": "^2.0.0"
