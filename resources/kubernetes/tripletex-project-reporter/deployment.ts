@@ -2,6 +2,8 @@ import * as k8s from '@pulumi/kubernetes';
 import { provider } from '../provider';
 import { image, tag } from './config';
 import { reportsTripletexSecret } from './tripletex-secret';
+import { host } from './config';
+import { output } from '@pulumi/pulumi';
 
 const name = 'tripletex-project-reporter';
 
@@ -38,6 +40,10 @@ const deployment = new k8s.apps.v1.Deployment(
                 {
                   name: 'PORT',
                   value: String(port),
+                },
+                {
+                  name: 'SELF_URL',
+                  value: output(host).apply(h => `https://${h}`),
                 },
               ],
             },
