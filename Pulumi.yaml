@@ -3,8 +3,6 @@ description: Branches main Pulumi-config
 runtime: nodejs
 config:
   pulumi:disable-default-providers: '*'
-  gcp:impersonateServiceAccount: conf-deployer@bjerk-core.iam.gserviceaccount.com
-  google-native:impersonateServiceAccountDelegates: '["conf-deployer@bjerk-core.iam.gserviceaccount.com"]'
   google:billing-account-id: 014BE3-9C71F5-3ED088
   google:service-account: conf-deployer@bjerk-core.iam.gserviceaccount.com
   google:folder-id: 89785497175

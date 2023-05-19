@@ -11,8 +11,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/github-script@v5
+      - uses: actions/checkout@v3
+      - uses: actions/github-script@v6
         id: search
         with:
           result-encoding: string

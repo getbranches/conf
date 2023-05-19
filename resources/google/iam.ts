@@ -1,7 +1,7 @@
 import * as google from '@pulumi/google-native';
 import { interpolate } from '@pulumi/pulumi';
 import { callerServiceAccount, clusterDevelopers } from '../config';
-import { mainProvider, project } from './main-project';
+import { mainProvider, project } from './project';
 
 // Cluster roles for caller service account
 export const callerClusterIamMember =

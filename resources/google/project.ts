@@ -19,12 +19,13 @@ export const project = new gcp.organizations.Project(
 
 export const mainClassicProvider = new gcp.Provider('google-main-provider', {
   project: project.projectId,
-  impersonateServiceAccount: config.require('service-account'),
 });
 
 export const mainProvider = new google.Provider('google-native-main-provider', {
   project: project.projectId,
 });
+
+export const googleProviders = [mainClassicProvider, mainProvider];
 
 new google.cloudresourcemanager.v3.ProjectIamMember(
   'main-project-iam-member',
@@ -58,6 +59,7 @@ export const services = [
   'iam.googleapis.com',
   'cloudbilling.googleapis.com',
   'iamcredentials.googleapis.com',
+  'artifactregistry.googleapis.com',
 ];
 
 export const apiServices = services.map(

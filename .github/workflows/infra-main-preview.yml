@@ -35,10 +35,12 @@ jobs:
         run: yarn install
 
       - name: Authenticate to GCP 🔒
-        uses: google-github-actions/auth@v0
+        uses: google-github-actions/auth@v1
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: conf-deployer@bjerk-core.iam.gserviceaccount.com
+
+      - uses: simenandre/setup-gke-gcloud-auth-plugin@v1
 
       - name: Running Pulumi 🚀
         uses: pulumi/actions@v4

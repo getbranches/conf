@@ -1,12 +1,20 @@
 import './config';
-import './main-project/main-project';
-import './main-project/gke';
-import './main-project/iam';
-import './domain/todoist-github-bot';
+import './google/artifact-registry';
+import './google/project';
+import './google/gke';
+import './google/iam';
 import './domain/procore-abax';
+import './domain/tripletex-project-reporter';
 // import './kubernetes/adminer';
 
 import './kubernetes/ingress-controller';
 import './kubernetes/postgres-operator';
 import './kubernetes/provider';
-import './kubernetes/k8s-resources';
+
+// Kubernetes resources
+import './kubernetes/tripletex-project-reporter/deployment';
+import './kubernetes/tripletex-project-reporter/ingress';
+import './kubernetes/vaultwarden/deployment';
+import './kubernetes/vaultwarden/ingress';
+import './kubernetes/unleash/deployment';
+import './kubernetes/unleash/ingress';
