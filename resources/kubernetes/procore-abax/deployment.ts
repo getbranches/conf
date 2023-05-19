@@ -1,11 +1,10 @@
 import * as k8s from '@pulumi/kubernetes';
 import { output } from '@pulumi/pulumi';
 import { provider } from '../provider';
-import { image, tag } from './config';
-import { host } from './config';
-import { reportsTripletexSecret } from './tripletex-secret';
+import { host, image, tag } from './config';
+import { procoreAbaxSecrets } from './secrets';
 
-const name = 'tripletex-project-reporter';
+const name = 'procore-abax';
 
 export const port = 4242;
 
@@ -34,7 +33,7 @@ const deployment = new k8s.apps.v1.Deployment(
               imagePullPolicy: 'IfNotPresent',
               ports: [{ containerPort: port }],
               envFrom: [
-                { secretRef: { name: reportsTripletexSecret.metadata.name } },
+                { secretRef: { name: procoreAbaxSecrets.metadata.name } },
               ],
               env: [
                 {
