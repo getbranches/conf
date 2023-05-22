@@ -35,5 +35,5 @@ export const ingress = new k8s.networking.v1.Ingress(
       ],
     },
   },
-  { provider },
+  { provider, deleteBeforeReplace: true },
 );
