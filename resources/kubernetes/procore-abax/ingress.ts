@@ -9,6 +9,7 @@ export const ingress = new k8s.networking.v1.Ingress(
   `${name}-ingress`,
   {
     metadata: {
+      name,
       annotations: {
         'kubernetes.io/ingress.class': 'caddy',
       },
