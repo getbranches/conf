@@ -49,8 +49,8 @@ jobs:
         with:
           token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
           repository: ${{ steps.inputs.outputs.repository }}
-          base: ${{ fromJson(steps.config.outputs.key).value }}
-          head: ${{ steps.inputs.outputs.tag }}
+          base: ${{ steps.inputs.outputs.tag }}
+          head: ${{ fromJson(steps.config.outputs.key).value }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
@@ -66,4 +66,4 @@ jobs:
           body: |
             Automated tag change. 🎉
 
-            ${{ steps.changelog.changelog }}
+            ${{ steps.changelog.outputs.changelog }}
