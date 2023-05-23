@@ -6,7 +6,7 @@ import { procoreAbaxSecrets } from './secrets';
 
 const name = 'procore-abax';
 
-export const port = 4242;
+export const port = 8000;
 
 const deployment = new k8s.apps.v1.Deployment(
   `${name}-deployment`,
@@ -28,7 +28,7 @@ const deployment = new k8s.apps.v1.Deployment(
         spec: {
           containers: [
             {
-              name: name,
+              name,
               image: `${image}:${tag}`,
               imagePullPolicy: 'IfNotPresent',
               ports: [{ containerPort: port }],
