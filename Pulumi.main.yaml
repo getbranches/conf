@@ -9,7 +9,7 @@ config:
   procore-abax:developers:
     - so@bjerk.io
     - brage@bjerk.io
-  procore-abax:host: procore-abax.branches.no
+  procore-abax:host: procoreabax.branches.no
   procore-abax:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/procore-abax
   procore-abax:sanity-project-id:
     secure: AAABAKlm50371+L8Izs9+G139TDGB/widU/B+dP4QtXGXCPXW7g7zg==
