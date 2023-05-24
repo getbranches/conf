@@ -1,6 +1,6 @@
 import * as gcp from '@pulumi/gcp';
 import * as pulumi from '@pulumi/pulumi';
-import { project } from './main-project';
+import { project } from './project';
 
 const config = new pulumi.Config('slack');
 const name = 'branches-slack-logger';
