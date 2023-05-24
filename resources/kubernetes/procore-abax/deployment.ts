@@ -44,6 +44,10 @@ const deployment = new k8s.apps.v1.Deployment(
                   name: 'SELF_URL',
                   value: output(host).apply(h => `https://${h}`),
                 },
+                {
+                  name: 'NODE_ENV',
+                  value: 'production',
+                },
               ],
               resources: {
                 requests: {
