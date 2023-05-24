@@ -1,6 +1,6 @@
 import * as gcp from '@pulumi/gcp';
 import * as pulumi from '@pulumi/pulumi';
-import { mainClassicProvider, project } from './project';
+import { apiServices, mainClassicProvider, project } from './project';
 
 const config = new pulumi.Config('slack');
 const name = 'branches-slack-logger';
@@ -72,7 +72,7 @@ new gcp.eventarc.Trigger(
       },
     },
   },
-  { provider: mainClassicProvider },
+  { provider: mainClassicProvider, dependsOn: apiServices },
 );
 
 new gcp.projects.IAMMember(
