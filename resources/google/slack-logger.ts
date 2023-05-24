@@ -1,20 +1,20 @@
 import * as gcp from '@pulumi/gcp';
 import * as pulumi from '@pulumi/pulumi';
-import { project } from './main-project';
+import { mainClassicProvider, project } from './project';
 
 const config = new pulumi.Config('slack');
 const name = 'branches-slack-logger';
 const slackAgentTag = 'v3.1.0';
 const channel = 'C0574QRTMCN'; // #branches-notifications
 
-const topic = new gcp.pubsub.Topic(name, {}, { parent: this });
+const topic = new gcp.pubsub.Topic(name, {}, { provider: mainClassicProvider });
 
 const serviceAccount = new gcp.serviceaccount.Account(
   name,
   {
     accountId: name,
   },
-  { parent: this },
+  { provider: mainClassicProvider },
 );
 
 const service = new gcp.cloudrunv2.Service(
@@ -42,7 +42,7 @@ const service = new gcp.cloudrunv2.Service(
       ],
     },
   },
-  { parent: this },
+  { provider: mainClassicProvider },
 );
 
 new gcp.eventarc.Trigger(
@@ -72,7 +72,7 @@ new gcp.eventarc.Trigger(
       },
     },
   },
-  { parent: this },
+  { provider: mainClassicProvider },
 );
 
 new gcp.projects.IAMMember(
@@ -82,7 +82,7 @@ new gcp.projects.IAMMember(
     role: 'roles/eventarc.eventReceiver',
     member: pulumi.interpolate`serviceAccount:${serviceAccount.email}`,
   },
-  { parent: this },
+  { provider: mainClassicProvider },
 );
 
 new gcp.cloudrunv2.ServiceIamMember(
@@ -93,7 +93,7 @@ new gcp.cloudrunv2.ServiceIamMember(
     role: 'roles/run.invoker',
     member: pulumi.interpolate`serviceAccount:${serviceAccount.email}`,
   },
-  { parent: this },
+  { provider: mainClassicProvider },
 );
 
 const logSink = new gcp.logging.ProjectSink(
@@ -104,7 +104,7 @@ const logSink = new gcp.logging.ProjectSink(
       'operation.producer="github.com/bjerkio/google-cloud-logger-slack@v1"',
     destination: pulumi.interpolate`pubsub.googleapis.com/${topic.id}`,
   },
-  { protect: true, parent: this },
+  { protect: true, provider: mainClassicProvider },
 );
 
 new gcp.pubsub.TopicIAMMember(
@@ -114,5 +114,5 @@ new gcp.pubsub.TopicIAMMember(
     role: 'roles/pubsub.publisher',
     member: logSink.writerIdentity,
   },
-  { protect: true, parent: this },
+  { protect: true, provider: mainClassicProvider },
 );

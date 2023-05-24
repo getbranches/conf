@@ -6,6 +6,7 @@ import './google/iam';
 import './domain/procore-abax';
 import './domain/tripletex-project-reporter';
 // import './kubernetes/adminer';
+import './google/slack-logger';
 
 import './kubernetes/ingress-controller';
 import './kubernetes/postgres-operator';

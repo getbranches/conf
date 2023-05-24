@@ -15,6 +15,8 @@ config:
   procore-abax:tag: main-1cfb8a5
   pulumi:disable-default-providers:
     - '*'
+  slack:bot-oauth-token:
+    secure: AAABAJHjb4f9T3Miv4R+IUSi94aTFcAB7AGRccjxr3TWXUczZAm8maKzisHiEl2S/6Lgbn1rWH1QkXEC2Wq/WNfwMl7HVQMshMY=
   todoist-github-bot:developers:
     - so@bjerk.io
   tripletex-project-reporter:host: reporting.bjerk.io
