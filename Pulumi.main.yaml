@@ -5,10 +5,7 @@ config:
     secure: AAABAB1+aHgnhW95Ajp/yUq1jqpgL7mgx0aEQKGCTXsJQMhGbQES8LFs1UoJUJf1miBUMHF9/aximsB2Jra2GWkr7n0B6PORljdaLXGr8UbxjEYe36yFQX8EE+ckkv2z1rzMHd4D9JR5Ys+9EsLoguOcoPx1WjH4iKcgDDA=
   github:token-expires-at: "2024-01-01"
   kubernetes:cluster-developers:
-    - so@bjerk.io
-  procore-abax:developers:
-    - so@bjerk.io
-    - brage@bjerk.io
+    - group:developers@bjerk.io
   procore-abax:host: procore-abax.branches.no
   procore-abax:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/procore-abax
   procore-abax:sanity-project-id:
