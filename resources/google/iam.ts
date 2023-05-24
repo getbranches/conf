@@ -16,11 +16,11 @@ export const callerClusterIamMember =
   );
 
 clusterDevelopers.map(
-  email =>
+  member =>
     new google.cloudresourcemanager.v3.ProjectIamMember(
-      `${email}-cluster-access`,
+      `${member}-cluster-access`,
       {
-        member: interpolate`user:${email}`,
+        member,
         role: 'roles/container.developer',
         name: project.projectId,
       },
