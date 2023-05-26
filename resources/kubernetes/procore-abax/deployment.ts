@@ -84,17 +84,19 @@ export const cronJob = new k8s.batch.v1.CronJob(
       name: `${name}-cronjob`,
     },
     spec: {
-      schedule: '0 4 * * *',
+      schedule: '0 4 * * *', // every night at 4 AM
       jobTemplate: {
         spec: {
           template: {
             spec: {
               containers: [
-                // a container that runs a GET HTTP request to the /sync-logs endpoint
                 {
-                  name: 'sync-logs',
-                  image: 'curlimages/curl',
-                  command: ['curl', 'https://procore-abax.branches.no/sync'],
+                  name,
+                  image: `${image}:${tag}`,
+                  envFrom: [
+                    { secretRef: { name: procoreAbaxSecrets.metadata.name } },
+                  ],
+                  command: ['node', 'dist/sync.js'],
                 },
               ],
             },
