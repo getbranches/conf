@@ -79,3 +79,35 @@ export const service = new k8s.core.v1.Service(
   },
   { provider },
 );
+
+// set up a kubernetes engine cron job that runs every night at 4 AM
+export const cronJob = new k8s.batch.v1.CronJob(
+  `${name}-cronjob`,
+  {
+    metadata: {
+      name: `${name}-cronjob`,
+    },
+    spec: {
+      schedule: '0 4 * * *', // every night at 4 AM
+      jobTemplate: {
+        spec: {
+          template: {
+            spec: {
+              containers: [
+                {
+                  name,
+                  image: `${image}:${tag}`,
+                  envFrom: [
+                    { secretRef: { name: procoreAbaxSecrets.metadata.name } },
+                  ],
+                  command: ['node', 'dist/sync.js'],
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
+  { provider },
+);
