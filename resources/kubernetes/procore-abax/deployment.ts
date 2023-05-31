@@ -93,6 +93,7 @@ export const cronJob = new k8s.batch.v1.CronJob(
         spec: {
           template: {
             spec: {
+              restartPolicy: 'OnFailure',
               containers: [
                 {
                   name,
