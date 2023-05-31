@@ -21,7 +21,7 @@ config:
     - so@bjerk.io
   tripletex-project-reporter:host: reporting.bjerk.io
   tripletex-project-reporter:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/tripletex-project-reporter
-  tripletex-project-reporter:tag: main-51701d1
+  tripletex-project-reporter:tag: main-9cd0cc5
   tripletex-project-reporter:tripletex-consumer-token:
     secure: AAABAJcJvRj4zKIIgI1p9VtSheJV3jblcMVxSMhYICOo+vm0lKawC4fjTdJvFXN9EDw8wlAYEi1mWAh6sl2Day8Y/9I=
   tripletex-project-reporter:tripletex-employee-token:
