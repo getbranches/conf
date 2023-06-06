@@ -1,6 +1,11 @@
 import * as k8s from '@pulumi/kubernetes';
 import { provider } from '../provider';
-import { sanityProjectId, sanityToken } from './config';
+import {
+  procoreClientId,
+  procoreClientSecret,
+  sanityProjectId,
+  sanityToken,
+} from './config';
 
 export const procoreAbaxSecrets = new k8s.core.v1.Secret(
   'procore-abax-secrets',
@@ -11,6 +16,8 @@ export const procoreAbaxSecrets = new k8s.core.v1.Secret(
     stringData: {
       SANITY_SECRET_TOKEN: sanityToken,
       SANITY_PROJECT_ID: sanityProjectId,
+      PROCORE_APP_CLIENT_ID: procoreClientId,
+      PROCORE_APP_CLIENT_SECRET: procoreClientSecret,
     },
   },
   { provider },
