@@ -8,6 +8,9 @@ config:
     - group:developers@bjerk.io
   procore-abax:host: procore-abax.branches.no
   procore-abax:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/procore-abax
+  procore-abax:procore-app-client-id: 7331d37d32e91bfa87c0db1cec4fc3d170ee004a37fd304067f903ddb80404d9
+  procore-abax:procore-app-client-secret:
+    secure: AAABAOhi2Cjrku7xfMWWwBQWnusA8sVTH6iGU4ofAGB0wN8Ocye5shGsNngMSEbCMTGnVUv6qMoMZP/n7/klo81pdNxFn2kqZ5hNieH/FzxaIJXZqi27uvC54zmGSPDw
   procore-abax:sanity-project-id:
     secure: AAABAKlm50371+L8Izs9+G139TDGB/widU/B+dP4QtXGXCPXW7g7zg==
   procore-abax:sanity-token:
