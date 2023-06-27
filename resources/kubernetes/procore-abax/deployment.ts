@@ -101,6 +101,20 @@ export const cronJob = new k8s.batch.v1.CronJob(
                   envFrom: [
                     { secretRef: { name: procoreAbaxSecrets.metadata.name } },
                   ],
+                  env: [
+                    {
+                      name: 'PORT',
+                      value: String(port),
+                    },
+                    {
+                      name: 'SELF_URL',
+                      value: output(host).apply(h => `https://${h}`),
+                    },
+                    {
+                      name: 'NODE_ENV',
+                      value: 'production',
+                    },
+                  ],
                   command: ['node', 'dist/sync.js'],
                 },
               ],
