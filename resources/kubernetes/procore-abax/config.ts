@@ -13,8 +13,8 @@ export const procoreClientSecret = config.requireSecret(
   'procore-app-client-secret',
 );
 export const procoreSandboxClientId = config.require(
-  'procore-sandbox-app-client-id',
+  'procore-app-sandbox-client-id',
 );
 export const procoreSandboxClientSecret = config.requireSecret(
-  'procore-sandbox-app-client-secret',
+  'procore-app-sandbox-client-secret',
 );
