@@ -26,6 +26,9 @@ config:
   todoist-github-bot-event-handler:tag: main-1256f52
   todoist-github-bot:developers:
     - so@bjerk.io
+  todoist-github-event-handler:host:
+    secure: AAABABEM8RVJCaFNdgzMzcbQ1jffBn0Eq1WfrW4IZDCxGA0zfzR90IGB1esu/mlrdmCoVOYY6AT6L63KJaPELKNGn1VcErJQ
+  todoist-github-frontend:host: todoist-github.branches.no
   tripletex-project-reporter:host: reporting.bjerk.io
   tripletex-project-reporter:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/tripletex-project-reporter
   tripletex-project-reporter:tag: main-3e03234

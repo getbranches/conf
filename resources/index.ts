@@ -7,7 +7,6 @@ import './domain/procore-abax';
 import './domain/tripletex-project-reporter';
 // import './kubernetes/adminer';
 import './google/slack-logger';
-
 import './kubernetes/ingress-controller';
 import './kubernetes/postgres-operator';
 import './kubernetes/provider';
@@ -21,3 +20,5 @@ import './kubernetes/vaultwarden/deployment';
 import './kubernetes/vaultwarden/ingress';
 import './kubernetes/unleash/deployment';
 import './kubernetes/unleash/ingress';
+import './kubernetes/todoist-github/event-handler/deployment';
+import './kubernetes/todoist-github/event-handler/ingress';
