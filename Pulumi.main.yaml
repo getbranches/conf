@@ -23,7 +23,7 @@ config:
     - '*'
   slack:bot-oauth-token:
     secure: AAABAJHjb4f9T3Miv4R+IUSi94aTFcAB7AGRccjxr3TWXUczZAm8maKzisHiEl2S/6Lgbn1rWH1QkXEC2Wq/WNfwMl7HVQMshMY=
-  todoist-github-bot-event-handler:tag: main-1256f52
+  todoist-github-event-handler:tag: main-1256f52
   todoist-github-bot:developers:
     - so@bjerk.io
   todoist-github-event-handler:host:
