@@ -4,7 +4,7 @@ import { provider } from '../../provider';
 import { tag as commonTag } from '../config';
 import { tag as deploymentTag, host } from './config';
 
-const name = 'todoist-github-event-handler';
+const name = 'todoist-github-frontend';
 
 export const port = 4242;
 
@@ -12,9 +12,10 @@ const tag = deploymentTag ?? commonTag;
 
 if (deploymentTag) {
   pulumi.log.warn(
-    'Using a different tag for the todoist-github/event-handler deployment than the common tag.',
-  )
+    'Using a different tag for the todoist-github/frontend deployment than the common tag.',
+  );
 }
+
 
 const deployment = new k8s.apps.v1.Deployment(
   `${name}-deployment`,
@@ -37,7 +38,7 @@ const deployment = new k8s.apps.v1.Deployment(
           containers: [
             {
               name: name,
-              image: `ghcr.io/getbranches/todoist-github-bot/event-handler:${tag}`,
+              image: `ghcr.io/getbranches/todoist-github-bot/frontend:${tag}`,
               imagePullPolicy: 'IfNotPresent',
               ports: [{ containerPort: port }],
               env: [

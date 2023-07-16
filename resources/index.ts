@@ -22,3 +22,5 @@ import './kubernetes/unleash/deployment';
 import './kubernetes/unleash/ingress';
 import './kubernetes/todoist-github/event-handler/deployment';
 import './kubernetes/todoist-github/event-handler/ingress';
+import './kubernetes/todoist-github/frontend/deployment';
+import './kubernetes/todoist-github/frontend/ingress';
