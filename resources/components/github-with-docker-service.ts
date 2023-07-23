@@ -7,7 +7,7 @@ import {
   getIdentityPoolMember,
   identityPoolProvider,
 } from '../google/identity-pool';
-import { mainClassicProvider , project } from '../google/project';
+import { mainClassicProvider, project } from '../google/project';
 
 export interface GithubWithDockerServiceProps {
   owner?: string;

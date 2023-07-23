@@ -471,9 +471,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/kubernetes@npm:^3.27.0":
-  version: 3.30.2
-  resolution: "@pulumi/kubernetes@npm:3.30.2"
+"@pulumi/kubernetes@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@pulumi/kubernetes@npm:4.0.3"
   dependencies:
     "@pulumi/pulumi": ^3.25.0
     "@types/glob": ^5.0.35
@@ -483,21 +483,11 @@ __metadata:
     node-fetch: ^2.3.0
     shell-quote: ^1.6.1
     tmp: ^0.0.33
-  checksum: 1b26f47277344a7cc0d2be53ae15058dd4c3338751dc6f81d0e8cbe1d8b7b4c962b278a26f2f47569ceeea33aa566c129630875f10a45017abad26d948dfc14a
+  checksum: b184d04ec7ee427b0e85746ba18d71cc437895d5c976a7be723a064c13d128d5d05f2f54d5db61ac0102e8b2113da5fbf800a0b4282eed6983811bca596246ab
   languageName: node
   linkType: hard
 
-"@pulumi/kubernetesx@npm:^0.1.6":
-  version: 0.1.6
-  resolution: "@pulumi/kubernetesx@npm:0.1.6"
-  peerDependencies:
-    "@pulumi/kubernetes": ^3.0.0
-    "@pulumi/pulumi": ^3.0.0
-  checksum: fe309359c3bc62b8cd0d4de7bbcb6c6210e0f1bfa6ca793b6888a699543165190203be72cb1b0b63eba275f8442438d7ad0dbd7ae885619436c6e9823b854970
-  languageName: node
-  linkType: hard
-
-"@pulumi/pulumi@npm:^3.0.0, @pulumi/pulumi@npm:^3.25.0, @pulumi/pulumi@npm:^3.65.1, @pulumi/pulumi@npm:^3.66.0":
+"@pulumi/pulumi@npm:^3.0.0, @pulumi/pulumi@npm:^3.25.0, @pulumi/pulumi@npm:^3.65.1":
   version: 3.75.0
   resolution: "@pulumi/pulumi@npm:3.75.0"
   dependencies:
@@ -527,6 +517,39 @@ __metadata:
     typescript: ~3.8.3
     upath: ^1.1.0
   checksum: 48e201e1161d3370ed9b02e527019a7bbe7e4bee11e5140d1b803ea642a49cd61084111c75d65fbc3b3991e48d057f053ae6770782b23693a8f3b5794a5bb28d
+  languageName: node
+  linkType: hard
+
+"@pulumi/pulumi@npm:^3.76.0":
+  version: 3.76.0
+  resolution: "@pulumi/pulumi@npm:3.76.0"
+  dependencies:
+    "@grpc/grpc-js": ^1.8.16
+    "@logdna/tail-file": ^2.0.6
+    "@opentelemetry/api": ^1.2.0
+    "@opentelemetry/exporter-zipkin": ^1.6.0
+    "@opentelemetry/instrumentation": ^0.32.0
+    "@opentelemetry/instrumentation-grpc": ^0.32.0
+    "@opentelemetry/resources": ^1.6.0
+    "@opentelemetry/sdk-trace-base": ^1.6.0
+    "@opentelemetry/sdk-trace-node": ^1.6.0
+    "@opentelemetry/semantic-conventions": ^1.6.0
+    "@pulumi/query": ^0.3.0
+    execa: ^5.1.0
+    google-protobuf: ^3.5.0
+    ini: ^2.0.0
+    js-yaml: ^3.14.0
+    minimist: ^1.2.6
+    normalize-package-data: ^3.0.0
+    pkg-dir: ^7.0.0
+    read-package-tree: ^5.3.1
+    require-from-string: ^2.0.1
+    semver: ^7.5.2
+    source-map-support: ^0.5.6
+    ts-node: ^7.0.1
+    typescript: ~3.8.3
+    upath: ^1.1.0
+  checksum: ce334f1479843bd5ca432ffcb38f93c643d2f9ce91c9ce0ea65c1cdd47af477a448ec481329c1036ea33c0d7c5e8a4cdf611b3135e78f5384105a6383f41bd2e
   languageName: node
   linkType: hard
 
@@ -1079,9 +1102,8 @@ __metadata:
     "@pulumi/gcp": ^6.55.1
     "@pulumi/github": ^5.9.0
     "@pulumi/google-native": ^0.30.0
-    "@pulumi/kubernetes": ^3.27.0
-    "@pulumi/kubernetesx": ^0.1.6
-    "@pulumi/pulumi": ^3.66.0
+    "@pulumi/kubernetes": ^4.0.3
+    "@pulumi/pulumi": ^3.76.0
     "@types/eslint": ^8.37.0
     "@types/node": ^18.16.7
     "@types/prettier": ^2.7.2

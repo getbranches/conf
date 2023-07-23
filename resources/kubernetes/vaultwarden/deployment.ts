@@ -13,7 +13,13 @@ export const port = 80;
 const deployment = new k8s.apps.v1.Deployment(
   `${name}-deployment`,
   {
-    metadata: { name },
+    metadata: {
+      name,
+      annotations: {
+        'pulumi.com/patchForce': 'true',
+        'pulumi.com/skipAwait': 'true',
+      },
+    },
     spec: {
       replicas: 1,
       selector: {

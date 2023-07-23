@@ -5,13 +5,12 @@ import './google/gke';
 import './google/iam';
 import './domain/procore-abax';
 import './domain/tripletex-project-reporter';
-// import './kubernetes/adminer';
 import './google/slack-logger';
 import './kubernetes/ingress-controller';
 import './kubernetes/postgres-operator';
 import './kubernetes/provider';
 
-import './google/postgres-backup'
+import './google/postgres-backup';
 
 // Kubernetes resources
 import './kubernetes/procore-abax/deployment';
