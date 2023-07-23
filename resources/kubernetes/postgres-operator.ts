@@ -4,6 +4,24 @@ import {
   serviceAccountIamRole,
 } from '../google/postgres-backup';
 import { provider } from './provider';
+import {
+  backupServiceAccount,
+  serviceAccountIamRole,
+} from '../google/postgres-backup';
+
+export const serviceAccount = new k8s.core.v1.ServiceAccount(
+  'postgres-backup',
+  {
+    metadata: {
+      name: 'postgres-backup',
+      annotations: {
+        'iam.gke.io/gcp-service-account': backupServiceAccount.email,
+      },
+    },
+  },
+  { provider, dependsOn: [serviceAccountIamRole] },
+);
+
 
 export const serviceAccount = new k8s.core.v1.ServiceAccount(
   'postgres-backup',
@@ -37,6 +55,9 @@ new k8s.helm.v3.Chart(
     values: {
       podAnnotations: {
         'pulumi.com/skipAwait': 'true',
+      },
+      podServiceAccount: {
+        name: serviceAccount.metadata.name,
       },
       resources: {
         requests: {
