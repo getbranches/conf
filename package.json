@@ -1,7 +1,7 @@
 {
   "name": "branches-main",
   "main": "resources/index.ts",
-  "packageManager": "pnpm@8.6.9",
+  "packageManager": "pnpm@8.6.10",
   "scripts": {
     "format": "prettier --write . --ignore-path .gitignore ",
     "format:check": "prettier --check . --ignore-path .gitignore",
