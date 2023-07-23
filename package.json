@@ -14,7 +14,8 @@
     "@pulumi/google-native": "^0.31.1",
     "@pulumi/kubernetes": "^4.0.3",
     "@pulumi/pulumi": "^3.76.0",
-    "get-pulumi-secret": "^2.0.0"
+    "get-pulumi-secret": "^2.0.0",
+    "ts-invariant": "^0.10.3"
   },
   "devDependencies": {
     "@bjerk/eslint-config": "^5.3.1",
