@@ -42,6 +42,12 @@ jobs:
 
       - uses: simenandre/setup-gke-gcloud-auth-plugin@v1
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::318306939417:role/GitHubActionRole
+          aws-region: eu-north-1
+
       - name: Running Pulumi 🚀
         uses: pulumi/actions@v4
         env:

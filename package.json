@@ -31,6 +31,7 @@
     "prettier": "^2.8.8"
   },
   "dependencies": {
+    "@pulumi/aws": "^5.42.0",
     "@pulumi/gcp": "^6.55.1",
     "@pulumi/github": "^5.9.0",
     "@pulumi/google-native": "^0.30.0",
