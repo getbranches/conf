@@ -1,18 +1,33 @@
 import * as k8s from '@pulumi/kubernetes';
 import { output } from '@pulumi/pulumi';
 import { provider } from '../provider';
-import { image, tag } from './config';
-import { host } from './config';
+import { host, image, tag } from './config';
 import { reportsTripletexSecret } from './tripletex-secret';
 
 const name = 'tripletex-project-reporter';
 
 export const port = 4242;
 
+const resources = {
+  requests: {
+    cpu: '250m',
+    memory: '512Mi',
+  },
+  limits: {
+    cpu: '250m',
+    memory: '512Mi',
+  },
+};
+
 const deployment = new k8s.apps.v1.Deployment(
   `${name}-deployment`,
   {
-    metadata: { name },
+    metadata: {
+      name,
+      annotations: {
+        'pulumi.com/skipAwait': 'true',
+      },
+    },
     spec: {
       replicas: 1,
       selector: {
@@ -46,16 +61,7 @@ const deployment = new k8s.apps.v1.Deployment(
                   value: output(host).apply(h => `https://${h}`),
                 },
               ],
-              resources: {
-                requests: {
-                  cpu: '100m',
-                  memory: '512Mi',
-                },
-                limits: {
-                  cpu: '100m',
-                  memory: '512Mi',
-                },
-              },
+              resources,
             },
           ],
         },

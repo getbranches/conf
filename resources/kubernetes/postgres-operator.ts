@@ -1,9 +1,9 @@
 import * as k8s from '@pulumi/kubernetes';
-import { provider } from './provider';
 import {
   backupServiceAccount,
   serviceAccountIamRole,
 } from '../google/postgres-backup';
+import { provider } from './provider';
 
 export const serviceAccount = new k8s.core.v1.ServiceAccount(
   'postgres-backup',
@@ -18,38 +18,39 @@ export const serviceAccount = new k8s.core.v1.ServiceAccount(
   { provider, dependsOn: [serviceAccountIamRole] },
 );
 
-
+/**
+ * The postgres-operator helm chart
+ *
+ * @see https://opensource.zalando.com/postgres-operator/docs/
+ * @see https://github.com/zalando/postgres-operator
+ * @see https://postgres-operator.readthedocs.io/en/1.10.0/
+ */
 new k8s.helm.v3.Chart(
   'postgres-operator',
   {
     chart: 'postgres-operator',
-    version: '1.8.2',
+    version: '1.10.0',
     fetchOpts: {
       repo: 'https://opensource.zalando.com/postgres-operator/charts/postgres-operator',
     },
+    skipAwait: true,
     values: {
+      podAnnotations: {
+        'pulumi.com/skipAwait': 'true',
+      },
+      resources: {
+        requests: {
+          cpu: '250m',
+          memory: '512Mi',
+        },
+        limits: {
+          cpu: '250m',
+          memory: '512Mi',
+        },
+      },
       // podServiceAccount: {
       //   name: serviceAccount.metadata.name,
       // },
-      image: {
-        /**
-         * TODO: Remove when issue 2098 is fixed
-         * @see https://github.com/zalando/postgres-operator/issues/2098
-         */
-        tag: 'v1.8.2-43-g3e148ea5',
-      },
-    },
-  },
-  { provider },
-);
-
-new k8s.helm.v3.Chart(
-  'postgres-operator-ui',
-  {
-    chart: 'postgres-operator-ui',
-    version: '1.8.2',
-    fetchOpts: {
-      repo: 'https://opensource.zalando.com/postgres-operator/charts/postgres-operator-ui',
     },
   },
   { provider },

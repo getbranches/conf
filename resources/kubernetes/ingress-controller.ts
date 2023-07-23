@@ -16,9 +16,11 @@ export const ingress = new k8s.helm.v3.Chart(
   'caddy-ingress',
   {
     chart: 'caddy-ingress-controller',
+    version: '1.0.5',
     fetchOpts: {
       repo: 'https://caddyserver.github.io/ingress/',
     },
+    skipAwait: true,
     namespace: namespace.metadata.name,
     values: {
       ingressController: {
@@ -28,12 +30,12 @@ export const ingress = new k8s.helm.v3.Chart(
       },
       resources: {
         requests: {
-          cpu: '100m',
-          memory: '128Mi',
+          cpu: '250m',
+          memory: '512Mi',
         },
         limits: {
-          cpu: '100m',
-          memory: '128Mi',
+          cpu: '250m',
+          memory: '512Mi',
         },
       },
     },

@@ -8,10 +8,33 @@ const name = 'procore-abax';
 
 export const port = 8000;
 
+const probe = {
+  httpGet: {
+    path: '/health',
+    port,
+  },
+};
+
+const resources = {
+  requests: {
+    cpu: '250m',
+    memory: '512Mi',
+  },
+  limits: {
+    cpu: '250m',
+    memory: '512Mi',
+  },
+};
+
 const deployment = new k8s.apps.v1.Deployment(
   `${name}-deployment`,
   {
-    metadata: { name },
+    metadata: {
+      name,
+      annotations: {
+        'pulumi.com/skipAwait': 'true',
+      },
+    },
     spec: {
       replicas: 1,
       selector: {
@@ -32,6 +55,7 @@ const deployment = new k8s.apps.v1.Deployment(
               image: `${image}:${tag}`,
               imagePullPolicy: 'IfNotPresent',
               ports: [{ containerPort: port }],
+              readinessProbe: probe,
               envFrom: [
                 { secretRef: { name: procoreAbaxSecrets.metadata.name } },
               ],
@@ -49,16 +73,7 @@ const deployment = new k8s.apps.v1.Deployment(
                   value: 'production',
                 },
               ],
-              resources: {
-                requests: {
-                  cpu: '100m',
-                  memory: '512Mi',
-                },
-                limits: {
-                  cpu: '100m',
-                  memory: '512Mi',
-                },
-              },
+              resources,
             },
           ],
         },

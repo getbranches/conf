@@ -3,10 +3,10 @@ import { provider } from '../provider';
 import { adminToken } from './config';
 
 export const vaultwardenAdminTokenSecret = new k8s.core.v1.Secret(
-  'vaultwarden-admin-token-secret',
+  'vaultwarden-admin-token',
   {
     metadata: {
-      name: 'vault-admin-token-secret',
+      name: 'vault-admin-token',
     },
     stringData: {
       ADMIN_TOKEN: adminToken,

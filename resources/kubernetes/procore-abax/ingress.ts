@@ -12,6 +12,7 @@ export const ingress = new k8s.networking.v1.Ingress(
       name,
       annotations: {
         'kubernetes.io/ingress.class': 'caddy',
+        'pulumi.com/skipAwait': 'true',
       },
     },
     spec: {
