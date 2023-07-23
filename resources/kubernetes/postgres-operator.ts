@@ -1,5 +1,23 @@
 import * as k8s from '@pulumi/kubernetes';
 import { provider } from './provider';
+import {
+  backupServiceAccount,
+  serviceAccountIamRole,
+} from '../google/postgres-backup';
+
+export const serviceAccount = new k8s.core.v1.ServiceAccount(
+  'postgres-backup',
+  {
+    metadata: {
+      name: 'postgres-backup',
+      annotations: {
+        'iam.gke.io/gcp-service-account': backupServiceAccount.email,
+      },
+    },
+  },
+  { provider, dependsOn: [serviceAccountIamRole] },
+);
+
 
 new k8s.helm.v3.Chart(
   'postgres-operator',
@@ -10,6 +28,9 @@ new k8s.helm.v3.Chart(
       repo: 'https://opensource.zalando.com/postgres-operator/charts/postgres-operator',
     },
     values: {
+      podServiceAccount: {
+        name: serviceAccount.metadata.name,
+      },
       image: {
         /**
          * TODO: Remove when issue 2098 is fixed
@@ -33,3 +54,5 @@ new k8s.helm.v3.Chart(
   },
   { provider },
 );
+
+export const k8sServiceAccountName = 'postgres-backup';
