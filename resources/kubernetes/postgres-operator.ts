@@ -1,7 +1,8 @@
 import * as k8s from '@pulumi/kubernetes';
 import { provider } from './provider';
+import * as awsConfig from '../aws/config';
 
-new k8s.helm.v3.Chart(
+const operator = new k8s.helm.v3.Chart(
   'postgres-operator',
   {
     chart: 'postgres-operator',
@@ -33,3 +34,15 @@ new k8s.helm.v3.Chart(
   },
   { provider },
 );
+
+// Operator Configuration
+
+new k8s.core.v1.ConfigMap(
+  'postgres-operator-config',
+  {
+    metadata: {
+      name: 'postgres-operator',
+    },
+    data: {
+      aws_region: awsConfig.region,
+      kube_iam_role: ''
