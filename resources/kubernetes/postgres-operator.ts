@@ -28,9 +28,9 @@ new k8s.helm.v3.Chart(
       repo: 'https://opensource.zalando.com/postgres-operator/charts/postgres-operator',
     },
     values: {
-      podServiceAccount: {
-        name: serviceAccount.metadata.name,
-      },
+      // podServiceAccount: {
+      //   name: serviceAccount.metadata.name,
+      // },
       image: {
         /**
          * TODO: Remove when issue 2098 is fixed
