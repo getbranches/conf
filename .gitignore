@@ -12,3 +12,5 @@ stack.json
 !.yarn/versions
 
 gha-creds-*.json
+
+.DS_Store

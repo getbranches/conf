@@ -23,7 +23,6 @@
   description: Backwards incompatible
 - name: impact/approved-breaking-change
   description: 'Backwards incompatible changes that are approved'
-  color: 88E1CD
   color: bfe5bf
 - name: impact/changelog
   description: Changelog related
