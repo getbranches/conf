@@ -11,6 +11,8 @@ import './kubernetes/ingress-controller';
 import './kubernetes/postgres-operator';
 import './kubernetes/provider';
 
+import './google/postgres-backup'
+
 // Kubernetes resources
 import './kubernetes/procore-abax/deployment';
 import './kubernetes/procore-abax/ingress';
