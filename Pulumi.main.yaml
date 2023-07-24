@@ -25,10 +25,8 @@ config:
     secure: AAABAJHjb4f9T3Miv4R+IUSi94aTFcAB7AGRccjxr3TWXUczZAm8maKzisHiEl2S/6Lgbn1rWH1QkXEC2Wq/WNfwMl7HVQMshMY=
   todoist-github-bot:developers:
     - so@bjerk.io
-  todoist-github-event-handler:host:
-    secure: AAABABEM8RVJCaFNdgzMzcbQ1jffBn0Eq1WfrW4IZDCxGA0zfzR90IGB1esu/mlrdmCoVOYY6AT6L63KJaPELKNGn1VcErJQ
-  todoist-github-frontend:host: todoist-github.branches.no
-  todoist-github:tag: main-aa8a9e1
+  todoist-github:host: todoist-github.branches.no
+  todoist-github:tag: main-1fd1aab
   tripletex-project-reporter:host: reporting.bjerk.io
   tripletex-project-reporter:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/tripletex-project-reporter
   tripletex-project-reporter:tag: main-92c390e
