@@ -1,8 +1,9 @@
 import * as gcp from '@pulumi/gcp';
 import * as pulumi from '@pulumi/pulumi';
-import { k8sServiceAccountName } from '../kubernetes/postgres-operator';
 import { cluster } from './gke';
 import { mainClassicProvider } from './project';
+
+export const k8sServiceAccountName = 'postgres-backup';
 
 export const bucket = new gcp.storage.Bucket(
   'postgres-backup',
@@ -42,7 +43,7 @@ export const serviceAccountIamRole = new gcp.serviceaccount.IAMMember(
   {
     serviceAccountId: backupServiceAccount.name,
     role: 'roles/iam.workloadIdentityUser',
-    member: pulumi.interpolate`serviceAccount:${cluster.workloadIdentityConfig.workloadPool}[${k8sServiceAccountName}]`,
+    member: pulumi.interpolate`serviceAccount:${cluster.workloadIdentityConfig.workloadPool}[default/${k8sServiceAccountName}]`,
   },
   { provider: mainClassicProvider },
 );
