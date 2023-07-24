@@ -2,6 +2,7 @@ import * as k8s from '@pulumi/kubernetes';
 import {
   backupServiceAccount,
   bucket,
+  k8sServiceAccountName,
   serviceAccountIamRole,
 } from '../google/postgres-backup';
 import { provider } from './provider';
@@ -10,7 +11,7 @@ export const serviceAccount = new k8s.core.v1.ServiceAccount(
   'postgres-backup',
   {
     metadata: {
-      name: 'postgres-backup',
+      name: k8sServiceAccountName,
       annotations: {
         'iam.gke.io/gcp-service-account': backupServiceAccount.email,
       },
@@ -36,11 +37,15 @@ new k8s.helm.v3.Chart(
     },
     skipAwait: true,
     values: {
+      enableJsonLogging: true,
       podAnnotations: {
         'pulumi.com/skipAwait': 'true',
       },
       podServiceAccount: {
         name: serviceAccount.metadata.name,
+      },
+      configAwsOrGcp: {
+        wal_gs_bucket: bucket.name,
       },
       resources: {
         requests: {
@@ -51,30 +56,6 @@ new k8s.helm.v3.Chart(
           cpu: '250m',
           memory: '512Mi',
         },
-      },
-      // podServiceAccount: {
-      //   name: serviceAccount.metadata.name,
-      // },
-    },
-  },
-  { provider },
-);
-
-
-export const k8sServiceAccountName = 'postgres-backup';
-
-// OperatorConfiguration
-export const operatorConfiguration = new k8s.apiextensions.CustomResource(
-  'operator-configuration',
-  {
-    apiVersion: 'acid.zalan.do/v1',
-    kind: 'OperatorConfiguration',
-    metadata: {
-      name: 'postgresql-operator-configuration',
-    },
-    configuration: {
-      aws_or_gcp: {
-        wal_gs_bucket: bucket.name,
       },
     },
   },
