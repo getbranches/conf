@@ -81,8 +81,16 @@ export const service = new k8s.core.v1.Service(
     metadata: { name },
     spec: {
       ports: [
-        { port: publicPort, targetPort: publicPort },
-        { port: managementPort, targetPort: managementPort },
+        {
+          name: 'public',
+          port: publicPort,
+          targetPort: publicPort,
+        },
+        {
+          name: 'management',
+          port: managementPort,
+          targetPort: managementPort,
+        },
       ],
       selector: deployment.spec.selector.matchLabels,
     },

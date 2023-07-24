@@ -27,7 +27,7 @@ export const ingress = new k8s.networking.v1.Ingress(
                 backend: {
                   service: {
                     name: service.metadata.name,
-                    port: { number: publicPort },
+                    port: { number: publicPort, name: 'public' },
                   },
                 },
               },
