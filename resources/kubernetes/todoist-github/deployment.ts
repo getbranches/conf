@@ -1,20 +1,12 @@
 import * as k8s from '@pulumi/kubernetes';
 import * as pulumi from '@pulumi/pulumi';
-import { provider } from '../../provider';
-import { tag as commonTag } from '../config';
-import { tag as deploymentTag, host } from './config';
+import { provider } from '../provider';
+import { host, tag } from './config';
 
-const name = 'todoist-github-frontend';
+const name = 'todoist-github';
 
-export const port = 4242;
-
-const tag = deploymentTag ?? commonTag;
-
-if (deploymentTag) {
-  pulumi.log.warn(
-    'Using a different tag for the todoist-github/frontend deployment than the common tag.',
-  );
-}
+export const managementPort = 8484;
+export const publicPort = 8080;
 
 const resources = {
   requests: {
@@ -53,13 +45,20 @@ const deployment = new k8s.apps.v1.Deployment(
           containers: [
             {
               name: name,
-              image: `ghcr.io/getbranches/todoist-github-bot/frontend:${tag}`,
+              image: `ghcr.io/getbranches/todoist-github-bot/server:${tag}`,
               imagePullPolicy: 'IfNotPresent',
-              ports: [{ containerPort: port }],
+              ports: [
+                { containerPort: publicPort },
+                { containerPort: managementPort },
+              ],
               env: [
                 {
                   name: 'PORT',
-                  value: String(port),
+                  value: String(publicPort),
+                },
+                {
+                  name: 'ADMIN_PORT',
+                  value: String(managementPort),
                 },
                 {
                   name: 'SELF_URL',
@@ -81,7 +80,18 @@ export const service = new k8s.core.v1.Service(
   {
     metadata: { name },
     spec: {
-      ports: [{ port }],
+      ports: [
+        {
+          name: 'public',
+          port: publicPort,
+          targetPort: publicPort,
+        },
+        {
+          name: 'management',
+          port: managementPort,
+          targetPort: managementPort,
+        },
+      ],
       selector: deployment.spec.selector.matchLabels,
     },
   },

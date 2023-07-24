@@ -1,9 +1,9 @@
 import * as k8s from '@pulumi/kubernetes';
-import { provider } from '../../provider';
+import { provider } from '../provider';
 import { host } from './config';
-import { port, service } from './deployment';
+import { publicPort, service } from './deployment';
 
-const name = 'todoist-github-event-handler';
+const name = 'todoist-github';
 
 export const ingress = new k8s.networking.v1.Ingress(
   `${name}-ingress`,
@@ -27,7 +27,7 @@ export const ingress = new k8s.networking.v1.Ingress(
                 backend: {
                   service: {
                     name: service.metadata.name,
-                    port: { number: port },
+                    port: { number: publicPort },
                   },
                 },
               },
