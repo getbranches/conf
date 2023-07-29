@@ -5,35 +5,33 @@ permissions:
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: Which tag
-        required: true
       name:
         description: Name of deployment
         required: true
-  repository_dispatch:
-    types: [update-tag]
+      tag:
+        description: Which tag
+        required: true
+      repository:
+        description: Repository
+        required: false
 jobs:
   update-deployment-tag:
     name: Update deployment tag
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
 
-      - uses: simenandre/setup-inputs@v1
+      - name: Setup inputs 📥
+        uses: simenandre/setup-inputs@v1
         id: inputs
 
-      - run: echo ${{ steps.inputs.outputs.payload }}
+      - name: Set summary 📝 – ${{ steps.inputs.outputs.name }} 👉 ${{ steps.inputs.outputs.tag }}
+        run: |
+          echo "**${{ steps.inputs.outputs.name }}** set to **${{ steps.inputs.outputs.tag }}**" >> $GITHUB_STEP_SUMMARY
 
-      - name: Authenticate to GCP 🔒
-        uses: google-github-actions/auth@v1
-        with:
-          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
-          service_account: conf-deployer@bjerk-core.iam.gserviceaccount.com
-
-      - uses: simenandre/setup-gke-gcloud-auth-plugin@v1
-
-      - uses: simenandre/pulumi-config@v2
+      - name: Set config 🔧
+        uses: simenandre/pulumi-config@v2
         id: config
         env:
           GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
@@ -43,7 +41,8 @@ jobs:
           key: ${{ steps.inputs.outputs.name }}:tag
           value: ${{ steps.inputs.outputs.tag }}
 
-      - uses: simenandre/get-commit-changelog@v1
+      - name: Get changelog from commit 📜
+        uses: simenandre/get-commit-changelog@v1
         id: changelog
         if: steps.config.outputs.key
         with:
@@ -52,7 +51,7 @@ jobs:
           base: ${{ fromJson(steps.config.outputs.key).value }}
           head: ${{ steps.inputs.outputs.tag }}
 
-      - name: Create Pull Request
+      - name: Create Pull Request 🎉
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
