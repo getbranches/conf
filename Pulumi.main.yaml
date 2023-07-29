@@ -26,7 +26,7 @@ config:
   todoist-github-bot:developers:
     - so@bjerk.io
   todoist-github:host: todoist-github.branches.no
-  todoist-github:tag: main-1fd1aab
+  todoist-github:tag: main-06662c4
   tripletex-project-reporter:host: reporting.bjerk.io
   tripletex-project-reporter:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/tripletex-project-reporter
   tripletex-project-reporter:tag: main-92c390e
