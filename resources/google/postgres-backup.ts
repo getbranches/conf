@@ -15,6 +15,17 @@ export const bucket = new gcp.storage.Bucket(
     versioning: {
       enabled: true,
     },
+    lifecycleRules: [
+      // Delete backups older than 120 days
+      {
+        action: {
+          type: 'Delete',
+        },
+        condition: {
+          age: 120,
+        },
+      },
+    ],
   },
   { provider: mainClassicProvider, protect: true },
 );
