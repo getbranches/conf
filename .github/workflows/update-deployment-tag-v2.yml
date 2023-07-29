@@ -16,16 +16,19 @@ jobs:
     name: Update deployment tag
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
 
-      - uses: simenandre/setup-inputs@v1
+      - name: Setup inputs 📥
+        uses: simenandre/setup-inputs@v1
         id: inputs
 
-      - name: Set summary
+      - name: Set summary 📝 – **${{ steps.inputs.outputs.name }}** set to **${{ steps.inputs.outputs.tag }}**
         run: |
           echo "**${{ steps.inputs.outputs.name }}** set to **${{ steps.inputs.outputs.tag }}**" >> $GITHUB_STEP_SUMMARY
 
-      - uses: simenandre/pulumi-config@v2
+      - name: Set config 🔧
+        uses: simenandre/pulumi-config@v2
         id: config
         env:
           GITHUB_TOKEN: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
