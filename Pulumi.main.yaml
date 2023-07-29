@@ -26,6 +26,7 @@ config:
   todoist-github-bot:developers:
     - so@bjerk.io
   todoist-github:host: todoist-github.branches.no
+  todoist-github:log-level: debug
   todoist-github:tag: main-5274c4f
   todoist-github:webhook-secret:
     secure: AAABANadNhLU5iAPsflF1DXS+jZYqq1PR6hETnm9xmvQOFvRedVI76JbLOfhwfR/WH+etaR7M2F1+vjwcFOr2rWJShMzdSU/
