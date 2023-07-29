@@ -2,6 +2,7 @@ import * as k8s from '@pulumi/kubernetes';
 import * as pulumi from '@pulumi/pulumi';
 import { provider } from '../provider';
 import { host, tag } from './config';
+import { todoistGitHubSecrets } from './secrets';
 
 const name = 'todoist-github';
 
@@ -50,6 +51,9 @@ const deployment = new k8s.apps.v1.Deployment(
               ports: [
                 { containerPort: publicPort },
                 { containerPort: managementPort },
+              ],
+              envFrom: [
+                { secretRef: { name: todoistGitHubSecrets.metadata.name } },
               ],
               env: [
                 {

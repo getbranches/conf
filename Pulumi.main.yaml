@@ -27,6 +27,8 @@ config:
     - so@bjerk.io
   todoist-github:host: todoist-github.branches.no
   todoist-github:tag: main-06662c4
+  todoist-github:webhook-secret:
+    secure: AAABANadNhLU5iAPsflF1DXS+jZYqq1PR6hETnm9xmvQOFvRedVI76JbLOfhwfR/WH+etaR7M2F1+vjwcFOr2rWJShMzdSU/
   tripletex-project-reporter:host: reporting.bjerk.io
   tripletex-project-reporter:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/tripletex-project-reporter
   tripletex-project-reporter:tag: main-92c390e
