@@ -21,7 +21,9 @@ jobs:
       - uses: simenandre/setup-inputs@v1
         id: inputs
 
-      - run: echo ${{ steps.inputs.outputs.payload }}
+      - name: Set summary
+        run: |
+          echo "**${{ steps.inputs.outputs.name }}** set to **${{ steps.inputs.outputs.tag }}**" >> $GITHUB_STEP_SUMMARY
 
       - uses: simenandre/pulumi-config@v2
         id: config
