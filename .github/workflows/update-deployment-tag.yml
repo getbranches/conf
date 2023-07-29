@@ -14,6 +14,8 @@ on:
       repository:
         description: Repository
         required: false
+  repository_dispatch:
+    types: [update-tag]
 jobs:
   update-deployment-tag:
     name: Update deployment tag
