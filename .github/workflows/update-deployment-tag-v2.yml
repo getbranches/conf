@@ -23,7 +23,7 @@ jobs:
         uses: simenandre/setup-inputs@v1
         id: inputs
 
-      - name: Set summary 📝 – **${{ steps.inputs.outputs.name }}** set to **${{ steps.inputs.outputs.tag }}**
+      - name: Set summary 📝 – ${{ steps.inputs.outputs.name }} 👉 ${{ steps.inputs.outputs.tag }}
         run: |
           echo "**${{ steps.inputs.outputs.name }}** set to **${{ steps.inputs.outputs.tag }}**" >> $GITHUB_STEP_SUMMARY
 
@@ -38,7 +38,8 @@ jobs:
           key: ${{ steps.inputs.outputs.name }}:tag
           value: ${{ steps.inputs.outputs.tag }}
 
-      - uses: simenandre/get-commit-changelog@v1
+      - name: Get changelog from commit 📜
+        uses: simenandre/get-commit-changelog@v1
         id: changelog
         if: steps.config.outputs.key
         with:
@@ -47,7 +48,7 @@ jobs:
           base: ${{ fromJson(steps.config.outputs.key).value }}
           head: ${{ steps.inputs.outputs.tag }}
 
-      - name: Create Pull Request
+      - name: Create Pull Request 🎉
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.BJERKBOT_GITHUB_TOKEN }}
