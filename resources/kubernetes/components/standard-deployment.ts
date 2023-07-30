@@ -1,14 +1,25 @@
-import { invariant } from 'ts-invariant';
-import * as pulumi from '@pulumi/pulumi';
 import * as k8s from '@pulumi/kubernetes';
+import * as pulumi from '@pulumi/pulumi';
+import { invariant } from 'ts-invariant';
+
+export interface StandardDeploymentPort {
+  /**
+   * The port that the application is listening on.
+   */
+  port: pulumi.Input<number>;
+
+  /**
+   * The name of the port.
+   *
+   * Port named "public" is used for the ingress and injected as environment
+   * variable called "PORT".
+   *
+   * @default 'public'
+   */
+  name: pulumi.Input<string>;
+}
 
 export interface StandardDeploymentArgs {
-  /**
-   * Secrets are accessable for the application/pod as environment variables,
-   * but stored in the cluster as secrets.
-   */
-  secretEnv: Record<string, pulumi.Input<string>>;
-
   /**
    * The image to use for the deployment.
    */
@@ -20,11 +31,28 @@ export interface StandardDeploymentArgs {
   tag: pulumi.Input<string>;
 
   /**
-   * The port that the application is listening on.
+   * Secrets are accessable for the application/pod as environment variables,
+   * but stored in the cluster as secrets.
    */
-  port: pulumi.Input<number>;
+  secretEnv?: Record<string, pulumi.Input<string>>;
 
   /**
+   * The ports that the application is listening on.
+   *
+   * @default [
+   *  {
+   *    port: 8080,
+   *    name: 'public',
+   *  },
+   * ]
+   */
+  ports?: StandardDeploymentPort[];
+
+  /**
+   * @default {
+   *  cpu: '250m',
+   *  memory: '512Mi',
+   * }
    * @see https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot-resource-requests
    */
   resources?: {
@@ -54,9 +82,7 @@ export interface StandardDeploymentArgs {
  * resources that are needed to deploy a deployment.
  */
 export class StandardDeployment extends pulumi.CustomResource {
-  readonly name: string;
   readonly deployment: k8s.apps.v1.Deployment;
-  readonly args: StandardDeploymentArgs;
 
   readonly service?: k8s.core.v1.Service;
   readonly ingress?: k8s.networking.v1.Ingress;
@@ -72,7 +98,12 @@ export class StandardDeployment extends pulumi.CustomResource {
       secretEnv,
       image,
       tag,
-      port,
+      ports = [
+        {
+          port: 8080,
+          name: 'public',
+        },
+      ],
       host,
       resources = {
         cpu: '250m',
@@ -82,16 +113,21 @@ export class StandardDeployment extends pulumi.CustomResource {
       createService = true,
     } = args;
 
+    const webPort = ports.find(p => p.name === 'public');
+
     const env: pulumi.Input<pulumi.Input<k8s.types.input.core.v1.EnvVar>[]> = [
-      {
-        name: 'PORT',
-        value: String(port),
-      },
       {
         name: 'NODE_ENV',
         value: 'production',
       },
     ];
+
+    if (webPort) {
+      env.push({
+        name: 'PORT',
+        value: pulumi.output(webPort.port).apply(p => p.toString()),
+      });
+    }
 
     if (host) {
       env.push({
@@ -106,10 +142,10 @@ export class StandardDeployment extends pulumi.CustomResource {
 
     if (secretEnv) {
       const secret = new k8s.core.v1.Secret(
-        'procore-abax-secrets',
+        name,
         {
           metadata: {
-            name: 'procore-abax-secrets',
+            name,
           },
           stringData: secretEnv,
         },
@@ -124,10 +160,12 @@ export class StandardDeployment extends pulumi.CustomResource {
     }
 
     const probe = {
-      httpGet: {
-        path: '/health',
-        port,
-      },
+      httpGet: webPort
+        ? {
+            path: '/health',
+            port: webPort.port,
+          }
+        : undefined,
     };
 
     this.deployment = new k8s.apps.v1.Deployment(
@@ -156,9 +194,14 @@ export class StandardDeployment extends pulumi.CustomResource {
               containers: [
                 {
                   name,
-                  image: `${image}:${tag}`,
+                  image: pulumi
+                    .all([image, tag])
+                    .apply(imageParts => imageParts.join(':')),
                   imagePullPolicy: 'IfNotPresent',
-                  ports: [{ containerPort: port }],
+                  ports: ports.map(p => ({
+                    containerPort: p.port,
+                    name: p.name,
+                  })),
                   readinessProbe: probe,
                   envFrom,
                   resources: {
@@ -186,12 +229,10 @@ export class StandardDeployment extends pulumi.CustomResource {
           },
           spec: {
             selector: this.deployment.spec.template.metadata.labels,
-            ports: [
-              {
-                port,
-                targetPort: port,
-              },
-            ],
+            ports: ports.map(p => ({
+              port: p.port,
+              name: p.name,
+            })),
           },
         },
         { parent: this },
@@ -201,6 +242,7 @@ export class StandardDeployment extends pulumi.CustomResource {
     if (createIngress) {
       invariant(this.service, 'Service must be created to create an ingress');
       invariant(host, 'Host must be defined to create an ingress');
+      invariant(webPort, 'Web port must be defined to create an ingress');
 
       this.ingress = new k8s.networking.v1.Ingress(
         name,
@@ -224,7 +266,7 @@ export class StandardDeployment extends pulumi.CustomResource {
                       backend: {
                         service: {
                           name: this.service.metadata.name,
-                          port: { number: port },
+                          port: { name: webPort.name },
                         },
                       },
                     },
