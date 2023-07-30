@@ -273,7 +273,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
           parent: this,
           aliases: [
             { parent: pulumi.rootStackResource },
-            { parent: pulumi.rootStackResource, name: `${name}-ingress` },
+            { parent: pulumi.rootStackResource, name: `${name}-service` },
           ],
         },
       );
