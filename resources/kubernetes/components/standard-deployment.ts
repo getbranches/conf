@@ -265,7 +265,13 @@ export class StandardDeployment extends pulumi.ComponentResource {
       );
     }
 
-    if (createIngress) {
+    if (createIngress && !createService) {
+      pulumi.log.warn(
+        'Ingress cannot be created without a service. Skipping ingress creation.',
+      );
+    }
+
+    if (createIngress && createService) {
       invariant(this.service, 'Service must be created to create an ingress');
       invariant(host, 'Host must be defined to create an ingress');
       invariant(publicPort, 'Web port must be defined to create an ingress');
