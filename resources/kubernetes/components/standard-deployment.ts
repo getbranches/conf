@@ -37,6 +37,14 @@ export interface StandardDeploymentArgs {
   secretEnv?: Record<string, pulumi.Input<string>>;
 
   /**
+   * The number of replicas to run.
+   * @default 1
+   * @see https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#replicas
+   * @see https://cloud.google.com/kubernetes-engine/docs/concepts/autopilot#replicas
+   */
+  replicas?: pulumi.Input<number>;
+
+  /**
    * The ports that the application is listening on.
    *
    * @default [
@@ -99,6 +107,7 @@ export class StandardDeployment extends pulumi.CustomResource {
       secretEnv,
       image,
       tag,
+      replicas = 1,
       ports = [
         {
           port: 8080,
@@ -179,7 +188,7 @@ export class StandardDeployment extends pulumi.CustomResource {
           },
         },
         spec: {
-          replicas: 1,
+          replicas,
           selector: {
             matchLabels: {
               app: name,
