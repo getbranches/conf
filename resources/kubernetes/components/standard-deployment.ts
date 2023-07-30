@@ -113,6 +113,8 @@ export class StandardDeployment extends pulumi.ComponentResource {
   ) {
     super('branches:k8s:standard-deployment', name, {}, opts);
 
+    const publicPortName = 'web';
+
     const {
       secretEnv,
       image,
@@ -121,7 +123,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       ports = [
         {
           port: 8080,
-          name: 'public',
+          name: publicPortName,
         },
       ],
       host,
@@ -133,7 +135,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       createService = true,
     } = args;
 
-    const publicPort = ports.find(p => p.name === 'public');
+    const publicPort = ports.find(p => p.name === publicPortName);
     pulumi.log.info(JSON.stringify({ ports, publicPort }));
 
     const env: pulumi.Input<pulumi.Input<k8s.types.input.core.v1.EnvVar>[]> = [
