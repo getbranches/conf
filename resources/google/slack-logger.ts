@@ -27,7 +27,7 @@ const service = new gcp.cloudrunv2.Service(
       serviceAccount: serviceAccount.email,
       containers: [
         {
-          image: `docker.io/bjerkbot/google-cloud-logger-slack:${slackAgentTag}`,
+          image: `"ghcr.io/bjerkio/google-cloud-logger-slack:${slackAgentTag}`,
           envs: [
             {
               name: 'SLACK_TOKEN',
