@@ -112,9 +112,6 @@ export class StandardDeployment extends pulumi.ComponentResource {
     opts?: pulumi.ComponentResourceOptions,
   ) {
     super('branches:k8s:standard-deployment', name, {}, opts);
-
-    const publicPortName = 'web';
-
     const {
       secretEnv,
       image,
@@ -123,7 +120,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       ports = [
         {
           port: 8080,
-          name: publicPortName,
+          name: 'public',
         },
       ],
       host,
@@ -135,8 +132,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       createService = true,
     } = args;
 
-    const publicPort = ports.find(p => p.name === publicPortName);
-    pulumi.log.info(JSON.stringify({ ports, publicPort }));
+    const publicPort = ports.find(p => p.name === 'public');
 
     const env: pulumi.Input<pulumi.Input<k8s.types.input.core.v1.EnvVar>[]> = [
       {
@@ -192,7 +188,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
     };
 
     this.deployment = new k8s.apps.v1.Deployment(
-      `${name}-deployment`,
+      name,
       {
         metadata: {
           name,
@@ -238,7 +234,13 @@ export class StandardDeployment extends pulumi.ComponentResource {
           },
         },
       },
-      { parent: this },
+      {
+        parent: this,
+        aliases: [
+          { parent: pulumi.rootStackResource },
+          { parent: pulumi.rootStackResource, name: `${name}-deployment` },
+        ],
+      },
     );
 
     if (createService) {
@@ -261,7 +263,13 @@ export class StandardDeployment extends pulumi.ComponentResource {
             selector: this.deployment.spec.template.metadata.labels,
           },
         },
-        { parent: this },
+        {
+          parent: this,
+          aliases: [
+            { parent: pulumi.rootStackResource },
+            { parent: pulumi.rootStackResource, name: `${name}-ingress` },
+          ],
+        },
       );
     }
 
@@ -308,7 +316,14 @@ export class StandardDeployment extends pulumi.ComponentResource {
             ],
           },
         },
-        { parent: this },
+        {
+          parent: this,
+          deleteBeforeReplace: true,
+          aliases: [
+            { parent: pulumi.rootStackResource },
+            { parent: pulumi.rootStackResource, name: `${name}-ingress` },
+          ],
+        },
       );
     }
   }
