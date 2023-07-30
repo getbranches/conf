@@ -89,7 +89,7 @@ export interface StandardDeploymentArgs {
  * Kubernetes deployment with a single class, where methods represents typical
  * resources that are needed to deploy a deployment.
  */
-export class StandardDeployment extends pulumi.CustomResource {
+export class StandardDeployment extends pulumi.ComponentResource {
   readonly deployment: k8s.apps.v1.Deployment;
 
   readonly service?: k8s.core.v1.Service;
@@ -101,7 +101,7 @@ export class StandardDeployment extends pulumi.CustomResource {
     args: StandardDeploymentArgs,
     opts?: pulumi.ComponentResourceOptions,
   ) {
-    super('branches:k8s:standard-deployment', name, args, opts);
+    super('branches:k8s:standard-deployment', name, {}, opts);
 
     const {
       secretEnv,
