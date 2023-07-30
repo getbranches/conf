@@ -168,7 +168,13 @@ export class StandardDeployment extends pulumi.ComponentResource {
           },
           stringData: secretEnv,
         },
-        { parent: this },
+        {
+          parent: this,
+          aliases: [
+            { parent: pulumi.rootStackResource },
+            { parent: pulumi.rootStackResource, name: `${name}-secrets` },
+          ],
+        },
       );
 
       envFrom.push({
