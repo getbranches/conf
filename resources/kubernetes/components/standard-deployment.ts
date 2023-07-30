@@ -20,6 +20,13 @@ export interface StandardDeploymentPort {
    * @default 'public'
    */
   name: pulumi.Input<string>;
+
+  /**
+   * The protocol that the application is listening on.
+   * @default 'TCP'
+   * @see https://kubernetes.io/docs/concepts/services-networking/service/#protocol
+   */
+  protocol?: pulumi.Input<string>;
 }
 
 export interface StandardDeploymentArgs {
@@ -126,7 +133,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       createService = true,
     } = args;
 
-    const webPort = ports.find(p => p.name === 'public');
+    const publicPort = ports.find(p => p.name === 'public');
 
     const env: pulumi.Input<pulumi.Input<k8s.types.input.core.v1.EnvVar>[]> = [
       {
@@ -135,10 +142,10 @@ export class StandardDeployment extends pulumi.ComponentResource {
       },
     ];
 
-    if (webPort) {
+    if (publicPort) {
       env.push({
         name: 'PORT',
-        value: pulumi.output(webPort.port).apply(p => p.toString()),
+        value: pulumi.output(publicPort.port).apply(p => p.toString()),
       });
     }
 
@@ -173,10 +180,10 @@ export class StandardDeployment extends pulumi.ComponentResource {
     }
 
     const probe = {
-      httpGet: webPort
+      httpGet: publicPort
         ? {
             path: '/health',
-            port: webPort.port,
+            port: publicPort.port,
           }
         : undefined,
     };
@@ -241,12 +248,13 @@ export class StandardDeployment extends pulumi.ComponentResource {
             },
           },
           spec: {
-            selector: this.deployment.spec.template.metadata.labels,
             ports: ports.map(p => ({
-              port: p.port,
-              targetPort: p.port,
               name: p.name,
+              port: p.port,
+              protocol: p.protocol ?? 'TCP',
+              targetPort: p.port,
             })),
+            selector: this.deployment.spec.template.metadata.labels,
           },
         },
         { parent: this },
@@ -256,7 +264,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
     if (createIngress) {
       invariant(this.service, 'Service must be created to create an ingress');
       invariant(host, 'Host must be defined to create an ingress');
-      invariant(webPort, 'Web port must be defined to create an ingress');
+      invariant(publicPort, 'Web port must be defined to create an ingress');
 
       this.ingress = new k8s.networking.v1.Ingress(
         name,
@@ -280,7 +288,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
                       backend: {
                         service: {
                           name: this.service.metadata.name,
-                          port: { name: webPort.name },
+                          port: { name: publicPort.name },
                         },
                       },
                     },
