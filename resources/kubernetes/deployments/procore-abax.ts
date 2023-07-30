@@ -1,5 +1,5 @@
-import * as pulumi from '@pulumi/pulumi';
 import * as k8s from '@pulumi/kubernetes';
+import * as pulumi from '@pulumi/pulumi';
 import { StandardDeployment } from '../components/standard-deployment';
 import { provider } from '../provider';
 

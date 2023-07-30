@@ -134,6 +134,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
     } = args;
 
     const publicPort = ports.find(p => p.name === 'public');
+    pulumi.log.info(JSON.stringify({ ports, publicPort }));
 
     const env: pulumi.Input<pulumi.Input<k8s.types.input.core.v1.EnvVar>[]> = [
       {
@@ -221,6 +222,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
                   ports: ports.map(p => ({
                     containerPort: p.port,
                     protocol: p.protocol ?? 'TCP',
+                    name: p.name,
                   })),
                   readinessProbe: probe,
                   envFrom,
@@ -248,20 +250,12 @@ export class StandardDeployment extends pulumi.ComponentResource {
             },
           },
           spec: {
-            // ports: ports.map(p => ({
-            //   name: p.name,
-            //   port: p.port,
-            //   protocol: p.protocol ?? 'TCP',
-            //   targetPort: p.port,
-            // })),
-            ports: [
-              {
-                name: 'public',
-                port: 8080,
-                protocol: 'TCP',
-                targetPort: 8080,
-              },
-            ],
+            ports: ports.map(p => ({
+              name: p.name,
+              port: p.port,
+              protocol: p.protocol ?? 'TCP',
+              targetPort: p.port,
+            })),
             selector: this.deployment.spec.template.metadata.labels,
           },
         },
