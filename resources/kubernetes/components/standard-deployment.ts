@@ -164,7 +164,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
         name,
         {
           metadata: {
-            name,
+            name: `${name}-env-config`,
           },
           stringData: secretEnv,
         },
