@@ -86,13 +86,14 @@ export class StandardDeployment extends pulumi.CustomResource {
 
   readonly service?: k8s.core.v1.Service;
   readonly ingress?: k8s.networking.v1.Ingress;
+  readonly secret?: k8s.core.v1.Secret;
 
   constructor(
     name: string,
     args: StandardDeploymentArgs,
     opts?: pulumi.CustomResourceOptions,
   ) {
-    super('branches:standard-deployment', name, args, opts);
+    super('branches:k8s:standard-deployment', name, args, opts);
 
     const {
       secretEnv,
@@ -141,7 +142,7 @@ export class StandardDeployment extends pulumi.CustomResource {
     > = [];
 
     if (secretEnv) {
-      const secret = new k8s.core.v1.Secret(
+      this.secret = new k8s.core.v1.Secret(
         name,
         {
           metadata: {
@@ -154,7 +155,7 @@ export class StandardDeployment extends pulumi.CustomResource {
 
       envFrom.push({
         secretRef: {
-          name: secret.metadata.name,
+          name: this.secret.metadata.name,
         },
       });
     }

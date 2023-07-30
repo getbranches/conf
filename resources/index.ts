@@ -13,8 +13,9 @@ import './kubernetes/provider';
 import './google/postgres-backup';
 
 // Kubernetes resources
-import './kubernetes/procore-abax/deployment';
-import './kubernetes/procore-abax/ingress';
+// import './kubernetes/procore-abax/deployment';
+// import './kubernetes/procore-abax/ingress';
+import './kubernetes/deployments/procore-abax';
 import './kubernetes/tripletex-project-reporter/deployment';
 import './kubernetes/tripletex-project-reporter/ingress';
 import './kubernetes/vaultwarden/deployment';
