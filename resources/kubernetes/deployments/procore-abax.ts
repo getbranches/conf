@@ -12,14 +12,14 @@ export const standardDeployment = new StandardDeployment(
     tag: config.require('tag'),
     host: config.require('host'),
     secretEnv: {
+      SANITY_SECRET_TOKEN: config.requireSecret('sanity-token'),
       SANITY_PROJECT_ID: config.requireSecret('sanity-project-id'),
-      SANITY_TOKEN: config.requireSecret('sanity-token'),
-      PROCORE_CLIENT_ID: config.require('procore-app-client-id'),
-      PROCORE_CLIENT_SECRET: config.requireSecret('procore-app-client-secret'),
-      PROCORE_SANDBOX_CLIENT_ID: config.require(
+      PROCORE_APP_CLIENT_ID: config.require('procore-app-client-id'),
+      PROCORE_APP_CLIENT_SECRET: config.requireSecret('procore-app-client-secret'),
+      PROCORE_APP_SANDBOX_CLIENT_ID: config.require(
         'procore-app-sandbox-client-id',
       ),
-      PROCORE_SANDBOX_CLIENT_SECRET: config.requireSecret(
+      PROCORE_APP_SANDBOX_CLIENT_SECRET: config.requireSecret(
         'procore-app-sandbox-client-secret',
       ),
     },
