@@ -99,7 +99,7 @@ export class StandardDeployment extends pulumi.CustomResource {
   constructor(
     name: string,
     args: StandardDeploymentArgs,
-    opts?: pulumi.CustomResourceOptions,
+    opts?: pulumi.ComponentResourceOptions,
   ) {
     super('branches:k8s:standard-deployment', name, args, opts);
 

@@ -24,7 +24,7 @@ export const standardDeployment = new StandardDeployment(
       ),
     },
   },
-  { provider },
+  { providers: [provider] },
 );
 
 const defaultContainer =
