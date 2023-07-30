@@ -27,7 +27,7 @@ config:
     - so@bjerk.io
   todoist-github:host: todoist-github.branches.no
   todoist-github:log-level: debug
-  todoist-github:tag: main-8696f96
+  todoist-github:tag: main-6981242
   todoist-github:webhook-secret:
     secure: AAABANadNhLU5iAPsflF1DXS+jZYqq1PR6hETnm9xmvQOFvRedVI76JbLOfhwfR/WH+etaR7M2F1+vjwcFOr2rWJShMzdSU/
   tripletex-project-reporter:host: reporting.bjerk.io
