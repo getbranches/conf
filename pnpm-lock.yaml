@@ -23,6 +23,9 @@ dependencies:
   get-pulumi-secret:
     specifier: ^2.0.0
     version: 2.0.0
+  ts-invariant:
+    specifier: ^0.10.3
+    version: 0.10.3
 
 devDependencies:
   '@bjerk/eslint-config':
@@ -2607,6 +2610,13 @@ packages:
     dependencies:
       typescript: 5.1.6
     dev: true
+
+  /ts-invariant@0.10.3:
+    resolution: {integrity: sha512-uivwYcQaxAucv1CzRp2n/QdYPo4ILf9VXgH19zEIjFx2EJufV16P0JtJVpYHy89DItG6Kwj2oIUjrcK5au+4tQ==}
+    engines: {node: '>=8'}
+    dependencies:
+      tslib: 2.6.0
+    dev: false
 
   /ts-node@7.0.1:
     resolution: {integrity: sha512-BVwVbPJRspzNh2yfslyT1PSbl5uIk03EZlb493RKHN4qej/D06n1cEhjlOJG69oFsE7OT8XjpTUcYf6pKTLMhw==}
