@@ -220,7 +220,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
                   imagePullPolicy: 'IfNotPresent',
                   ports: ports.map(p => ({
                     containerPort: p.port,
-                    name: p.name,
+                    protocol: p.protocol ?? 'TCP',
                   })),
                   readinessProbe: probe,
                   envFrom,
