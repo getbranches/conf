@@ -14,6 +14,9 @@ export interface StandardDeploymentPort {
    * Port named "public" is used for the ingress and injected as environment
    * variable called "PORT".
    *
+   * The name of this port within the service. This must be a DNS_LABEL.
+   * All ports within a deployment must have unique names.
+   *
    * @default 'public'
    */
   name: pulumi.Input<string>;
@@ -241,6 +244,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
             selector: this.deployment.spec.template.metadata.labels,
             ports: ports.map(p => ({
               port: p.port,
+              targetPort: p.port,
               name: p.name,
             })),
           },
