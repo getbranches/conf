@@ -23,6 +23,8 @@ export const standardDeployment = new StandardDeployment(
         'procore-app-sandbox-client-secret',
       ),
     },
+    createService: false,
+    createIngress: false,
   },
   { providers: [provider] },
 );
