@@ -54,7 +54,7 @@ const deployment = new k8s.apps.v1.Deployment(
               name,
               image: `${image}:${tag}`,
               imagePullPolicy: 'IfNotPresent',
-              ports: [{ containerPort: port }],
+              ports: [{ containerPort: port, name: 'public' }],
               readinessProbe: probe,
               envFrom: [
                 { secretRef: { name: procoreAbaxSecrets.metadata.name } },
@@ -88,7 +88,7 @@ export const service = new k8s.core.v1.Service(
   {
     metadata: { name },
     spec: {
-      ports: [{ port }],
+      ports: [{ port, name: 'public' }],
       selector: deployment.spec.selector.matchLabels,
     },
   },
