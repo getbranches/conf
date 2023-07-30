@@ -248,12 +248,20 @@ export class StandardDeployment extends pulumi.ComponentResource {
             },
           },
           spec: {
-            ports: ports.map(p => ({
-              name: p.name,
-              port: p.port,
-              protocol: p.protocol ?? 'TCP',
-              targetPort: p.port,
-            })),
+            // ports: ports.map(p => ({
+            //   name: p.name,
+            //   port: p.port,
+            //   protocol: p.protocol ?? 'TCP',
+            //   targetPort: p.port,
+            // })),
+            ports: [
+              {
+                name: 'public',
+                port: 8080,
+                protocol: 'TCP',
+                targetPort: 8080,
+              },
+            ],
             selector: this.deployment.spec.template.metadata.labels,
           },
         },
