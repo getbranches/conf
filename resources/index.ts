@@ -3,12 +3,11 @@ import './google/artifact-registry';
 import './google/project';
 import './google/gke';
 import './google/iam';
-import './domain/procore-abax';
-import './domain/tripletex-project-reporter';
 import './google/slack-logger';
 import './kubernetes/ingress-controller';
 import './kubernetes/postgres-operator';
 import './kubernetes/provider';
+import './repository-with-artifacts';
 
 import './google/postgres-backup';
 
