@@ -40,11 +40,26 @@ export interface StandardDeploymentArgs {
    */
   tag: pulumi.Input<string>;
 
+  // TODO: Add support for env vars
+  // /**
+  //  * Environment variables
+  //  */
+  // env?: Record<string, pulumi.Input<string>>;
+
   /**
    * Secrets are accessable for the application/pod as environment variables,
    * but stored in the cluster as secrets.
    */
   secretEnv?: Record<string, pulumi.Input<string>>;
+
+  /**
+   * Log level
+   * @default 'info'
+   * @allowedValues 'trace', 'debug', 'info', 'warn', 'error', 'fatal'
+   */
+  logLevel?: pulumi.Input<
+    'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'
+  >;
 
   /**
    * The number of replicas to run.
@@ -124,6 +139,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
         },
       ],
       host,
+      logLevel = 'info',
       resources = {
         cpu: '250m',
         memory: '512Mi',
@@ -138,6 +154,10 @@ export class StandardDeployment extends pulumi.ComponentResource {
       {
         name: 'NODE_ENV',
         value: 'production',
+      },
+      {
+        name: 'LOG_LEVEL',
+        value: logLevel,
       },
     ];
 

@@ -15,6 +15,7 @@ import './google/postgres-backup';
 // import './kubernetes/procore-abax/deployment';
 // import './kubernetes/procore-abax/ingress';
 import './kubernetes/deployments/procore-abax';
+import './kubernetes/deployments/abax-minuba';
 import './kubernetes/tripletex-project-reporter/deployment';
 import './kubernetes/tripletex-project-reporter/ingress';
 import './kubernetes/vaultwarden/deployment';
