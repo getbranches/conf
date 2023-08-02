@@ -99,6 +99,12 @@ export interface StandardDeploymentArgs {
    */
   host?: pulumi.Input<string>;
 
+  /**
+   * The path that the health check is listening on.
+   * @default '/health'
+   */
+  healthCheckHttpPath?: pulumi.Input<string>;
+
   createIngress?: boolean;
   createService?: boolean;
 }
@@ -144,6 +150,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
         cpu: '250m',
         memory: '512Mi',
       },
+      healthCheckHttpPath = '/health',
       createIngress = true,
       createService = true,
     } = args;
@@ -207,7 +214,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
     const probe = {
       httpGet: publicPort
         ? {
-            path: '/health',
+            path: healthCheckHttpPath,
             port: publicPort.port,
           }
         : undefined,

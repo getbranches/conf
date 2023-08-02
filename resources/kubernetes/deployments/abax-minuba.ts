@@ -11,6 +11,7 @@ export const standardDeployment = new StandardDeployment(
     tag: config.require('tag'),
     host: config.require('host'),
     logLevel: 'debug',
+    healthCheckHttpPath: '/api/health',
   },
   { providers: [provider] },
 );
