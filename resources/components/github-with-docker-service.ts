@@ -22,6 +22,21 @@ export interface GithubWithDockerServiceProps {
   projectId?: string;
 }
 
+// This function makes the service account match the regex: ^[a-z](?:[-a-z0-9]{4,28}[a-z0-9])$
+// This is the same regex that is used by Google Cloud Platform.
+// https://cloud.google.com/iam/docs/creating-managing-service-accounts#creating
+function parseServiceAccountName(name: string): string {
+  if (name.length > 30) {
+    return name.slice(0, 30);
+  }
+
+  if (name.length < 6) {
+    return name + '-account';
+  }
+
+  return name;
+}
+
 export class GithubWithDockerService extends pulumi.ComponentResource {
   public readonly serviceAccount: gcp.serviceaccount.Account;
 
@@ -36,7 +51,7 @@ export class GithubWithDockerService extends pulumi.ComponentResource {
     this.serviceAccount = new gcp.serviceaccount.Account(
       name,
       {
-        accountId: name,
+        accountId: parseServiceAccountName(name),
       },
       { parent: this },
     );
