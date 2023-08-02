@@ -9,6 +9,7 @@ config:
   github:token-expires-at: '2024-01-01'
   kubernetes:cluster-developers:
     - group:developers@bjerk.io
+  meti:tag: main-71f06aa
   procore-abax:host: procore-abax.branches.no
   procore-abax:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/procore-abax
   procore-abax:procore-app-client-id: a75ed1d77292305071d8c3ce78da58ede9fc7c73dbcccac32f024c2a0269fcd4
