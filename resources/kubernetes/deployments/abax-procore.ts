@@ -3,10 +3,10 @@ import * as pulumi from '@pulumi/pulumi';
 import { StandardDeployment } from '../components/standard-deployment';
 import { provider } from '../provider';
 
-const config = new pulumi.Config('procore-abax');
+const config = new pulumi.Config('abax-procore');
 
 export const standardDeployment = new StandardDeployment(
-  'procore-abax',
+  'abax-procore',
   {
     image: config.require('image'),
     tag: config.require('tag'),
@@ -31,10 +31,10 @@ const defaultContainer =
   standardDeployment.deployment.spec.template.spec.containers[0];
 
 export const cronJob = new k8s.batch.v1.CronJob(
-  `procore-abax-cronjob`,
+  `abax-procore-cronjob`,
   {
     metadata: {
-      name: `procore-abax-cronjob`,
+      name: `abax-procore-cronjob`,
     },
     spec: {
       schedule: '0 4 * * *', // every night at 4 AM
@@ -45,11 +45,11 @@ export const cronJob = new k8s.batch.v1.CronJob(
               restartPolicy: 'OnFailure',
               containers: [
                 {
-                  name: 'procore-abax-cronjob',
+                  name: 'abax-procore-cronjob',
                   image: defaultContainer.image,
                   envFrom: defaultContainer.envFrom,
                   env: defaultContainer.env,
-                  command: ['node', 'dist/sync.js'],
+                  command: ['node', 'packages/server/dist/sync.js'],
                 },
               ],
             },
