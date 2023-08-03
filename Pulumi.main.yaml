@@ -1,6 +1,6 @@
 config:
   abax-minuba:host: abax-minuba.branches.no
-  abax-minuba:tag: main-505849c
+  abax-minuba:tag: main-0d49d90
   abax-minuba:ui-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/ui
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
