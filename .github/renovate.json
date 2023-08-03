@@ -5,5 +5,16 @@
     "enabled": true,
     "automerge": true
   },
-  "rangeStrategy": "replace"
+  "rangeStrategy": "replace",
+  "regexManagers": [
+    {
+      "description": "Match default config.",
+      "fileMatch": ["(^|/).+\\.chart\\.ts$"],
+      "matchStrings": [
+        "// renovate: depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: registryUrl=(?<registryUrl>.+?))?(?: depType=(?<depType>.+?))?(?: extractVersion=(?<extractVersion>.+?))?(?: versioning=(?<versioning>.+?))?\\s+.+?: '(?<currentValue>.+?)',\\s"
+      ],
+      "depTypeTemplate": "{{#if depType}}{{depType}}{{else}}config{{/if}}",
+      "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}"
+    }
+  ]
 }

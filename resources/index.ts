@@ -4,8 +4,8 @@ import './google/project';
 import './google/gke';
 import './google/iam';
 import './google/slack-logger';
-import './kubernetes/ingress-controller';
-import './kubernetes/postgres-operator';
+import './kubernetes/ingress-controller.chart';
+import './kubernetes/postgres-operator.chart';
 import './kubernetes/provider';
 import './repository-with-artifacts';
 
