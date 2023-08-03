@@ -1,17 +1,7 @@
 config:
   abax-minuba:host: abax-minuba.branches.no
-  abax-minuba:tag: main-0d49d90
+  abax-minuba:tag: main-673a2d7
   abax-minuba:ui-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/ui
-  branches-main:system-email:
-    secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
-  github:token:
-    secure: AAABAB1+aHgnhW95Ajp/yUq1jqpgL7mgx0aEQKGCTXsJQMhGbQES8LFs1UoJUJf1miBUMHF9/aximsB2Jra2GWkr7n0B6PORljdaLXGr8UbxjEYe36yFQX8EE+ckkv2z1rzMHd4D9JR5Ys+9EsLoguOcoPx1WjH4iKcgDDA=
-  github:token-expires-at: '2024-01-01'
-  kubernetes:cluster-developers:
-    - group:developers@bjerk.io
-  meti:host: meti.branches.no
-  meti:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/meti/server
-  meti:tag: main-6ec050d
   abax-procore:host: procore-abax.branches.no
   abax-procore:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-procore/server
   abax-procore:procore-app-client-id: a75ed1d77292305071d8c3ce78da58ede9fc7c73dbcccac32f024c2a0269fcd4
@@ -25,6 +15,16 @@ config:
   abax-procore:sanity-token:
     secure: AAABAPeEZQkP7K7KgF5/xEzscQuxvTXbeYTS6bZw+6uHDViz4GiShe357OLddodiiuKA4CccRb820hWT8qtv2pR6hDCin9Owv1efpXcNisw6Gr5qP2OQO6u+aLgq9Znz1XHRCaL+xtpFQrPvh5TvRzGz3sROVObZHFCiWd0xALWh6yRJP7RTVH0qTSBkHENUNRODKw8BKs3N+r11Kwg1QQ2Mtnw0aF2G3D4b8zShVjw02AkvtfppX0/+FbNUsf7nPRmAGfVyz6Vuc0VZv+Am05foDOY=
   abax-procore:tag: main-52324bc
+  branches-main:system-email:
+    secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
+  github:token:
+    secure: AAABAB1+aHgnhW95Ajp/yUq1jqpgL7mgx0aEQKGCTXsJQMhGbQES8LFs1UoJUJf1miBUMHF9/aximsB2Jra2GWkr7n0B6PORljdaLXGr8UbxjEYe36yFQX8EE+ckkv2z1rzMHd4D9JR5Ys+9EsLoguOcoPx1WjH4iKcgDDA=
+  github:token-expires-at: '2024-01-01'
+  kubernetes:cluster-developers:
+    - group:developers@bjerk.io
+  meti:host: meti.branches.no
+  meti:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/meti/server
+  meti:tag: main-6ec050d
   pulumi:disable-default-providers:
     - '*'
   slack:bot-oauth-token:
