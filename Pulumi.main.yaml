@@ -1,6 +1,6 @@
 config:
   abax-minuba:host: abax-minuba.branches.no
-  abax-minuba:tag: main-505849c
+  abax-minuba:tag: main-0d49d90
   abax-minuba:ui-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/ui
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
@@ -43,12 +43,12 @@ config:
     secure: AAABAJcJvRj4zKIIgI1p9VtSheJV3jblcMVxSMhYICOo+vm0lKawC4fjTdJvFXN9EDw8wlAYEi1mWAh6sl2Day8Y/9I=
   tripletex-project-reporter:tripletex-employee-token:
     secure: AAABAK6oNNxmX+MpGAMxiN53BaGYP/VeE2iVbOjbuuNyMIAJwZlVMYxY3lESRUpalhbM9DtJDLjjgzJv2SX/aSPSN8Q=
-  unleash:host: unleash.branches.no
   unleash:ext-image: unleashorg/unleash-server:5.3.3
+  unleash:host: unleash.branches.no
   vaultwarden:admin-token:
     secure: AAABAKOVnb6v5XQY6p2ys2TEWo5W4hTpkgBEW6COucNbgdsgQ5EanrfmiEKf9j5ddJNY3BKSn4vc5uFDLGjcSt9QP3eVxxA7sODFSM4wPEV3BcZKQYWgkwJblyc+R6XQ
-  vaultwarden:host: vault.branches.no
   vaultwarden:ext-image: vaultwarden/server:1.29.1-alpine
+  vaultwarden:host: vault.branches.no
   vaultwarden:yubico-client-id:
     secure: AAABAMEW2/YTO7JMOTWb4Ab3uDwwTopWxgjzyeQNuxUX17QH5Q==
   vaultwarden:yubico-client-secret:
