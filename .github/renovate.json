@@ -9,6 +9,7 @@
   "regexManagers": [
     {
       "description": "Match default config.",
+      "datasourceTemplate": "helm",
       "fileMatch": ["(^|/).+\\.chart\\.ts$"],
       "matchStrings": [
         "// renovate: depName=(?<depName>.+?)(?: packageName=(?<packageName>.+?))?(?: registryUrl=(?<registryUrl>.+?))?(?: depType=(?<depType>.+?))?(?: extractVersion=(?<extractVersion>.+?))?(?: versioning=(?<versioning>.+?))?\\s+.+?: '(?<currentValue>.+?)',\\s"
