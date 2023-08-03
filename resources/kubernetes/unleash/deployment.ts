@@ -1,7 +1,7 @@
 import * as k8s from '@pulumi/kubernetes';
 import { interpolate } from '@pulumi/pulumi';
 import { provider } from '../provider';
-import { host, image, tag } from './config';
+import { host, image } from './config';
 import { database, dbSecretName, serviceHostname } from './db';
 
 const name = 'unleash';
@@ -35,7 +35,7 @@ const deployment = new k8s.apps.v1.Deployment(
           containers: [
             {
               name: name,
-              image: `${image}:${tag}`,
+              image,
               imagePullPolicy: 'IfNotPresent',
               ports: [{ containerPort: port }],
               envFrom: [
