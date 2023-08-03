@@ -339,7 +339,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
                       backend: {
                         service: {
                           name: this.service.metadata.name,
-                          port: { name: publicPort.name },
+                          port: { number: publicPort.port },
                         },
                       },
                     },
