@@ -119,6 +119,25 @@ export interface StandardDeploymentArgs {
  * The motivation behind this component is to provide a simple way to deploy a
  * Kubernetes deployment with a single class, where methods represents typical
  * resources that are needed to deploy a deployment.
+ *
+ * The service requires a `/health` endpoint to be exposed. This is used for
+ * health checks.
+ *
+ * @example
+ * ```ts
+ * import { StandardDeployment } from '@branches/kubernetes';
+ *
+ * const config = new pulumi.Config('unleash');
+ *
+ * const host = config.require('host');
+ * const image = config.require('ext-image');
+ *
+ * const deployment = new StandardDeployment('unleash', {
+ *  image,
+ *  tag: 'latest',
+ *  host,
+ * });
+ * ```
  */
 export class StandardDeployment extends pulumi.ComponentResource {
   readonly deployment: k8s.apps.v1.Deployment;
