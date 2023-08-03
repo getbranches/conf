@@ -3,7 +3,7 @@ import { getGithubProvider } from './github/providers';
 import { googleProviders } from './google/project';
 
 const repos = [
-  'procore-abax', //
+  'abax-procore', //
   'tripletex-project-reporter',
   'abax-minuba',
   'meti'
