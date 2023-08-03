@@ -18,7 +18,7 @@
       "extractVersionTemplate": "{{#if extractVersion}}{{{extractVersion}}}{{else}}^v?(?<version>.+)${{/if}}"
     },
     {
-      "fileMatch": ["^Pulumi\\.yaml$"],
+      "fileMatch": ["^Pulumi.*\\.yaml$"],
       "matchStrings": [
         "(?<depName>[\\w.-]+:ext-image):\\s+(?<lookupName>[\\w.-]+/[\\w.-]+):(?<currentValue>[\\w.-]+)"
       ],
