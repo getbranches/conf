@@ -12,19 +12,19 @@ config:
   meti:host: meti.branches.no
   meti:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/meti/server
   meti:tag: main-6ec050d
-  procore-abax:host: procore-abax.branches.no
-  procore-abax:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/procore-abax
-  procore-abax:procore-app-client-id: a75ed1d77292305071d8c3ce78da58ede9fc7c73dbcccac32f024c2a0269fcd4
-  procore-abax:procore-app-client-secret:
+  abax-procore:host: procore-abax.branches.no
+  abax-procore:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-procore/server
+  abax-procore:procore-app-client-id: a75ed1d77292305071d8c3ce78da58ede9fc7c73dbcccac32f024c2a0269fcd4
+  abax-procore:procore-app-client-secret:
     secure: AAABADnuvX4cbemWSExo/uF74ozDGTNGzVst13Gz3VdyOyHJCqaHXmEyK+bX0YSedl4zYp/rsFYs6qlYQZe323WAgwrAsi26ab5JeO+nPU13T7XmVaGDDtAe31M+3NZS
-  procore-abax:procore-app-sandbox-client-id: 7331d37d32e91bfa87c0db1cec4fc3d170ee004a37fd304067f903ddb80404d9
-  procore-abax:procore-app-sandbox-client-secret:
+  abax-procore:procore-app-sandbox-client-id: 7331d37d32e91bfa87c0db1cec4fc3d170ee004a37fd304067f903ddb80404d9
+  abax-procore:procore-app-sandbox-client-secret:
     secure: AAABAPtLHdm4feVbuJiytFw/LuFIWEBQFLMj9zD5UnrUV2g54HOYD8xTMhY50SEHy6k3dJIgFbgFI/dl11xHtT77JDfJ+uiUEcVLP0XkFH/tGEDnm3XESV72G0ttdnEA
-  procore-abax:sanity-project-id:
+  abax-procore:sanity-project-id:
     secure: AAABAKlm50371+L8Izs9+G139TDGB/widU/B+dP4QtXGXCPXW7g7zg==
-  procore-abax:sanity-token:
+  abax-procore:sanity-token:
     secure: AAABAPeEZQkP7K7KgF5/xEzscQuxvTXbeYTS6bZw+6uHDViz4GiShe357OLddodiiuKA4CccRb820hWT8qtv2pR6hDCin9Owv1efpXcNisw6Gr5qP2OQO6u+aLgq9Znz1XHRCaL+xtpFQrPvh5TvRzGz3sROVObZHFCiWd0xALWh6yRJP7RTVH0qTSBkHENUNRODKw8BKs3N+r11Kwg1QQ2Mtnw0aF2G3D4b8zShVjw02AkvtfppX0/+FbNUsf7nPRmAGfVyz6Vuc0VZv+Am05foDOY=
-  procore-abax:tag: main-828862a
+  abax-procore:tag: main-52324bc
   pulumi:disable-default-providers:
     - '*'
   slack:bot-oauth-token:

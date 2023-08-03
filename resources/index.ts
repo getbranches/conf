@@ -14,8 +14,8 @@ import './kubernetes/provider';
 
 // Kubernetes Deployments
 import './kubernetes/deployments/abax-minuba';
+import './kubernetes/deployments/abax-procore';
 import './kubernetes/deployments/meti';
-import './kubernetes/deployments/procore-abax';
 import './kubernetes/todoist-github/deployment';
 import './kubernetes/todoist-github/ingress';
 import './kubernetes/tripletex-project-reporter/deployment';
@@ -24,3 +24,4 @@ import './kubernetes/unleash/deployment';
 import './kubernetes/unleash/ingress';
 import './kubernetes/vaultwarden/deployment';
 import './kubernetes/vaultwarden/ingress';
+
