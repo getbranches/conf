@@ -22,7 +22,7 @@ const dbCluster = new k8s.apiextensions.CustomResource(
     spec: {
       teamId: team,
       postgresql: {
-        version: '14',
+        version: '15',
       },
       numberOfInstances: 1,
       volume: {
