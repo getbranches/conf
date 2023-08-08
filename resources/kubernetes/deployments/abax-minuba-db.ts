@@ -2,10 +2,10 @@ import * as k8s from '@pulumi/kubernetes';
 import { interpolate } from '@pulumi/pulumi';
 import { provider } from '../provider';
 
-const name = 'minuba';
+const name = 'abax-minuba-db';
 const team = 'thebranches';
-const username = 'minuba';
-export const database = 'minuba';
+const username = 'abax-minuba';
+export const database = 'abax-minuba';
 const crd = 'acid.zalan.do';
 
 const dbCluster = new k8s.apiextensions.CustomResource(
