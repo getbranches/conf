@@ -6,7 +6,7 @@ const repos = [
   'abax-procore', //
   'tripletex-project-reporter',
   'abax-minuba',
-  'meti'
+  'meti',
 ];
 
 repos.map(
