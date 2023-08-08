@@ -1,6 +1,7 @@
 import * as pulumi from '@pulumi/pulumi';
 import { StandardDeployment } from '../components/standard-deployment';
 import { provider } from '../provider';
+import { database } from './abax-minuba-db';
 
 const config = new pulumi.Config('abax-minuba');
 
@@ -38,6 +39,32 @@ export const serverDeployment = new StandardDeployment(
       {
         port: 8081,
         name: 'management',
+      },
+    ],
+  },
+  { providers: [provider] },
+);
+
+export const databaseDeployment = new StandardDeployment(
+  'abax-minuba-db',
+  {
+    image: config.require('db-image'),
+    tag: config.require('tag'),
+    host: config.require('db-host'),
+    logLevel: 'debug',
+    secretEnv: {
+      POSTGRES_USERNAME: pulumi
+        .output(config.require('db-username'))
+        .apply(username => username),
+      POSTGRES_PASSWORD: pulumi
+        .output(config.require('db-password'))
+        .apply(password => password),
+      POSTGRES_DATABASE: database,
+    },
+    ports: [
+      {
+        port: 5432,
+        name: 'db',
       },
     ],
   },
