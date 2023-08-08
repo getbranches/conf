@@ -1,6 +1,11 @@
 config:
-  abax-minuba:host: abax-minuba.branches.no
-  abax-minuba:tag: main-395db57
+  abax-minuba:abax-client-id: imHgHFu6zYuaLkolpFsViQ3MDnE33vtX
+  abax-minuba:abax-client-secret:
+    secure: AAABAHHeXBJWgOqyyUsaiXP7QfgMnqB7EWskI07FMczuWARY8B//FvD9srDWQicAOnbkhq+nZZXL3QcUykDEVQ==
+  abax-minuba:api-host: api.abax-minuba.branches.no
+  abax-minuba:frontend-host: abax-minuba.branches.no
+  abax-minuba:server-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/server
+  abax-minuba:tag: main-673a2d7
   abax-minuba:ui-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/ui
   abax-procore:host: procore-abax.branches.no
   abax-procore:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-procore/server
@@ -38,7 +43,7 @@ config:
     secure: AAABANadNhLU5iAPsflF1DXS+jZYqq1PR6hETnm9xmvQOFvRedVI76JbLOfhwfR/WH+etaR7M2F1+vjwcFOr2rWJShMzdSU/
   tripletex-project-reporter:host: reporting.bjerk.io
   tripletex-project-reporter:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/tripletex-project-reporter
-  tripletex-project-reporter:tag: main-8a7da18
+  tripletex-project-reporter:tag: main-d3d07d0
   tripletex-project-reporter:tripletex-consumer-token:
     secure: AAABAJcJvRj4zKIIgI1p9VtSheJV3jblcMVxSMhYICOo+vm0lKawC4fjTdJvFXN9EDw8wlAYEi1mWAh6sl2Day8Y/9I=
   tripletex-project-reporter:tripletex-employee-token:

@@ -15,14 +15,16 @@ export const standardDeployment = new StandardDeployment(
       SANITY_SECRET_TOKEN: config.requireSecret('sanity-token'),
       SANITY_PROJECT_ID: config.requireSecret('sanity-project-id'),
       PROCORE_APP_CLIENT_ID: config.require('procore-app-client-id'),
-      PROCORE_APP_CLIENT_SECRET: config.requireSecret('procore-app-client-secret'),
+      PROCORE_APP_CLIENT_SECRET: config.requireSecret(
+        'procore-app-client-secret',
+      ),
       PROCORE_APP_SANDBOX_CLIENT_ID: config.require(
         'procore-app-sandbox-client-id',
       ),
       PROCORE_APP_SANDBOX_CLIENT_SECRET: config.requireSecret(
         'procore-app-sandbox-client-secret',
       ),
-    }
+    },
   },
   { providers: [provider] },
 );

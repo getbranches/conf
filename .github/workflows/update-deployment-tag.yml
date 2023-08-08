@@ -28,7 +28,9 @@ jobs:
         uses: simenandre/setup-inputs@v1
         id: inputs
 
-      - name: Set summary 📝 – ${{ steps.inputs.outputs.name }} 👉 ${{ steps.inputs.outputs.tag }}
+      - name:
+          Set summary 📝 – ${{ steps.inputs.outputs.name }} 👉 ${{
+          steps.inputs.outputs.tag }}
         run: |
           echo "**${{ steps.inputs.outputs.name }}** set to **${{ steps.inputs.outputs.tag }}**" >> $GITHUB_STEP_SUMMARY
 
