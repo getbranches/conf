@@ -100,8 +100,7 @@ const logSink = new gcp.logging.ProjectSink(
   name,
   {
     name,
-    filter:
-      'operation.producer="github.com/bjerkio/google-cloud-logger-slack@v1"',
+    filter: 'jsonPayload.slack:*',
     destination: pulumi.interpolate`pubsub.googleapis.com/${topic.id}`,
   },
   { protect: true, provider: mainClassicProvider },
