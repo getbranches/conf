@@ -1,6 +1,6 @@
 import * as k8s from '@pulumi/kubernetes';
 import { interpolate } from '@pulumi/pulumi';
-import { provider } from '../../provider';
+import { provider } from '../provider';
 
 const name = 'abax-minuba-db';
 const team = 'thebranches';

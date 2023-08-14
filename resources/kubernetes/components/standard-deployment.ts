@@ -1,6 +1,7 @@
 import * as k8s from '@pulumi/kubernetes';
 import * as pulumi from '@pulumi/pulumi';
 import { invariant } from 'ts-invariant';
+import { DatabaseDetails } from './standard-database';
 
 export interface StandardDeploymentPort {
   /**
@@ -107,6 +108,11 @@ export interface StandardDeploymentArgs {
 
   createIngress?: boolean;
   createService?: boolean;
+
+  /**
+   * Use a database with this deployment
+   */
+  databaseDetails?: pulumi.Input<DatabaseDetails>;
 }
 
 /**
@@ -204,6 +210,28 @@ export class StandardDeployment extends pulumi.ComponentResource {
     const envFrom: pulumi.Input<
       pulumi.Input<k8s.types.input.core.v1.EnvFromSourcePatch>[]
     > = [];
+
+    if (args.databaseDetails) {
+      envFrom.push({
+        secretRef: {
+          name: pulumi
+            .output(args.databaseDetails)
+            .apply(details => details.secretName),
+        },
+      });
+
+      env.push({
+        name: 'DATABASE_URL',
+        value: pulumi
+          .output(args.databaseDetails)
+          .apply(
+            details =>
+              `postgres://$(POSTGRES_username):$(POSTGRES_username)@${
+                details.hostname
+              }:${details.port ?? 5432}/${details.database}?sslmode=require`,
+          ),
+      });
+    }
 
     if (secretEnv) {
       this.secret = new k8s.core.v1.Secret(
