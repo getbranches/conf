@@ -14,6 +14,7 @@ import './kubernetes/provider';
 
 // Kubernetes Deployments
 import './kubernetes/deployments/abax-minuba';
+import './kubernetes/deployments/abax-minuba-db';
 import './kubernetes/deployments/abax-procore';
 import './kubernetes/deployments/meti';
 import './kubernetes/todoist-github/deployment';
