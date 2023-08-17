@@ -100,7 +100,7 @@ export class StandardDatabase extends pulumi.ComponentResource {
     } = args;
 
     // Where do we put this?
-    const initDeployments = [
+    const initContainers = [
       {
         name: `${name}-init`,
         image: pulumi
