@@ -29,6 +29,7 @@ export const serverDeployment = new StandardDeployment(
         .apply(host => `https://${host}`),
       ABAX_CLIENT_ID: config.require('abax-client-id'),
       ABAX_CLIENT_SECRET: config.require('abax-client-secret'),
+      DATABASE_CONNECTION_URL: config.require('database-connection-url'),
     },
     ports: [
       {
