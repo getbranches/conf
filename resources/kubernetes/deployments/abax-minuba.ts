@@ -30,6 +30,13 @@ export const serverDeployment = new StandardDeployment(
       ABAX_CLIENT_ID: config.require('abax-client-id'),
       ABAX_CLIENT_SECRET: config.require('abax-client-secret'),
     },
+    initContainers: [
+      {
+        image: config.require('server-image'),
+        tag: config.require('tag'),
+        command: ['pnpm', 'run', 'db:migrate:deploy'],
+      },
+    ],
     ports: [
       {
         port: 8080,

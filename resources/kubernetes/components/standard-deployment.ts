@@ -30,7 +30,7 @@ export interface StandardDeploymentPort {
   protocol?: pulumi.Input<string>;
 }
 
-export interface StandardDeploymentArgs {
+export interface StandardDeploymentDeploymentArgs {
   /**
    * The image to use for the deployment.
    */
@@ -41,17 +41,38 @@ export interface StandardDeploymentArgs {
    */
   tag: pulumi.Input<string>;
 
+  /**
+   * The command to run in the container.
+   */
+  command?: pulumi.Input<string[]>;
+
   // TODO: Add support for env vars
   // /**
   //  * Environment variables
   //  */
   // env?: Record<string, pulumi.Input<string>>;
+}
+
+export interface StandardDeploymentArgs extends StandardDeploymentDeploymentArgs {
+  /**
+   * Init containers
+   * @default []
+   * @see https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+   */
+  initContainers?: pulumi.Input<
+    pulumi.Input<StandardDeploymentDeploymentArgs>[]
+  >;
 
   /**
    * Secrets are accessable for the application/pod as environment variables,
    * but stored in the cluster as secrets.
    */
   secretEnv?: Record<string, pulumi.Input<string>>;
+
+  /**
+   * Use a database with this deployment
+   */
+  databaseDetails?: pulumi.Input<DatabaseDetails>;
 
   /**
    * Log level
@@ -108,11 +129,6 @@ export interface StandardDeploymentArgs {
 
   createIngress?: boolean;
   createService?: boolean;
-
-  /**
-   * Use a database with this deployment
-   */
-  databaseDetails?: pulumi.Input<DatabaseDetails>;
 }
 
 /**
@@ -162,6 +178,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       secretEnv,
       image,
       tag,
+      command,
       replicas = 1,
       ports = [
         {
@@ -178,6 +195,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       healthCheckHttpPath = '/health',
       createIngress = true,
       createService = true,
+      initContainers = [],
     } = args;
 
     const publicPort = ports.find(p => p.name === 'public');
@@ -290,6 +308,23 @@ export class StandardDeployment extends pulumi.ComponentResource {
               },
             },
             spec: {
+              initContainers: pulumi.output(initContainers).apply(ic =>
+                ic.map(initContainer => ({
+                  name,
+                  image: pulumi
+                    .all([initContainer.image, initContainer.tag])
+                    .apply(imageParts => imageParts.join(':')),
+                  imagePullPolicy: 'IfNotPresent',
+                  command: initContainer.command,
+                  ports: ports.map(p => ({
+                    containerPort: p.port,
+                    protocol: p.protocol ?? 'TCP',
+                    name: p.name,
+                  })),
+                  envFrom,
+                  env,
+                })),
+              ),
               containers: [
                 {
                   name,
@@ -297,6 +332,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
                     .all([image, tag])
                     .apply(imageParts => imageParts.join(':')),
                   imagePullPolicy: 'IfNotPresent',
+                  command,
                   ports: ports.map(p => ({
                     containerPort: p.port,
                     protocol: p.protocol ?? 'TCP',
