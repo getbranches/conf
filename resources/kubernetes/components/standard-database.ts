@@ -9,6 +9,16 @@ export interface StandardDatabaseArgs {
   team?: string;
 
   /**
+   * The image to use for the init container
+   */
+  initImage?: pulumi.Input<string>;
+
+  /**
+   * Tag of the image to use for the init container
+   */
+  initTag?: pulumi.Input<string>;
+
+  /**
    * The username that owns the deployment.
    * Defaults to name if not provided.
    */
@@ -62,7 +72,7 @@ export interface DatabaseDetails {
   database: pulumi.Input<string>;
 }
 
-export class StandardDeployment extends pulumi.ComponentResource {
+export class StandardDatabase extends pulumi.ComponentResource {
   readonly databaseName: pulumi.Output<string>;
   readonly databaseSecretName: pulumi.Output<string>;
   readonly serviceHostname: pulumi.Output<string>;
@@ -76,6 +86,8 @@ export class StandardDeployment extends pulumi.ComponentResource {
     super('branches:k8s:standard-deployment', name, {}, opts);
     const {
       team = 'thebranches',
+      initImage,
+      initTag,
       username = name,
       database = name,
       sizeInGb = '10Gi',
@@ -86,6 +98,20 @@ export class StandardDeployment extends pulumi.ComponentResource {
         memory: '512Mi',
       },
     } = args;
+
+    // Where do we put this?
+    const initDeployments = [
+      {
+        name: `${name}-init`,
+        image: pulumi
+          .all([initImage, initTag])
+          .apply(imageParts => imageParts.join(':')),
+        imagePullPolicy: 'IfNotPresent',
+        command: ['pnpm', 'db:migrate:deploy'],
+        envFrom, // how do we get env?
+        env,
+      },
+    ];
 
     const dbCluster = new k8s.apiextensions.CustomResource(
       name,
