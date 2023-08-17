@@ -319,11 +319,6 @@ export class StandardDeployment extends pulumi.ComponentResource {
                     .apply(imageParts => imageParts.join(':')),
                   imagePullPolicy: 'IfNotPresent',
                   command: initContainer.command,
-                  ports: ports.map(p => ({
-                    containerPort: p.port,
-                    protocol: p.protocol ?? 'TCP',
-                    name: p.name,
-                  })),
                   envFrom,
                   env,
                 })),
