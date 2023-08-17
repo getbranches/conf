@@ -31,6 +31,8 @@ export interface StandardDeploymentPort {
 }
 
 export interface StandardDeploymentDeploymentArgs {
+  name?: pulumi.Input<string>;
+
   /**
    * The image to use for the deployment.
    */
@@ -53,7 +55,8 @@ export interface StandardDeploymentDeploymentArgs {
   // env?: Record<string, pulumi.Input<string>>;
 }
 
-export interface StandardDeploymentArgs extends StandardDeploymentDeploymentArgs {
+export interface StandardDeploymentArgs
+  extends StandardDeploymentDeploymentArgs {
   /**
    * Init containers
    * @default []
@@ -310,7 +313,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
             spec: {
               initContainers: pulumi.output(initContainers).apply(ic =>
                 ic.map(initContainer => ({
-                  name,
+                  name: initContainer.name ?? `${name}-init`,
                   image: pulumi
                     .all([initContainer.image, initContainer.tag])
                     .apply(imageParts => imageParts.join(':')),
