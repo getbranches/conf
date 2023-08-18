@@ -73,9 +73,9 @@ export class StandardDatabase extends pulumi.ComponentResource {
     args: StandardDatabaseArgs = {},
     opts?: pulumi.ComponentResourceOptions,
   ) {
-    super('branches:k8s:standard-deployment', name, {}, opts);
+    super('branches:k8s:standard-database', name, {}, opts);
     const {
-      team = 'thebranches',
+      team = 'branches',
       username = name,
       database = name,
       sizeInGb = '10Gi',
