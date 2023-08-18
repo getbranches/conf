@@ -84,8 +84,10 @@ export const cronJob = new k8s.batch.v1.CronJob(
               restartPolicy: 'OnFailure',
               containers: [
                 {
-                  name: 'abax-procore-cronjob',
-                  image: config.require('agent-image'),
+                  name: 'abax-minuba-cronjob',
+                  image: pulumi
+                    .all([config.require('agent-image'), config.require('tag')])
+                    .apply(imageParts => imageParts.join(':')),
                   envFrom: defaultContainer.envFrom,
                   env: defaultContainer.env,
                 },
