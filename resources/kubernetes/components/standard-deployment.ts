@@ -248,7 +248,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
           .output(args.databaseDetails)
           .apply(
             details =>
-              `postgres://$(POSTGRES_username):$(POSTGRES_username)@${
+              `postgres://$(POSTGRES_username):$(POSTGRES_password)@${
                 details.hostname
               }:${details.port ?? 5432}/${details.database}?sslmode=require`,
           ),
