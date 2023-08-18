@@ -19,7 +19,10 @@ export const standardDeployment = new StandardDeployment(
 
 export const abaxMinubaDb = new StandardDatabase(
   'abax-minuba',
-  {},
+  {
+    username: 'abaxminuba',
+    database: 'abaxminuba',
+  },
   { providers: [provider] },
 );
 
