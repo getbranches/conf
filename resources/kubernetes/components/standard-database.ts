@@ -111,7 +111,7 @@ export class StandardDatabase extends pulumi.ComponentResource {
             [username]: [],
           },
           databases: {
-            [database]: database,
+            [database]: username,
           },
           // enableConnectionPooler: true,
           allowedSourceRanges: null,
