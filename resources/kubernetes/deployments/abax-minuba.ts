@@ -1,3 +1,4 @@
+import * as k8s from '@pulumi/kubernetes';
 import * as pulumi from '@pulumi/pulumi';
 import { StandardDatabase } from '../components/standard-database';
 import { StandardDeployment } from '../components/standard-deployment';
@@ -60,4 +61,40 @@ export const serverDeployment = new StandardDeployment(
     databaseDetails: abaxMinubaDb.databaseDetails,
   },
   { providers: [provider] },
+);
+
+const defaultContainer =
+  serverDeployment.deployment.spec.template.spec.containers[0];
+
+export const cronJob = new k8s.batch.v1.CronJob(
+  'abax-minuba-cronjob',
+  {
+    metadata: {
+      name: `abax-procore-cronjob`,
+      annotations: {
+        'pulumi.com/skipAwait': 'true',
+      },
+    },
+    spec: {
+      schedule: '*/30 * * * *', // every 30 minutes
+      jobTemplate: {
+        spec: {
+          template: {
+            spec: {
+              restartPolicy: 'OnFailure',
+              containers: [
+                {
+                  name: 'abax-procore-cronjob',
+                  image: config.require('agent-image'),
+                  envFrom: defaultContainer.envFrom,
+                  env: defaultContainer.env,
+                },
+              ],
+            },
+          },
+        },
+      },
+    },
+  },
+  { provider },
 );
