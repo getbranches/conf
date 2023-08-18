@@ -1,4 +1,5 @@
 import * as pulumi from '@pulumi/pulumi';
+import { StandardDatabase } from '../components/standard-database';
 import { StandardDeployment } from '../components/standard-deployment';
 import { provider } from '../provider';
 
@@ -13,6 +14,12 @@ export const standardDeployment = new StandardDeployment(
     logLevel: 'debug',
     healthCheckHttpPath: '/',
   },
+  { providers: [provider] },
+);
+
+export const abaxMinubaDb = new StandardDatabase(
+  'abax-minuba',
+  {},
   { providers: [provider] },
 );
 
@@ -47,6 +54,7 @@ export const serverDeployment = new StandardDeployment(
         name: 'management',
       },
     ],
+    databaseDetails: abaxMinubaDb.databaseDetails,
   },
   { providers: [provider] },
 );
