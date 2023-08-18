@@ -62,7 +62,7 @@ export interface DatabaseDetails {
   database: pulumi.Input<string>;
 }
 
-export class StandardDeployment extends pulumi.ComponentResource {
+export class StandardDatabase extends pulumi.ComponentResource {
   readonly databaseName: pulumi.Output<string>;
   readonly databaseSecretName: pulumi.Output<string>;
   readonly serviceHostname: pulumi.Output<string>;
@@ -125,7 +125,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
     );
 
     this.databaseName = pulumi.output(database);
-    this.databaseSecretName = pulumi.interpolate`${username}.${dbCluster.metadata.name}.credentials.postgresql.${crd}`;
+    this.databaseSecretName = pulumi.interpolate`${username}.${dbCluster.metadata.name}.credentials.postgresql.acid.zalan.do`;
     this.serviceHostname = pulumi.interpolate`${dbCluster.metadata.name}.${dbCluster.metadata.namespace}.svc.cluster.local`;
 
     this.databaseDetails = pulumi.output({
