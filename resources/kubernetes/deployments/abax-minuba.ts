@@ -70,7 +70,7 @@ export const cronJob = new k8s.batch.v1.CronJob(
   'abax-minuba-cronjob',
   {
     metadata: {
-      name: `abax-procore-cronjob`,
+      name: 'abax-minuba-cronjob',
       annotations: {
         'pulumi.com/skipAwait': 'true',
       },
