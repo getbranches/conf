@@ -234,6 +234,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
 
     if (args.databaseDetails) {
       envFrom.push({
+        prefix: 'POSTGRES_',
         secretRef: {
           name: pulumi
             .output(args.databaseDetails)
