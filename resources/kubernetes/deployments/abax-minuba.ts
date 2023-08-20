@@ -23,7 +23,7 @@ export const standardDeployment = new StandardDeployment(
     host: config.require('frontend-host'),
     initContainers: [
       {
-        image: config.require('ui-image'),
+        image: config.require('agent-image'),
         tag: config.require('tag'),
         command: ['pnpm', 'run', 'db:migrate:deploy'],
       },
