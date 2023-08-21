@@ -6,18 +6,6 @@ import { provider } from '../provider';
 
 const config = new pulumi.Config('abax-minuba');
 
-export const standardDeployment = new StandardDeployment(
-  'abax-minuba-ui',
-  {
-    image: config.require('ui-image'),
-    tag: config.require('tag'),
-    host: config.require('frontend-host'),
-    logLevel: 'debug',
-    healthCheckHttpPath: '/',
-  },
-  { providers: [provider] },
-);
-
 export const abaxMinubaDb = new StandardDatabase(
   'abax-minuba',
   {
@@ -27,44 +15,32 @@ export const abaxMinubaDb = new StandardDatabase(
   { providers: [provider] },
 );
 
-export const serverDeployment = new StandardDeployment(
-  'abax-minuba-server',
+export const standardDeployment = new StandardDeployment(
+  'abax-minuba-ui',
   {
-    image: config.require('server-image'),
+    image: config.require('ui-image'),
     tag: config.require('tag'),
-    host: config.require('api-host'),
-    logLevel: 'debug',
-    secretEnv: {
-      FRONTEND_URL: pulumi
-        .output(config.require('frontend-host'))
-        .apply(host => `https://${host}`),
-      ABAX_CLIENT_ID: config.require('abax-client-id'),
-      ABAX_CLIENT_SECRET: config.require('abax-client-secret'),
-    },
+    host: config.require('frontend-host'),
     initContainers: [
       {
-        image: config.require('server-image'),
+        image: config.require('agent-image'),
         tag: config.require('tag'),
         command: ['pnpm', 'run', 'db:migrate:deploy'],
       },
     ],
-    ports: [
-      {
-        port: 8080,
-        name: 'public',
-      },
-      {
-        port: 8081,
-        name: 'management',
-      },
-    ],
+    secretEnv: {
+      ABAX_CLIENT_ID: config.require('abax-client-id'),
+      ABAX_CLIENT_SECRET: config.require('abax-client-secret'),
+    },
+    logLevel: 'debug',
+    healthCheckHttpPath: '/',
     databaseDetails: abaxMinubaDb.databaseDetails,
   },
   { providers: [provider] },
 );
 
 const defaultContainer =
-  serverDeployment.deployment.spec.template.spec.containers[0];
+  standardDeployment.deployment.spec.template.spec.containers[0];
 
 export const cronJob = new k8s.batch.v1.CronJob(
   'abax-minuba-cronjob',
