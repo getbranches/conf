@@ -19,7 +19,7 @@ config:
     secure: AAABAKlm50371+L8Izs9+G139TDGB/widU/B+dP4QtXGXCPXW7g7zg==
   abax-procore:sanity-token:
     secure: AAABAPeEZQkP7K7KgF5/xEzscQuxvTXbeYTS6bZw+6uHDViz4GiShe357OLddodiiuKA4CccRb820hWT8qtv2pR6hDCin9Owv1efpXcNisw6Gr5qP2OQO6u+aLgq9Znz1XHRCaL+xtpFQrPvh5TvRzGz3sROVObZHFCiWd0xALWh6yRJP7RTVH0qTSBkHENUNRODKw8BKs3N+r11Kwg1QQ2Mtnw0aF2G3D4b8zShVjw02AkvtfppX0/+FbNUsf7nPRmAGfVyz6Vuc0VZv+Am05foDOY=
-  abax-procore:tag: main-4e2e089
+  abax-procore:tag: main-4fdc262
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   github:token:
