@@ -29,6 +29,9 @@ export const standardDeployment = new StandardDeployment(
       },
     ],
     secretEnv: {
+      SELF_URL: pulumi
+        .output(config.require('frontend-host'))
+        .apply(host => `https://${host}`),
       ABAX_CLIENT_ID: config.require('abax-client-id'),
       ABAX_CLIENT_SECRET: config.require('abax-client-secret'),
     },
