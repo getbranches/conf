@@ -5,7 +5,7 @@ config:
   abax-minuba:agent-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/agent
   abax-minuba:api-host: api.abax-minuba.branches.no
   abax-minuba:frontend-host: abax-minuba.branches.no
-  abax-minuba:tag: main-7c97c9b
+  abax-minuba:tag: main-82b3c6e
   abax-minuba:ui-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/ui
   abax-procore:host: procore-abax.branches.no
   abax-procore:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-procore/server
