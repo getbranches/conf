@@ -31,6 +31,8 @@ export const standardDeployment = new StandardDeployment(
     secretEnv: {
       ABAX_CLIENT_ID: config.require('abax-client-id'),
       ABAX_CLIENT_SECRET: config.require('abax-client-secret'),
+      NEXT_PUBLIC_HELLO: 'hello',
+      HELLO: 'hello',
     },
     logLevel: 'debug',
     healthCheckHttpPath: '/',
