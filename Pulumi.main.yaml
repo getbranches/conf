@@ -48,7 +48,7 @@ config:
     secure: AAABAJcJvRj4zKIIgI1p9VtSheJV3jblcMVxSMhYICOo+vm0lKawC4fjTdJvFXN9EDw8wlAYEi1mWAh6sl2Day8Y/9I=
   tripletex-project-reporter:tripletex-employee-token:
     secure: AAABAK6oNNxmX+MpGAMxiN53BaGYP/VeE2iVbOjbuuNyMIAJwZlVMYxY3lESRUpalhbM9DtJDLjjgzJv2SX/aSPSN8Q=
-  unleash:ext-image: unleashorg/unleash-server:5.3.5
+  unleash:ext-image: unleashorg/unleash-server:5.4.1
   unleash:host: unleash.branches.no
   vaultwarden:admin-token:
     secure: AAABAKOVnb6v5XQY6p2ys2TEWo5W4hTpkgBEW6COucNbgdsgQ5EanrfmiEKf9j5ddJNY3BKSn4vc5uFDLGjcSt9QP3eVxxA7sODFSM4wPEV3BcZKQYWgkwJblyc+R6XQ
