@@ -23,8 +23,9 @@ config:
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   github:token:
-    secure: AAABAB1+aHgnhW95Ajp/yUq1jqpgL7mgx0aEQKGCTXsJQMhGbQES8LFs1UoJUJf1miBUMHF9/aximsB2Jra2GWkr7n0B6PORljdaLXGr8UbxjEYe36yFQX8EE+ckkv2z1rzMHd4D9JR5Ys+9EsLoguOcoPx1WjH4iKcgDDA=
-  github:token-expires-at: '2024-01-01'
+    secure: AAABAHRx0+1LIg/c3PYpw+LUDLcBS/jRXdd6CToE5ryZGtAtUNPaFBEP7RnmjLh5EW8v+YBabeqLLt70++6tYoolRPbLTzPc
+  github:token-expires-at: '2023-11-24T13:27:38.841Z'
+  github:token-id: "1301460448"
   kubernetes:cluster-developers:
     - group:developers@bjerk.io
   meti:host: meti.branches.no
