@@ -1,3 +1,6 @@
+import * as pulumi from '@pulumi/pulumi';
+import * as config from './config';
+
 import './config';
 import './google/artifact-registry';
 import './google/gke';
@@ -24,3 +27,5 @@ import './kubernetes/unleash/deployment';
 import './kubernetes/unleash/ingress';
 import './kubernetes/vaultwarden/deployment';
 import './kubernetes/vaultwarden/ingress';
+
+export const githubToken = pulumi.secret(config.githubToken);
