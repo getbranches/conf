@@ -18,7 +18,6 @@ import './kubernetes/provider';
 // Kubernetes Deployments
 import './kubernetes/deployments/abax-minuba';
 import './kubernetes/deployments/abax-procore';
-import './kubernetes/deployments/meti';
 import './kubernetes/todoist-github/deployment';
 import './kubernetes/todoist-github/ingress';
 import './kubernetes/tripletex-project-reporter/deployment';

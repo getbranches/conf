@@ -28,9 +28,6 @@ config:
   github:token-id: "1301460448"
   kubernetes:cluster-developers:
     - group:developers@bjerk.io
-  meti:host: meti.branches.no
-  meti:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/meti/server
-  meti:tag: main-ac9d8cd
   pulumi:disable-default-providers:
     - '*'
   slack:bot-oauth-token:
