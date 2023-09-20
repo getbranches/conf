@@ -31,6 +31,7 @@ export const standardDeployment = new StandardDeployment(
     secretEnv: {
       ABAX_CLIENT_ID: config.require('abax-client-id'),
       ABAX_CLIENT_SECRET: config.require('abax-client-secret'),
+      MINUBA_API_KEY: config.requireSecret('minuba-api-key'),
     },
     logLevel: 'debug',
     healthCheckHttpPath: '/',
