@@ -5,7 +5,6 @@
   "scripts": {
     "format": "prettier --write . --ignore-path .gitignore ",
     "format:check": "prettier --check . --ignore-path .gitignore",
-    "update-github-token": "rotate-pulumi-secret github --type github-classic --stack branches/branches-main/main --config-name github:token",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "prettier": "@simenandre/prettier",
@@ -15,8 +14,6 @@
     "@pulumi/google-native": "^0.31.1",
     "@pulumi/kubernetes": "^4.0.3",
     "@pulumi/pulumi": "^3.76.0",
-    "get-pulumi-secret": "^2.0.0",
-    "rotate-pulumi-secret": "^2.0.0",
     "ts-invariant": "^0.10.3"
   },
   "devDependencies": {
