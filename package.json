@@ -17,7 +17,7 @@
     "ts-invariant": "^0.10.3"
   },
   "devDependencies": {
-    "@bjerk/eslint-config": "^5.3.1",
+    "@bjerk/eslint-config": "^6.0.0",
     "@simenandre/prettier": "^5.0.0",
     "@types/node": "^18",
     "eslint": "^8.45.0",
