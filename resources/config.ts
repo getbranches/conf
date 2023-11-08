@@ -1,5 +1,9 @@
 import * as pulumi from '@pulumi/pulumi';
-import { getToken } from 'get-pulumi-secret';
+
+const config = new pulumi.Config();
+
+// This is references to a Pulumi ESC
+export const githubToken = config.requireSecret('githubToken');
 
 const googleConfig = new pulumi.Config('google');
 
@@ -9,9 +13,7 @@ export const zone = googleConfig.require('zone');
 export const billingAccountId = googleConfig.require('billing-account-id');
 export const callerServiceAccount = googleConfig.require('service-account');
 
-export const githubToken = getToken({ name: 'token', namespace: 'github' });
-
-const config = new pulumi.Config('kubernetes');
+const k8sConfig = new pulumi.Config('kubernetes');
 
 export const clusterDevelopers =
-  config.requireObject<string[]>('cluster-developers');
+  k8sConfig.requireObject<string[]>('cluster-developers');

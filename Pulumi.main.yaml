@@ -1,3 +1,5 @@
+environment:
+  - secrets
 config:
   abax-minuba:abax-client-id: imHgHFu6zYuaLkolpFsViQ3MDnE33vtX
   abax-minuba:abax-client-secret:
@@ -24,10 +26,6 @@ config:
   abax-procore:tag: main-477ad06
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
-  github:token:
-    secure: AAABAHRx0+1LIg/c3PYpw+LUDLcBS/jRXdd6CToE5ryZGtAtUNPaFBEP7RnmjLh5EW8v+YBabeqLLt70++6tYoolRPbLTzPc
-  github:token-expires-at: '2023-11-24T13:27:38.841Z'
-  github:token-id: "1301460448"
   kubernetes:cluster-developers:
     - group:developers@bjerk.io
   pulumi:disable-default-providers:
