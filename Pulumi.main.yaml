@@ -1,5 +1,5 @@
 environment:
-  - branches-secrets
+  - secrets
 config:
   abax-minuba:abax-client-id: imHgHFu6zYuaLkolpFsViQ3MDnE33vtX
   abax-minuba:abax-client-secret:
