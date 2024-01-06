@@ -1,5 +1,3 @@
-environment:
-  - secrets
 config:
   abax-minuba:abax-client-id: imHgHFu6zYuaLkolpFsViQ3MDnE33vtX
   abax-minuba:abax-client-secret:
@@ -41,7 +39,7 @@ config:
     secure: AAABANadNhLU5iAPsflF1DXS+jZYqq1PR6hETnm9xmvQOFvRedVI76JbLOfhwfR/WH+etaR7M2F1+vjwcFOr2rWJShMzdSU/
   tripletex-project-reporter:host: reporting.bjerk.io
   tripletex-project-reporter:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/tripletex-project-reporter
-  tripletex-project-reporter:tag: main-eaaa4d7
+  tripletex-project-reporter:tag: main-e94d954
   tripletex-project-reporter:tripletex-consumer-token:
     secure: AAABAJcJvRj4zKIIgI1p9VtSheJV3jblcMVxSMhYICOo+vm0lKawC4fjTdJvFXN9EDw8wlAYEi1mWAh6sl2Day8Y/9I=
   tripletex-project-reporter:tripletex-employee-token:
@@ -56,3 +54,5 @@ config:
     secure: AAABAMEW2/YTO7JMOTWb4Ab3uDwwTopWxgjzyeQNuxUX17QH5Q==
   vaultwarden:yubico-client-secret:
     secure: AAABADWp+a2/TVwr2dK/bULhLHyg/j1EhSvWFCWMRBb70wNwaK1WRLXugcN7sZRBt8+aTA0kj/iaEu2L
+environment:
+  - secrets
