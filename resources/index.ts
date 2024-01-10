@@ -27,4 +27,4 @@ import './kubernetes/unleash/ingress';
 import './kubernetes/vaultwarden/deployment';
 import './kubernetes/vaultwarden/ingress';
 
-export const githubToken = pulumi.secret(config.githubToken);
+export const githubToken = pulumi.secret(config.bjerkGithubToken);

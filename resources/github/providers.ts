@@ -1,5 +1,5 @@
 import * as github from '@pulumi/github';
-import { githubToken } from '../config';
+import { bjerkGithubToken } from '../config';
 
 const githubProviders = new Map<string, github.Provider>();
 
@@ -9,7 +9,7 @@ export function getGithubProvider(owner: string): github.Provider {
       owner,
       new github.Provider(owner, {
         owner,
-        token: githubToken,
+        token: bjerkGithubToken,
       }),
     );
   }
