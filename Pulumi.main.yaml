@@ -26,6 +26,9 @@ config:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   kubernetes:cluster-developers:
     - group:developers@bjerk.io
+  matrix:synapse-image: matrixdotorg/synapse
+  matrix:synapse-tag: latest
+  matrix:host: branches.no
   pulumi:disable-default-providers:
     - '*'
   slack:bot-oauth-token:
