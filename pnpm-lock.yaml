@@ -12,8 +12,8 @@ dependencies:
     specifier: ^5.14.1
     version: 5.14.1
   '@pulumi/google-native':
-    specifier: ^0.31.1
-    version: 0.31.1
+    specifier: ^0.32.0
+    version: 0.32.0
   '@pulumi/kubernetes':
     specifier: ^4.0.3
     version: 4.0.3
@@ -410,8 +410,8 @@ packages:
       - supports-color
     dev: false
 
-  /@pulumi/google-native@0.31.1:
-    resolution: {integrity: sha512-cOL3N2nZQbCg3g1sxau/eb/yliUbGAgjewK+VHfrcFyu4Y0NRGtm2KuVs8S+rWKIUHGOEN8Ll2CNWFFrA+nlWg==}
+  /@pulumi/google-native@0.32.0:
+    resolution: {integrity: sha512-7PJrCGHhmN/WnscNoImQtJPd1y817F/678KcgT8JhtTo4Af5enFpKXbQP4owoA9ngoJ4s+0lopBJHDbQi528Zw==}
     requiresBuild: true
     dependencies:
       '@pulumi/pulumi': 3.76.0
