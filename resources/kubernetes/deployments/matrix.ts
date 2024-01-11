@@ -18,6 +18,9 @@ export const synapseDatabase = new StandardDatabase(
   { providers: [provider] },
 );
 
+const test = new k8s.Provider('render-yaml');
+// TODO: set up this https://www.pulumi.com/blog/kubernetes-yaml-generation/
+
 export const homeserverConfig = new k8s.core.v1.ConfigMap('homeserver-config', {
   metadata: {
     name: 'matrix-synapse-config',
