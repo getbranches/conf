@@ -21,32 +21,36 @@ export const synapseDatabase = new StandardDatabase(
 
 const host = config.require('host');
 
-export const homeserverConfig = new k8s.core.v1.ConfigMap('homeserver-config', {
-  metadata: {
-    name: 'matrix-synapse-config',
-  },
-  data: {
-    'homeserver.yml': synapseDatabase.databaseDetails.hostname.apply(dbHost =>
-      yaml.dump({
-        server_name: 'Branches Matrix Server',
-        public_baseurl: `https://${host}`,
-        enable_registration: true,
-        enable_registration_captcha: true,
+export const homeserverConfig = new k8s.core.v1.ConfigMap(
+  'homeserver-config',
+  {
+    metadata: {
+      name: 'matrix-synapse-config',
+    },
+    data: {
+      'homeserver.yml': synapseDatabase.databaseDetails.hostname.apply(dbHost =>
+        yaml.dump({
+          server_name: 'Branches Matrix Server',
+          public_baseurl: `https://${host}`,
+          enable_registration: true,
+          enable_registration_captcha: true,
 
-        database: {
-          name: 'syndb',
-          args: {
-            user: databaseUser,
-            dbname: databaseName,
-            host: dbHost,
-            cp_min: 5,
-            cp_max: 10,
+          database: {
+            name: 'syndb',
+            args: {
+              user: databaseUser,
+              dbname: databaseName,
+              host: dbHost,
+              cp_min: 5,
+              cp_max: 10,
+            },
           },
-        },
-      }),
-    ),
+        }),
+      ),
+    },
   },
-});
+  { provider },
+);
 
 export const synapseDeployment = new StandardDeployment(
   'matrix-synapse',
