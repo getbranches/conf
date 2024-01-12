@@ -11,7 +11,7 @@ const databaseUser = 'matrix';
 const databaseName = 'matrix';
 
 export const synapseDatabase = new StandardDatabase(
-  'matrix-db',
+  'matrix-synapse-db',
   {
     username: databaseUser,
     database: databaseName,
@@ -22,7 +22,7 @@ export const synapseDatabase = new StandardDatabase(
 const host = config.require('host');
 
 export const homeserverConfig = new k8s.core.v1.ConfigMap(
-  'homeserver-config',
+  'matrix-homeserver-config',
   {
     metadata: {
       name: 'matrix-synapse-config',
