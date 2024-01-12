@@ -5,7 +5,8 @@ import { googleProviders } from './google/project';
 const repos = [
   'abax-procore', //
   'tripletex-project-reporter',
-  'abax-minuba'
+  'abax-minuba',
+  'abax-vwfs',
 ];
 
 repos.map(
