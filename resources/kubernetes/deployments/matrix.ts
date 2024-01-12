@@ -8,41 +8,43 @@ import { provider } from '../provider';
 const config = new pulumi.Config('matrix');
 
 const databaseUser = 'matrix';
+const databaseName = 'matrix';
 
 export const synapseDatabase = new StandardDatabase(
-  'matrix',
+  'matrix-db',
   {
     username: databaseUser,
-    database: 'matrix',
+    database: databaseName,
   },
   { providers: [provider] },
 );
 
-const test = new k8s.Provider('render-yaml');
-// TODO: set up this https://www.pulumi.com/blog/kubernetes-yaml-generation/
+const host = config.require('host');
 
 export const homeserverConfig = new k8s.core.v1.ConfigMap('homeserver-config', {
   metadata: {
     name: 'matrix-synapse-config',
   },
   data: {
-    'homeserver.yml': yaml.dump({
-      server_name: 'Branches Matrix Server',
-      public_baseurl: `https://${config.require('host')}`,
-      enable_registration: true,
-      enable_registration_captcha: true,
+    'homeserver.yml': synapseDatabase.databaseDetails.hostname.apply(dbHost =>
+      yaml.dump({
+        server_name: 'Branches Matrix Server',
+        public_baseurl: `https://${host}`,
+        enable_registration: true,
+        enable_registration_captcha: true,
 
-      database: {
-        name: 'syndb',
-        args: {
-          user: databaseUser,
-          dbname: synapseDatabase.databaseName,
-          host: synapseDatabase.databaseDetails.hostname,
-          cp_min: 5,
-          cp_max: 10,
+        database: {
+          name: 'syndb',
+          args: {
+            user: databaseUser,
+            dbname: databaseName,
+            host: dbHost,
+            cp_min: 5,
+            cp_max: 10,
+          },
         },
-      },
-    }),
+      }),
+    ),
   },
 });
 
