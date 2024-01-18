@@ -11,7 +11,7 @@ new gcp.dns.RecordSet(
   'portal-app-ipv4',
   {
     managedZone: zone.name,
-    name: abaxVwfsConfig.require('host'),
+    name: `${abaxVwfsConfig.require('host')}.`,
     type: 'A',
     ttl: 300,
     rrdatas: [ingressIpAddress],
