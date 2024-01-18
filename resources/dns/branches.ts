@@ -3,7 +3,7 @@ import * as pulumi from '@pulumi/pulumi';
 import { region } from '../config';
 import { apiServices, mainClassicProvider } from '../google/project';
 
-const config = new pulumi.Config('main-branches');
+const config = new pulumi.Config('branches-main');
 
 export const ipAddress = new gcp.compute.Address(
   'branches-main-address',
