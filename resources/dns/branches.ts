@@ -16,9 +16,9 @@ export const ipAddress = new gcp.compute.Address(
 );
 
 export const zone = new gcp.dns.ManagedZone(
-  'abax-vwfs-zone',
+  'branches-main-zone',
   {
-    name: 'abax-vwfs-zone',
+    name: 'branches-main-zone',
     dnsName: config.require('dns-name'),
     description: 'Branches zone',
   },
