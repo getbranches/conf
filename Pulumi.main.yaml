@@ -35,7 +35,7 @@ config:
     secure: AAABAMA4C5xo22b7NbhynZLGbY+cZ3VkVv8UMvfm78G0M82gRDUiH8biQ6hIiAPXbQ30lbZ1ryySbUUDKnbNfA==
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
-  branches-main:dns-name: branches.no
+  branches-main:dns-name: branches.no.
   kubernetes:cluster-developers:
     - group:developers@bjerk.io
   pulumi:disable-default-providers:
