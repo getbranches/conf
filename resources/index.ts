@@ -10,10 +10,6 @@ import './google/project';
 import './google/slack-logger';
 import './repository-with-artifacts';
 
-// DNS
-import './dns/branches';
-import './dns/abax-vwfs';
-
 // Kubernetes charts and other resources
 import './kubernetes/ingress-controller.chart';
 import './kubernetes/postgres-operator.chart';
