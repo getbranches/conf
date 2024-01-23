@@ -137,6 +137,17 @@ export interface StandardDeploymentArgs
    * Volume represents a named volume in a pod that may be accessed by any container in the pod.
    */
   volumes?: pulumi.Input<pulumi.Input<k8s.types.input.core.v1.Volume>[]>;
+
+  /**
+   * Arguments to the entrypoint. The container image's CMD is used if this is not provided.
+   * Variable references $(VAR_NAME) are expanded using the container's environment.
+   * If a variable cannot be resolved, the reference in the input string will be unchanged.
+   *  Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax:
+   * i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)".
+   * Escaped references will never be expanded, regardless of whether the variable exists or not.
+   * Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
+   */
+  args?: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 /**
@@ -205,6 +216,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       createService = true,
       initContainers = [],
       volumes = [],
+      args: entrypointArgs = undefined,
     } = args;
 
     const publicPort = ports.find(p => p.name === 'public');
@@ -350,6 +362,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
                     requests: resources,
                   },
                   env,
+                  args: entrypointArgs,
                 },
               ],
             },

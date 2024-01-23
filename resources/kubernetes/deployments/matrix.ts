@@ -93,8 +93,8 @@ export const synapseDeployment = new StandardDeployment(
         },
       },
     ],
-    // this command is needed to load the secrets and config in two separate files
-    command: ['--config-path=homeserver.yaml', '--config-path=secrets.yaml'],
+    // these args are needed to tell synapse to load the secrets and config from these files
+    args: ['--config-path=homeserver.yaml', '--config-path=secrets.yaml'],
   },
   { providers: [provider] },
 );
