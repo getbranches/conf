@@ -79,7 +79,7 @@ export const synapseDeployment = new StandardDeployment(
     image: config.require('synapse-image'),
     tag: config.require('synapse-tag'),
     host: config.require('host'),
-    healthCheckHttpPath: '/',
+    healthCheckHttpPath: '/health',
     databaseDetails: synapseDatabase.databaseDetails,
     volumes: [
       {
