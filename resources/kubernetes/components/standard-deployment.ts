@@ -132,6 +132,11 @@ export interface StandardDeploymentArgs
 
   createIngress?: boolean;
   createService?: boolean;
+
+  /**
+   * Volume represents a named volume in a pod that may be accessed by any container in the pod.
+   */
+  volumes?: pulumi.Input<pulumi.Input<k8s.types.input.core.v1.Volume>[]>;
 }
 
 /**
@@ -199,6 +204,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       createIngress = true,
       createService = true,
       initContainers = [],
+      volumes = [],
     } = args;
 
     const publicPort = ports.find(p => p.name === 'public');
@@ -312,6 +318,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
               },
             },
             spec: {
+              volumes,
               initContainers: pulumi.output(initContainers).apply(ic =>
                 ic.map(initContainer => ({
                   name: initContainer.name ?? `${name}-init`,
