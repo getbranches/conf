@@ -19,6 +19,7 @@ import './kubernetes/provider';
 import './kubernetes/deployments/abax-minuba';
 import './kubernetes/deployments/abax-procore';
 import './kubernetes/deployments/matrix';
+import './kubernetes/deployments/abax-vwfs';
 import './kubernetes/todoist-github/deployment';
 import './kubernetes/todoist-github/ingress';
 import './kubernetes/tripletex-project-reporter/deployment';
