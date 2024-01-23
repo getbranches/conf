@@ -54,6 +54,7 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
             enable_registration: true,
             enable_registration_captcha: true,
             registration_requires_token: true,
+            report_stats: true,
             database: {
               name: 'matrix-db',
               args: {
