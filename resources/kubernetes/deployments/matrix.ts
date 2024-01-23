@@ -94,7 +94,7 @@ export const synapseDeployment = new StandardDeployment(
       },
     ],
     // these args are needed to tell synapse to load the secrets and config from these files
-    args: ['--help'],
+    args: ['help'],
   },
   { providers: [provider] },
 );
