@@ -93,6 +93,18 @@ export const synapseDeployment = new StandardDeployment(
         },
       },
     ],
+    volumeMounts: [
+      {
+        name: 'secrets',
+        mountPath: '/secrets.yaml',
+        subPath: 'secrets.yaml',
+      },
+      {
+        name: 'config',
+        mountPath: '/homeserver.yaml',
+        subPath: 'homeserver.yaml',
+      },
+    ],
     // This is needed to tell synapse to load the secrets and config from these files
     command: [
       '/start.py',

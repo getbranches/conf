@@ -136,7 +136,12 @@ export interface StandardDeploymentArgs
   /**
    * Volume represents a named volume in a pod that may be accessed by any container in the pod.
    */
-  volumes?: pulumi.Input<pulumi.Input<k8s.types.input.core.v1.Volume>[]>;
+  volumes?: pulumi.Input<k8s.types.input.core.v1.Volume>[];
+
+  /**
+   * Pod volumes to mount into the container's filesystem. Cannot be updated.
+   */
+  volumeMounts?: pulumi.Input<k8s.types.input.core.v1.VolumeMount>[];
 
   /**
    * Arguments to the entrypoint. The container image's CMD is used if this is not provided.
@@ -217,6 +222,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       initContainers = [],
       volumes = [],
       args: entrypointArgs = undefined,
+      volumeMounts = [],
     } = args;
 
     const publicPort = ports.find(p => p.name === 'public');
@@ -345,6 +351,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
               ),
               containers: [
                 {
+                  volumeMounts,
                   name,
                   image: pulumi
                     .all([image, tag])
