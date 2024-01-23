@@ -37,7 +37,7 @@ const secretVolume = new k8s.core.v1.Secret(
   },
   { provider },
 );
-
+const host = config.require('host');
 export const homeserverConfig = new k8s.core.v1.ConfigMap(
   'matrix-homeserver-config',
   {
@@ -50,7 +50,7 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
         .apply(dbHost =>
           yaml.dump({
             server_name: 'bjerk.io',
-            public_baseurl: 'https://matrix.bjerk.io',
+            public_baseurl: `https://${host}`,
             enable_registration: true,
             enable_registration_captcha: true,
             registration_requires_token: true,
@@ -76,7 +76,7 @@ export const synapseDeployment = new StandardDeployment(
   {
     image: config.require('synapse-image'),
     tag: config.require('synapse-tag'),
-    host: config.require('host'),
+    host,
     healthCheckHttpPath: '/health',
     databaseDetails: synapseDatabase.databaseDetails,
     volumes: [
