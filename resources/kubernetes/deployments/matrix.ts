@@ -93,8 +93,13 @@ export const synapseDeployment = new StandardDeployment(
         },
       },
     ],
-    // these args are needed to tell synapse to load the secrets and config from these files
-    args: ['help'],
+    // This is needed to tell synapse to load the secrets and config from these files
+    command: [
+      '/start.py',
+      'run',
+      '--config-path=/data/homeserver.yaml',
+      '--config-path=/data/workers/synapse-generic-federation-4.yaml',
+    ],
   },
   { providers: [provider] },
 );
