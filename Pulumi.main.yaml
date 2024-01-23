@@ -37,7 +37,6 @@ config:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   kubernetes:cluster-developers:
     - group:developers@bjerk.io
-  matrix:host: matrix.bjerk.io
   matrix:registration-secret:
     secure: AAABAGbam0NXNM5M7WTWRuW/3xSJ23kb9xxs+xhXX8AZhKk7kk/VqYvJRy2D6X7rrj7COA==
   matrix:synapse-image: matrixdotorg/synapse

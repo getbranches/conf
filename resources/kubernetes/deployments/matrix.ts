@@ -19,8 +19,6 @@ export const synapseDatabase = new StandardDatabase(
   { providers: [provider] },
 );
 
-const host = config.require('host');
-
 const registrationSecret = config.requireSecret('registration-secret');
 
 const secretVolume = new k8s.core.v1.Secret(
@@ -51,8 +49,8 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
         .output(synapseDatabase.databaseDetails.hostname)
         .apply(dbHost =>
           yaml.dump({
-            server_name: 'Branches Matrix Server',
-            public_baseurl: `https://${host}`,
+            server_name: 'bjerk.io',
+            public_baseurl: 'https://matrix.bjerk.io',
             enable_registration: true,
             enable_registration_captcha: true,
             registration_requires_token: true,
