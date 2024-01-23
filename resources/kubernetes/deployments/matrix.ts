@@ -97,8 +97,8 @@ export const synapseDeployment = new StandardDeployment(
     command: [
       '/start.py',
       'run',
-      '--config-path=/data/homeserver.yaml',
-      '--config-path=/data/workers/synapse-generic-federation-4.yaml',
+      '--config-path=/homeserver.yaml',
+      '--config-path=/secrets.yaml',
     ],
   },
   { providers: [provider] },
