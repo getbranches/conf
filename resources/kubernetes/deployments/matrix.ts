@@ -21,6 +21,25 @@ export const synapseDatabase = new StandardDatabase(
 
 const host = config.require('host');
 
+const registrationSecret = config.requireSecret('registration-secret');
+
+const secretVolume = new k8s.core.v1.Secret(
+  'matrix-registration-secret',
+  {
+    metadata: {
+      name: 'matrix-registration-secret',
+    },
+    stringData: {
+      'secrets.yaml': registrationSecret.apply(s =>
+        yaml.dump({
+          registration_shared_secret: s,
+        }),
+      ),
+    },
+  },
+  { provider },
+);
+
 export const homeserverConfig = new k8s.core.v1.ConfigMap(
   'matrix-homeserver-config',
   {
@@ -28,25 +47,27 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
       name: 'matrix-synapse-config',
     },
     data: {
-      'homeserver.yml': synapseDatabase.databaseDetails.hostname.apply(dbHost =>
-        yaml.dump({
-          server_name: 'Branches Matrix Server',
-          public_baseurl: `https://${host}`,
-          enable_registration: true,
-          enable_registration_captcha: true,
-
-          database: {
-            name: 'syndb',
-            args: {
-              user: databaseUser,
-              dbname: databaseName,
-              host: dbHost,
-              cp_min: 5,
-              cp_max: 10,
+      'homeserver.yml': pulumi
+        .output(synapseDatabase.databaseDetails.hostname)
+        .apply(dbHost =>
+          yaml.dump({
+            server_name: 'Branches Matrix Server',
+            public_baseurl: `https://${host}`,
+            enable_registration: true,
+            enable_registration_captcha: true,
+            registration_requires_token: true,
+            database: {
+              name: 'matrix-db',
+              args: {
+                user: databaseUser,
+                dbname: databaseName,
+                host: dbHost,
+                cp_min: 5,
+                cp_max: 10,
+              },
             },
-          },
-        }),
-      ),
+          }),
+        ),
     },
   },
   { provider },
@@ -58,19 +79,26 @@ export const synapseDeployment = new StandardDeployment(
     image: config.require('synapse-image'),
     tag: config.require('synapse-tag'),
     host: config.require('host'),
-    secretEnv: {
-      SYNAPSE_CONFIG_DIR: '/data',
-      SYNAPSE_CONFIG_PATH: '/data/homeserver.yaml',
-    },
     healthCheckHttpPath: '/',
     databaseDetails: synapseDatabase.databaseDetails,
     volumes: [
       {
-        name: 'data',
-        configMap: {
-          name: 'homeserver-config',
+        name: 'secrets',
+        secret: {
+          secretName: secretVolume.metadata.name,
         },
       },
+      {
+        name: 'config',
+        configMap: {
+          name: homeserverConfig.metadata.name,
+        },
+      },
+    ],
+    command: [
+      'run',
+      '--config-path=/data/homeserver.yaml',
+      '--config-path=/data/secrets.yaml',
     ],
   },
   { providers: [provider] },
