@@ -47,7 +47,7 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
       name: 'matrix-synapse-config',
     },
     data: {
-      'homeserver.yml': pulumi
+      'homeserver.yaml': pulumi
         .output(synapseDatabase.databaseDetails.hostname)
         .apply(dbHost =>
           yaml.dump({
