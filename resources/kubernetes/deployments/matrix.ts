@@ -21,6 +21,42 @@ export const synapseDatabase = new StandardDatabase(
 
 const registrationSecret = config.requireSecret('registration-secret');
 
+const mediaVolume = new k8s.core.v1.PersistentVolumeClaim(
+  'matrix-media-volume',
+  {
+    metadata: {
+      name: 'matrix-media-volume',
+    },
+    spec: {
+      accessModes: ['ReadWriteOnce'],
+      resources: {
+        requests: {
+          storage: '1Gi',
+        },
+      },
+    },
+  },
+  { provider },
+);
+
+const dataVolume = new k8s.core.v1.PersistentVolumeClaim(
+  'matrix-data-volume',
+  {
+    metadata: {
+      name: 'matrix-data-volume',
+    },
+    spec: {
+      accessModes: ['ReadWriteOnce'],
+      resources: {
+        requests: {
+          storage: '1Gi',
+        },
+      },
+    },
+  },
+  { provider },
+);
+
 const secretVolume = new k8s.core.v1.Secret(
   'matrix-registration-secret',
   {
@@ -55,9 +91,9 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
             enable_registration_captcha: true,
             registration_requires_token: true,
             report_stats: true,
-            media_store_path: '/synapse/data/media_store',
-            pid_file: '/config/homeserver.pid',
-            signing_key_path: '/config/bjerk.io.signing.key',
+            media_store_path: '/synapse/media_store',
+            pid_file: '/synapse/data/homeserver.pid',
+            signing_key_path: '/synapse/data/bjerk.io.signing.key',
             database: {
               name: 'matrix-db',
               args: {
@@ -91,35 +127,47 @@ export const synapseDeployment = new StandardDeployment(
     volumes: [
       {
         name: 'secrets',
+        emptyDir: {},
         secret: {
           secretName: secretVolume.metadata.name,
         },
       },
       {
         name: 'config',
+        emptyDir: {},
         configMap: {
           name: homeserverConfig.metadata.name,
         },
       },
       {
-        name: 'matrix-synapse-data',
-        emptyDir: {},
+        name: 'matrix-data-volume',
+        persistentVolumeClaim: {
+          claimName: dataVolume.metadata.name,
+        },
+      },
+      {
+        name: 'matrix-media-volume',
+        persistentVolumeClaim: {
+          claimName: mediaVolume.metadata.name,
+        },
       },
     ],
     volumeMounts: [
       {
         name: 'secrets',
         mountPath: '/secrets',
-        subPath: 'secrets.yaml',
       },
       {
         name: 'config',
         mountPath: '/config',
-        subPath: 'homeserver.yaml',
       },
       {
-        name: 'matrix-synapse-data',
+        name: 'matrix-data-volume',
         mountPath: '/synapse/data',
+      },
+      {
+        name: 'matrix-media-volume',
+        mountPath: '/synapse/media_store',
       },
     ],
     // This is needed to tell synapse to load the secrets and config from these files
