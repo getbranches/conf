@@ -124,8 +124,8 @@ export const synapseDeployment = new StandardDeployment(
     command: [
       '/start.py',
       'run',
-      '--config-path=/homeserver.yaml',
-      '--config-path=/secrets.yaml',
+      '--config-path=/config/homeserver.yaml',
+      '--config-path=/secrets/secrets.yaml',
     ],
   },
   { providers: [provider] },
