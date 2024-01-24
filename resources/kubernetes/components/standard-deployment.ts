@@ -144,6 +144,11 @@ export interface StandardDeploymentArgs
   volumeMounts?: pulumi.Input<k8s.types.input.core.v1.VolumeMount>[];
 
   /**
+   * SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty. See type description for default values of each field.
+   */
+  securityContext?: pulumi.Input<k8s.types.input.core.v1.PodSecurityContext>;
+
+  /**
    * Arguments to the entrypoint. The container image's CMD is used if this is not provided.
    * Variable references $(VAR_NAME) are expanded using the container's environment.
    * If a variable cannot be resolved, the reference in the input string will be unchanged.
@@ -223,6 +228,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       volumes = [],
       args: entrypointArgs = undefined,
       volumeMounts = [],
+      securityContext = undefined,
     } = args;
 
     const publicPort = ports.find(p => p.name === 'public');
@@ -336,6 +342,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
               },
             },
             spec: {
+              securityContext,
               volumes,
               initContainers: pulumi.output(initContainers).apply(ic =>
                 ic.map(initContainer => ({

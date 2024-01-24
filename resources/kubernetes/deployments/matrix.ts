@@ -55,6 +55,9 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
             enable_registration_captcha: true,
             registration_requires_token: true,
             report_stats: true,
+            media_store_path: '/synapse/data/media_store',
+            pid_file: '/config/homeserver.pid',
+            signing_key_path: '/config/bjerk.io.signing.key',
             database: {
               name: 'matrix-db',
               args: {
@@ -75,6 +78,11 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
 export const synapseDeployment = new StandardDeployment(
   'matrix-synapse',
   {
+    // securityContext: {
+    //   fsGroup: 666,
+    //   runAsGroup: 666,
+    //   runAsUser: 666,
+    // },
     image: config.require('synapse-image'),
     tag: config.require('synapse-tag'),
     host,
@@ -93,17 +101,23 @@ export const synapseDeployment = new StandardDeployment(
           name: homeserverConfig.metadata.name,
         },
       },
+      {
+        name: 'matrix-synapse-data',
+        emptyDir: {},
+      },
     ],
     volumeMounts: [
       {
         name: 'secrets',
-        mountPath: '/secrets.yaml',
-        subPath: 'secrets.yaml',
+        mountPath: '/secrets',
       },
       {
         name: 'config',
-        mountPath: '/homeserver.yaml',
-        subPath: 'homeserver.yaml',
+        mountPath: '/config',
+      },
+      {
+        name: 'matrix-synapse-data',
+        mountPath: '/synapse/data',
       },
     ],
     // This is needed to tell synapse to load the secrets and config from these files
