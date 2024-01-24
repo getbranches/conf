@@ -140,13 +140,13 @@ export const synapseDeployment = new StandardDeployment(
         },
       },
       {
-        name: 'matrix-data-volume',
+        name: 'data',
         persistentVolumeClaim: {
           claimName: dataVolume.metadata.name,
         },
       },
       {
-        name: 'matrix-media-volume',
+        name: 'media',
         persistentVolumeClaim: {
           claimName: mediaVolume.metadata.name,
         },
@@ -162,11 +162,11 @@ export const synapseDeployment = new StandardDeployment(
         mountPath: '/config',
       },
       {
-        name: 'matrix-data-volume',
+        name: 'data',
         mountPath: '/synapse/data',
       },
       {
-        name: 'matrix-media-volume',
+        name: 'media',
         mountPath: '/synapse/media_store',
       },
     ],
