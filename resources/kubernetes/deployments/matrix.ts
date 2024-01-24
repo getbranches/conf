@@ -110,10 +110,12 @@ export const synapseDeployment = new StandardDeployment(
       {
         name: 'secrets',
         mountPath: '/secrets',
+        subPath: 'secrets.yaml',
       },
       {
         name: 'config',
         mountPath: '/config',
+        subPath: 'homeserver.yaml',
       },
       {
         name: 'matrix-synapse-data',
