@@ -30,9 +30,9 @@ config:
   abax-vwfs:tag: main-c0c43a7
   abax-vwfs:vwfs-api-url: https://cons-fleetextapi.vwfs.se/api
   abax-vwfs:vwfs-auth-url: https://idp.cons-common.vwfs.se/
-  abax-vwfs:vwfs-client-id: OTqECS6bDJkiZqeLVR8sRDofRflJpfKl
+  abax-vwfs:vwfs-client-id: f0004c6d-8801-43ee-b18d-d5d17c907182
   abax-vwfs:vwfs-client-secret:
-    secure: AAABAMA4C5xo22b7NbhynZLGbY+cZ3VkVv8UMvfm78G0M82gRDUiH8biQ6hIiAPXbQ30lbZ1ryySbUUDKnbNfA==
+    secure: AAABAG+c4zw9UjetzTCDi5rJ9L9GQWH+/xMvsXmB3D/kxivrKURoYKa2q8+rBHwb+wIICKvdl9WfHklaSH5DFuY+bKhd2Ns9
   branches-main:system-email:
     secure: AAABAKANFK+w1l/1jLJYs/BCmgH2aoUdZqyidGYQtfsAjBxXzO6rnOdcjw==
   kubernetes:cluster-developers:
