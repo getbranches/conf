@@ -19,9 +19,9 @@ export const matrixSynapseServiceAccount = new gcp.serviceaccount.Account(
 );
 
 // Grant the service account the role of Storage Object Viewer on the bucket
-const bucketIamMember = new gcp.storage.BucketIAMMember('bucket-iam-member', {
+new gcp.storage.BucketIAMMember('bucket-iam-member', {
   bucket: matrixDataBucket.name, // reference to our created bucket
-  role: 'roles/storage.objectViewer',
+  role: 'roles/storage.objectUser',
   member: matrixSynapseServiceAccount.email.apply(
     email => `serviceAccount:${email}`,
   ), // dynamically fetch the service account's email
