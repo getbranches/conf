@@ -1,6 +1,6 @@
 import * as gcp from '@pulumi/gcp';
 import { region } from '../../config';
-import { mainProvider } from '../../google/project';
+import { mainClassicProvider } from '../../google/project';
 
 // Create a Google Cloud Storage bucket
 export const matrixDataBucket = new gcp.storage.Bucket(
@@ -8,7 +8,7 @@ export const matrixDataBucket = new gcp.storage.Bucket(
   {
     location: region,
   },
-  { provider: mainProvider },
+  { provider: mainClassicProvider },
 );
 
 // Create a Google Cloud service account
@@ -18,7 +18,7 @@ export const matrixSynapseServiceAccount = new gcp.serviceaccount.Account(
     accountId: 'matrix-synapse-service-account',
     displayName: 'Matrix Service Account',
   },
-  { provider: mainProvider },
+  { provider: mainClassicProvider },
 );
 
 // Grant the service account the role of Storage Object Viewer on the bucket
@@ -31,5 +31,5 @@ new gcp.storage.BucketIAMMember(
       email => `serviceAccount:${email}`,
     ), // dynamically fetch the service account's email
   },
-  { provider: mainProvider },
+  { provider: mainClassicProvider },
 );

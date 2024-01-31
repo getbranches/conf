@@ -1,10 +1,10 @@
 import * as gcp from '@pulumi/gcp';
 import * as pulumi from '@pulumi/pulumi';
-import { project } from '../../google/project';
+import { mainClassicProvider, project } from '../../google/project';
 import { matrixSynapseServiceAccount } from './google';
 import { matrixK8sServiceAccount } from './k8s';
 
-const iamServiceAccountIamBinding = new gcp.serviceaccount.IAMBinding(
+new gcp.serviceaccount.IAMBinding(
   'iamServiceAccountIamBinding',
   {
     serviceAccountId: matrixSynapseServiceAccount.name,
@@ -18,4 +18,5 @@ const iamServiceAccountIamBinding = new gcp.serviceaccount.IAMBinding(
       pulumi.interpolate`serviceAccount:${project.projectId}.svc.id.goog[${matrixK8sServiceAccount.metadata.namespace}/${matrixK8sServiceAccount.metadata.name}]`,
     ],
   },
+  { provider: mainClassicProvider },
 );
