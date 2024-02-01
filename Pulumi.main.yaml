@@ -27,7 +27,7 @@ config:
     secure: AAABACw7CL2RfU5fi7GA3NnyLx9C32vQb+zggY+Xq2Wy5baH+KhutPkNa5ERghESrchdqh4DFoRX7oGnQglfOA==
   abax-vwfs:host: abax-vwfs.branches.no
   abax-vwfs:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-vwfs/server
-  abax-vwfs:tag: main-b65cc84
+  abax-vwfs:tag: main-cfd3c10
   abax-vwfs:vwfs-api-url: https://cons-fleetextapi.vwfs.se/api
   abax-vwfs:vwfs-auth-url: https://idp.cons-common.vwfs.se/
   abax-vwfs:vwfs-client-id: f0004c6d-8801-43ee-b18d-d5d17c907182
