@@ -149,6 +149,20 @@ export interface StandardDeploymentArgs
   securityContext?: pulumi.Input<k8s.types.input.core.v1.PodSecurityContext>;
 
   /**
+   * Annotations is an unstructured key value map stored with a resource that may be set by external
+   * tools to store and retrieve arbitrary metadata.
+   * They are not queryable and should be preserved when modifying objects.
+   * More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations
+   */
+  annotations?: Record<string, pulumi.Input<string>>;
+
+  /**
+   * ServiceAccountName is the name of the ServiceAccount to use to run this pod.
+   * More info: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+   */
+  serviceAccountName?: pulumi.Input<string>;
+
+  /**
    * Arguments to the entrypoint. The container image's CMD is used if this is not provided.
    * Variable references $(VAR_NAME) are expanded using the container's environment.
    * If a variable cannot be resolved, the reference in the input string will be unchanged.
@@ -229,6 +243,8 @@ export class StandardDeployment extends pulumi.ComponentResource {
       args: entrypointArgs = undefined,
       volumeMounts = [],
       securityContext = undefined,
+      annotations = {},
+      serviceAccountName = undefined,
     } = args;
 
     const publicPort = ports.find(p => p.name === 'public');
@@ -318,7 +334,6 @@ export class StandardDeployment extends pulumi.ComponentResource {
           }
         : undefined,
     };
-
     this.deployment = new k8s.apps.v1.Deployment(
       name,
       {
@@ -326,6 +341,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
           name,
           annotations: {
             'pulumi.com/skipAwait': 'true',
+            ...annotations,
           },
         },
         spec: {
@@ -343,6 +359,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
             },
             spec: {
               securityContext,
+              serviceAccountName,
               volumes,
               initContainers: pulumi.output(initContainers).apply(ic =>
                 ic.map(initContainer => ({

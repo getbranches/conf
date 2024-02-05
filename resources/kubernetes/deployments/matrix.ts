@@ -3,6 +3,8 @@ import * as pulumi from '@pulumi/pulumi';
 import * as yaml from 'js-yaml';
 import { StandardDatabase } from '../components/standard-database';
 import { StandardDeployment } from '../components/standard-deployment';
+import { matrixDataBucket } from '../matrix/google';
+import { matrixK8sServiceAccount } from '../matrix/k8s';
 import { provider } from '../provider';
 
 const config = new pulumi.Config('matrix');
@@ -21,45 +23,7 @@ export const synapseDatabase = new StandardDatabase(
 
 const registrationSecret = config.requireSecret('registration-secret');
 
-const mediaVolume = new k8s.core.v1.PersistentVolumeClaim(
-  'matrix-media-volume',
-  {
-    metadata: {
-      name: 'matrix-media-volume',
-    },
-    spec: {
-      accessModes: ['ReadWriteOnce'],
-      resources: {
-        requests: {
-          storage: '1Gi',
-        },
-      },
-      storageClassName: 'standard',
-    },
-  },
-  { provider },
-);
-
-const dataVolume = new k8s.core.v1.PersistentVolumeClaim(
-  'matrix-data-volume',
-  {
-    metadata: {
-      name: 'matrix-data-volume',
-    },
-    spec: {
-      accessModes: ['ReadWriteOnce'],
-      resources: {
-        requests: {
-          storage: '1Gi',
-        },
-      },
-      storageClassName: 'standard',
-    },
-  },
-  { provider },
-);
-
-const secretVolume = new k8s.core.v1.Secret(
+const secret = new k8s.core.v1.Secret(
   'matrix-registration-secret',
   {
     metadata: {
@@ -75,7 +39,9 @@ const secretVolume = new k8s.core.v1.Secret(
   },
   { provider },
 );
+
 const host = config.require('host');
+
 export const homeserverConfig = new k8s.core.v1.ConfigMap(
   'matrix-homeserver-config',
   {
@@ -93,7 +59,7 @@ export const homeserverConfig = new k8s.core.v1.ConfigMap(
             enable_registration_captcha: true,
             registration_requires_token: true,
             report_stats: true,
-            media_store_path: '/synapse/media_store',
+            media_store_path: '/synapse/data/media_store',
             pid_file: '/synapse/data/homeserver.pid',
             signing_key_path: '/synapse/data/bjerk.io.signing.key',
             database: {
@@ -124,6 +90,13 @@ export const synapseDeployment = new StandardDeployment(
     image: config.require('synapse-image'),
     tag: config.require('synapse-tag'),
     host,
+    annotations: {
+      'gke-gcsfuse/volumes': 'true',
+      'gke-gcsfuse/cpu-limit': '500m',
+      'gke-gcsfuse/memory-limit': '1Gi',
+      'gke-gcsfuse/ephemeral-storage-limit': '50Gi',
+    },
+    serviceAccountName: matrixK8sServiceAccount.metadata.name,
     healthCheckHttpPath: '/health',
     databaseDetails: synapseDatabase.databaseDetails,
     volumes: [
@@ -131,7 +104,7 @@ export const synapseDeployment = new StandardDeployment(
         name: 'secrets',
         emptyDir: {},
         secret: {
-          secretName: secretVolume.metadata.name,
+          secretName: secret.metadata.name,
         },
       },
       {
@@ -142,15 +115,14 @@ export const synapseDeployment = new StandardDeployment(
         },
       },
       {
-        name: 'data',
-        persistentVolumeClaim: {
-          claimName: dataVolume.metadata.name,
-        },
-      },
-      {
-        name: 'media',
-        persistentVolumeClaim: {
-          claimName: mediaVolume.metadata.name,
+        name: 'gcs-fuse-csi-ephemeral',
+        csi: {
+          driver: 'gcs.csi.infra.gke.io',
+          readOnly: true,
+          volumeAttributes: {
+            bucketName: matrixDataBucket.name,
+            mountOptions: 'implicit-dirs',
+          },
         },
       },
     ],
@@ -164,12 +136,8 @@ export const synapseDeployment = new StandardDeployment(
         mountPath: '/config',
       },
       {
-        name: 'data',
+        name: 'gcs-fuse-csi-ephemeral',
         mountPath: '/synapse/data',
-      },
-      {
-        name: 'media',
-        mountPath: '/synapse/media_store',
       },
     ],
     // This is needed to tell synapse to load the secrets and config from these files

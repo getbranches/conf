@@ -9,6 +9,9 @@ export const cluster = new google.container.v1.Cluster(
     releaseChannel: { channel: 'REGULAR' },
     location: region,
     autopilot: { enabled: true },
+    addonsConfig: {
+      gcsFuseCsiDriverConfig: { enabled: true },
+    },
   },
   { provider: mainProvider, protect: true },
 );
