@@ -1,17 +1,17 @@
-import * as gcp from '@pulumi/gcp';
+import * as google from '@pulumi/google-native';
 import * as pulumi from '@pulumi/pulumi';
-import { mainClassicProvider, project } from '../../google/project';
+import { mainProvider, project } from '../../google/project';
 import { matrixSynapseServiceAccount } from './google';
 import { matrixK8sServiceAccount } from './k8s';
 
-new gcp.serviceaccount.IAMBinding(
+new google.iam.v1.ServiceAccountIamBinding(
   'iamServiceAccountIamBinding',
   {
-    serviceAccountId: matrixSynapseServiceAccount.name,
+    name: matrixSynapseServiceAccount.name,
     role: 'roles/iam.serviceAccountTokenCreator',
     members: [
       pulumi.interpolate`serviceAccount:${project.projectId}.svc.id.goog[${matrixK8sServiceAccount.metadata.namespace}/${matrixK8sServiceAccount.metadata.name}]`,
     ],
   },
-  { provider: mainClassicProvider },
+  { provider: mainProvider },
 );
