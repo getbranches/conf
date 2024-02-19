@@ -7,7 +7,7 @@ const config = new pulumi.Config('abax-vwfs');
 export const standardDeployment = new StandardDeployment(
   'abax-vwfs',
   {
-    image: config.require('image'),
+    image: config.require('ui-image'),
     tag: config.require('tag'),
     host: config.require('host'),
     secretEnv: {
