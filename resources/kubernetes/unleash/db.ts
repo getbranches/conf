@@ -26,7 +26,7 @@ const dbCluster = new k8s.apiextensions.CustomResource(
       },
       numberOfInstances: 1,
       volume: {
-        size: '10Gi',
+        size: '15Gi',
       },
       users: {
         [username]: [],
