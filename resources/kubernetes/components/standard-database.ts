@@ -59,17 +59,18 @@ export interface DatabaseDetails {
    * @default 5432
    */
   port?: pulumi.Input<number>;
-  database: pulumi.Input<string>;
+  databases: pulumi.Input<string>[];
 }
 
 export class StandardDatabase extends pulumi.ComponentResource {
-  readonly databaseName: pulumi.Output<string>;
+  readonly databaseNames: pulumi.Output<string[]>;
   readonly databaseSecretName: pulumi.Output<string>;
   readonly serviceHostname: pulumi.Output<string>;
   readonly databaseDetails: pulumi.Output<DatabaseDetails>;
 
   constructor(
     name: string,
+    databases: string[],
     args: StandardDatabaseArgs = {},
     opts?: pulumi.ComponentResourceOptions,
   ) {
@@ -77,7 +78,6 @@ export class StandardDatabase extends pulumi.ComponentResource {
     const {
       team = 'branches',
       username = name,
-      database = name,
       sizeInGb = '10Gi',
       postgresqlVersion = '15',
       numberOfInstances = 1,
@@ -110,9 +110,10 @@ export class StandardDatabase extends pulumi.ComponentResource {
           users: {
             [username]: [],
           },
-          databases: {
-            [database]: username,
-          },
+          databases: databases.reduce<Record<string, string>>((acc, db) => {
+            acc[db] = username;
+            return acc;
+          }, {}),
           // enableConnectionPooler: true,
           allowedSourceRanges: null,
           resources: {
@@ -124,7 +125,7 @@ export class StandardDatabase extends pulumi.ComponentResource {
       { parent: this },
     );
 
-    this.databaseName = pulumi.output(database);
+    this.databaseNames = pulumi.output(databases);
     this.databaseSecretName = pulumi.interpolate`${username}.${dbCluster.metadata.name}.credentials.postgresql.acid.zalan.do`;
     this.serviceHostname = pulumi.interpolate`${dbCluster.metadata.name}.${dbCluster.metadata.namespace}.svc.cluster.local`;
 
@@ -132,7 +133,7 @@ export class StandardDatabase extends pulumi.ComponentResource {
       secretName: this.databaseSecretName,
       hostname: this.serviceHostname,
       port: 5432,
-      database: database,
+      databases,
     });
   }
 }

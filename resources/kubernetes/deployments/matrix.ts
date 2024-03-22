@@ -12,6 +12,7 @@ const databaseName = 'matrix';
 
 export const synapseDatabase = new StandardDatabase(
   'matrix-db',
+  ['matrix-synapse'],
   {
     username: databaseUser,
     database: databaseName,

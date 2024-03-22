@@ -280,7 +280,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
             details =>
               `postgres://$(POSTGRES_username):$(POSTGRES_password)@${
                 details.hostname
-              }:${details.port ?? 5432}/${details.database}?sslmode=require`,
+              }:${details.port ?? 5432}/${details.databases}?sslmode=require`,
           ),
       });
     }
