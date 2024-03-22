@@ -23,6 +23,8 @@ export const standardDeployment = new StandardDeployment(
       VWFS_AUTH_URL: config.require('vwfs-auth-url'),
       VWFS_API_URL: config.require('vwfs-api-url'),
       SIGN_SECRET: config.requireSecret('sign-secret'),
+      SELF_URL: config.require('self-url'),
+      LOG_LEVEL: config.require('log-level'),
     },
   },
   { providers: [provider] },
