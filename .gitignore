@@ -1,5 +1,5 @@
 /bin/
-/node_modules/
+node_modules
 .yarn/install-state.gz
 stack.json
 

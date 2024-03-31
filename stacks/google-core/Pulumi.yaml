@@ -1,0 +1,13 @@
+name: google-core
+runtime: yaml
+description: Defines project and organization policie
+resources:
+  main-project:
+    type: gcp:organizations:Project
+    properties:
+      billingAccount: ${google:billingAccount}
+      folderId: ${google:folderId}
+      name: Branches Org Main
+      projectId: ${google:projectId}
+    options:
+      protect: true

@@ -1,0 +1,5 @@
+name: core
+runtime: nodejs
+description: Maintains central infrastructure for Tidi.app
+options:
+  refresh: always
