@@ -1,6 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as gcp from "@pulumi/gcp";
 import * as config from "./config";
+import { Api } from "@pulumi/gcp/apigateway";
 
 export const cluster = new gcp.container.Cluster("primary", {
   name: "branches",
@@ -21,6 +22,7 @@ new gcp.container.NodePool("primary", {
     autoRepair: true,
     autoUpgrade: true,
   },
+
   nodeConfig: {
     oauthScopes: [
       "https://www.googleapis.com/auth/compute",
@@ -29,9 +31,9 @@ new gcp.container.NodePool("primary", {
       "https://www.googleapis.com/auth/monitoring",
     ],
     preemptible: true,
-    machineType: "e2-medium",
+    machineType: "e2-standard-2",
     workloadMetadataConfig: {
-      mode: "GCE_METADATA",
+      mode: "GKE_METADATA",
     }
   },
 });

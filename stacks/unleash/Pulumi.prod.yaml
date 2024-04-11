@@ -1,0 +1,5 @@
+environment:
+ - unleash-prod
+config:
+  ext-image: unleashorg/unleash-server:5.10.0
+  host: unleash.branches.no

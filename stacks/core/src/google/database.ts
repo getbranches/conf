@@ -9,10 +9,17 @@ export const database = new gcp.sql.DatabaseInstance("main", {
   deletionProtection: true,
   settings: {
     tier: "db-f1-micro",
+    deletionProtectionEnabled: true,
+    backupConfiguration: {
+      enabled: true,
+      binaryLogEnabled: true,
+      pointInTimeRecoveryEnabled: true,
+      startTime: "03:00",
+    },
   },
 }, { protect: true });
 
-const gcpServiceAccount = new gcp.serviceaccount.Account("databaseaccess", {
+export const gcpServiceAccount = new gcp.serviceaccount.Account("databaseaccess", {
   accountId: "maindbaccess",
   project: googleConfig.project,
 });
