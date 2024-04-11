@@ -4,7 +4,9 @@ description: Abax-VWFS integration
 config:
   host:
     type: string
-  ext-image:
+  portal-image:
+    type: string
+  tag:
     type: string
 resources:
   namespace:
@@ -76,7 +78,7 @@ resources:
               "iam.gke.io/gke-metadata-server-enabled": "true"
             containers:
               - name: app
-                image: ${ext-image}
+                image: ${portal-image}:${tag}
                 ports:
                   - containerPort: 8484
                 envFrom:
