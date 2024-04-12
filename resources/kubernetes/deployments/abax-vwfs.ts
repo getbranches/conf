@@ -1,13 +1,23 @@
 import * as pulumi from '@pulumi/pulumi';
+import { StandardDatabase } from '../components/standard-database';
 import { StandardDeployment } from '../components/standard-deployment';
 import { provider } from '../provider';
 
 const config = new pulumi.Config('abax-vwfs');
 
+export const abaxVwfsDb = new StandardDatabase(
+  'abax-vwfs',
+  {
+    username: 'abaxvwfs',
+    database: 'abaxvwfs',
+  },
+  { providers: [provider] },
+);
+
 export const standardDeployment = new StandardDeployment(
   'abax-vwfs',
   {
-    image: config.require('ui-image'),
+    image: config.require('portal-image'),
     tag: config.require('tag'),
     host: config.require('host'),
     secretEnv: {
@@ -18,6 +28,7 @@ export const standardDeployment = new StandardDeployment(
       ABAX_CLIENT_ID: config.requireSecret('abax-client-id'),
       ABAX_CLIENT_SECRET: config.requireSecret('abax-client-secret'),
     },
+    databaseDetails: abaxVwfsDb.databaseDetails,
   },
   { providers: [provider] },
 );
