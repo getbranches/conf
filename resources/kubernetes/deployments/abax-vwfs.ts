@@ -28,6 +28,7 @@ export const standardDeployment = new StandardDeployment(
       LOG_LEVEL: config.require('log-level'),
     },
     databaseDetails: abaxMinubaDb.databaseDetails,
+    database: 'abaxvwfs',
   },
   { providers: [provider] },
 );

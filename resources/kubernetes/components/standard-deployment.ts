@@ -78,6 +78,11 @@ export interface StandardDeploymentArgs
   databaseDetails?: pulumi.Input<DatabaseDetails>;
 
   /**
+   * The name of the database that the deployment connects to.
+   */
+  database?: pulumi.Input<string>;
+
+  /**
    * Log level
    * @default 'info'
    * @allowedValues 'trace', 'debug', 'info', 'warn', 'error', 'fatal'
@@ -229,6 +234,7 @@ export class StandardDeployment extends pulumi.ComponentResource {
       args: entrypointArgs = undefined,
       volumeMounts = [],
       securityContext = undefined,
+      database,
     } = args;
 
     const publicPort = ports.find(p => p.name === 'public');
@@ -280,7 +286,9 @@ export class StandardDeployment extends pulumi.ComponentResource {
             details =>
               `postgres://$(POSTGRES_username):$(POSTGRES_password)@${
                 details.hostname
-              }:${details.port ?? 5432}/${details.databases}?sslmode=require`,
+              }:${details.port ?? 5432}/${
+                database?.toString() ?? details.databases[0]
+              }?sslmode=require`,
           ),
       });
     }

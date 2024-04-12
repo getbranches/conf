@@ -8,7 +8,7 @@ const config = new pulumi.Config('abax-minuba');
 
 export const abaxMinubaDb = new StandardDatabase(
   'abax-minuba',
-  ['abaxminuba', 'abax_vwfs'],
+  ['abaxminuba', 'abaxvwfs'],
   {
     username: 'abaxminuba',
     database: 'abaxminuba',
