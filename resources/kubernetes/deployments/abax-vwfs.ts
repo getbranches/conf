@@ -1,6 +1,7 @@
 import * as pulumi from '@pulumi/pulumi';
 import { StandardDeployment } from '../components/standard-deployment';
 import { provider } from '../provider';
+import { abaxMinubaDb } from './abax-minuba';
 
 const config = new pulumi.Config('abax-vwfs');
 
@@ -26,6 +27,7 @@ export const standardDeployment = new StandardDeployment(
       SELF_URL: config.require('self-url'),
       LOG_LEVEL: config.require('log-level'),
     },
+    databaseDetails: abaxMinubaDb.databaseDetails,
   },
   { providers: [provider] },
 );
