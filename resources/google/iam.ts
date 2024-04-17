@@ -12,7 +12,17 @@ export const callerClusterIamMember =
       role: 'roles/container.clusterAdmin',
       name: project.projectId,
     },
-    { provider: mainProvider },
+    {
+      provider: mainProvider,
+      ignoreChanges: [
+        'bindings',
+        'member',
+        'name',
+        'role',
+        'resource',
+        'version',
+      ],
+    },
   );
 
 clusterDevelopers.map(
