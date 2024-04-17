@@ -20,6 +20,9 @@ dependencies:
   '@pulumi/pulumi':
     specifier: ^3.76.0
     version: 3.76.0
+  get-pulumi-secret:
+    specifier: ^2.0.0
+    version: 2.0.0
   js-yaml:
     specifier: ^4.1.0
     version: 4.1.0
@@ -78,6 +81,13 @@ packages:
       chalk: 2.4.2
       js-tokens: 4.0.0
     dev: true
+
+  /@babel/runtime@7.24.4:
+    resolution: {integrity: sha512-dkxf7+hn8mFBwKjs9bvBlArzLVxVbS8usaPUDd5p2a9JCL9tB8OaOVN1isD4+Xyk4ns89/xeOmbQvgdK7IIVdA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.14.1
+    dev: false
 
   /@bjerk/eslint-config@5.3.1(eslint@8.45.0)(prettier@3.0.0)(typescript@5.1.6):
     resolution: {integrity: sha512-my3ZCnQR1HFzxKbq2xrAxhEsh4/Xm00SP+wj45LMLL8sTetpRRTqQi2BGBAaYFsfW2SWgx2rSVEL3m3nAodN0g==}
@@ -987,6 +997,13 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
 
+  /date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
+    dependencies:
+      '@babel/runtime': 7.24.4
+    dev: false
+
   /debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
@@ -1531,6 +1548,16 @@ packages:
       has-proto: 1.0.1
       has-symbols: 1.0.3
       hasown: 2.0.0
+
+  /get-pulumi-secret@2.0.0:
+    resolution: {integrity: sha512-Nuf+/b3t13tPuApinsjsM4LYl33KY0LACQnGEnyYQqBwMHI1iI+DyjtdiNoM49+m9hjm/Za0lo7/xhMElRRt4A==}
+    engines: {node: '>=18'}
+    dependencies:
+      '@pulumi/pulumi': 3.76.0
+      date-fns: 2.30.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /get-stream@6.0.1:
     resolution: {integrity: sha512-ts6Wi+2j3jQjqi70w5AlN8DFnkSwC+MqmxEzdEALB2qXZYV3X/b1CTfgPLGJNMeAWxdPfU8FO1ms3NUfaHCPYg==}
@@ -2341,6 +2368,10 @@ packages:
       dezalgo: 1.0.4
       graceful-fs: 4.2.11
       once: 1.4.0
+    dev: false
+
+  /regenerator-runtime@0.14.1:
+    resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
     dev: false
 
   /regexp-tree@0.1.27:

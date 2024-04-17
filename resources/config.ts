@@ -1,9 +1,13 @@
 import * as pulumi from '@pulumi/pulumi';
-
-const config = new pulumi.Config();
+import { getToken } from 'get-pulumi-secret';
 
 // This is references to a Pulumi ESC
-export const githubToken = config.requireSecret('githubToken');
+export const githubToken = pulumi.secret(
+  getToken({
+    name: 'getbranches-token',
+    namespace: 'github',
+  }),
+);
 
 const googleConfig = new pulumi.Config('google');
 
