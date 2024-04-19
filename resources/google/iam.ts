@@ -1,7 +1,7 @@
 import * as gcp from '@pulumi/gcp';
 import { interpolate } from '@pulumi/pulumi';
 import { callerServiceAccount, clusterDevelopers } from '../config';
-import { mainProvider, project } from './project';
+import { mainClassicProvider, project } from './project';
 
 // Cluster roles for caller service account
 export const callerClusterIamBinding = new gcp.projects.IAMBinding(
@@ -11,11 +11,15 @@ export const callerClusterIamBinding = new gcp.projects.IAMBinding(
     role: 'roles/container.clusterAdmin',
     members: [interpolate`serviceAccount:${callerServiceAccount}`],
   },
-  { provider: mainProvider },
+  { provider: mainClassicProvider },
 );
 
-new gcp.projects.IAMBinding(`clusterDevelopers-cluster-access`, {
-  project: project.projectId,
-  role: 'roles/container.developer',
-  members: clusterDevelopers,
-});
+new gcp.projects.IAMBinding(
+  `clusterDevelopers-cluster-access`,
+  {
+    project: project.projectId,
+    role: 'roles/container.developer',
+    members: clusterDevelopers,
+  },
+  { provider: mainClassicProvider },
+);
