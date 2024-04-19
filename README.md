@@ -4,8 +4,8 @@ This repository contains the infrastructure code for Branches.
 
 ## Deploying manually
 
-With a sufficiently authorized account, authenticate normally and as
-application-default:
+With a sufficiently powerful account, authenticate with Google Cloud normally
+and as application-default:
 
 ```sh
 gcloud auth login
