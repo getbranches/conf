@@ -15,7 +15,7 @@ export const callerClusterIamBinding = new gcp.projects.IAMBinding(
 );
 
 new gcp.projects.IAMBinding(
-  `clusterDevelopers-cluster-access`,
+  `cluster-developers-cluster-access`,
   {
     project: project.projectId,
     role: 'roles/container.developer',
