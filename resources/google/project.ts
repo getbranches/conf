@@ -27,14 +27,14 @@ export const mainProvider = new google.Provider('google-native-main-provider', {
 
 export const googleProviders = [mainClassicProvider, mainProvider];
 
-new google.cloudresourcemanager.v3.ProjectIamMember(
-  'main-project-iam-member',
+new gcp.projects.IAMBinding(
+  'main-project-iam-binding',
   {
-    member: interpolate`serviceAccount:${config.require('service-account')}`,
+    project: project.projectId,
     role: 'roles/owner',
-    name: project.projectId,
+    members: [interpolate`serviceAccount:${config.require('service-account')}`],
   },
-  { provider: mainProvider },
+  { provider: mainClassicProvider },
 );
 
 export const services = [

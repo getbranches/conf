@@ -1,29 +1,25 @@
-import * as google from '@pulumi/google-native';
+import * as gcp from '@pulumi/gcp';
 import { interpolate } from '@pulumi/pulumi';
 import { callerServiceAccount, clusterDevelopers } from '../config';
-import { mainProvider, project } from './project';
+import { mainClassicProvider, project } from './project';
 
 // Cluster roles for caller service account
-export const callerClusterIamMember =
-  new google.cloudresourcemanager.v3.ProjectIamMember(
-    'caller-cluster-access',
-    {
-      member: interpolate`serviceAccount:${callerServiceAccount}`,
-      role: 'roles/container.clusterAdmin',
-      name: project.projectId,
-    },
-    { provider: mainProvider },
-  );
+export const callerClusterIamBinding = new gcp.projects.IAMBinding(
+  'caller-cluster-access',
+  {
+    project: project.projectId,
+    role: 'roles/container.clusterAdmin',
+    members: [interpolate`serviceAccount:${callerServiceAccount}`],
+  },
+  { provider: mainClassicProvider },
+);
 
-clusterDevelopers.map(
-  member =>
-    new google.cloudresourcemanager.v3.ProjectIamMember(
-      `${member}-cluster-access`,
-      {
-        member,
-        role: 'roles/container.developer',
-        name: project.projectId,
-      },
-      { provider: mainProvider },
-    ),
+new gcp.projects.IAMBinding(
+  `cluster-developers-cluster-access`,
+  {
+    project: project.projectId,
+    role: 'roles/container.developer',
+    members: clusterDevelopers,
+  },
+  { provider: mainClassicProvider },
 );
