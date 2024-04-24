@@ -32,8 +32,14 @@ jobs:
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
-
-      - uses: simenandre/setup-gke-gcloud-auth-plugin@v1
+      - uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          install_components: 'gke-gcloud-auth-plugin'
+      - name: Get GKE credentials
+        uses: 'google-github-actions/get-gke-credentials@v2'
+        with:
+          cluster_name: core-cluster
+          location: europe-north1
 
       - name: Install dependencies 📦️
         run: pnpm install --frozen-lockfile
@@ -61,4 +67,3 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_DRIFTCHECK_WEBHOOK_URL }}
-
