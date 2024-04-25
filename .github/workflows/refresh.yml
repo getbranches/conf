@@ -25,10 +25,9 @@ jobs:
           cache: pnpm
 
       - uses: 'google-github-actions/setup-gcloud@v2'
-          with:
-            install_components: 'gke-gcloud-auth-plugin'
+        with:
+          install_components: 'gke-gcloud-auth-plugin'
 
-            
       - name: Authenticate with Google 🔑
         uses: google-github-actions/auth@v2
         with:
