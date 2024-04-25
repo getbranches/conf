@@ -40,7 +40,7 @@ jobs:
       - name: Get GKE credentials
         uses: 'google-github-actions/get-gke-credentials@v2'
         with:
-          cluster_name: core-cluster
+          cluster_name: branches-main
           location: europe-north1
 
       - name: Install dependencies 📦️
