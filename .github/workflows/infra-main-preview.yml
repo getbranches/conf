@@ -36,21 +36,15 @@ jobs:
       - name: Install dependencies 📦️
         run: pnpm install --frozen-lockfile
 
+      - uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          install_components: 'gke-gcloud-auth-plugin'
+
       - name: Authenticate to GCP 🔒
         uses: google-github-actions/auth@v2
         with:
           workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
           service_account: conf-deployer@bjerk-core.iam.gserviceaccount.com
-
-      - uses: 'google-github-actions/setup-gcloud@v2'
-        with:
-          install_components: 'gke-gcloud-auth-plugin'
-
-      - name: Get GKE credentials
-        uses: 'google-github-actions/get-gke-credentials@v2'
-        with:
-          cluster_name: branches-main
-          location: europe-north1
 
       - name: Running Pulumi 🚀
         uses: pulumi/actions@v4
