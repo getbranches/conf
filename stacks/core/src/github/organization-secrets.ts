@@ -5,7 +5,7 @@ import * as githubConfig from "./config";
 import { identityPoolProvider } from "../google/identity-pool-github";
 import { artifactRepository } from "../google/artifact-registry";
 import { artifactServiceAccount } from "../google/repository-artifact-access";
-import "./organization-secrets-bjerkio";
+import "../github-bjerk/organization-secrets-bjerkio";
 
 const provider = new github.Provider("github", {
   owner: githubConfig.owner,

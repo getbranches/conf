@@ -7,7 +7,7 @@ import { artifactRepository } from "../google/artifact-registry";
 import { artifactServiceAccount } from "../google/repository-artifact-access";
 
 const provider = new github.Provider("bjerkio-github", {
-  owner: "bjerkio",
+  owner: githubConfig.owner,
   token: githubConfig.token,
 });
 
