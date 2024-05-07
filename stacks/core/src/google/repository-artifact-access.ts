@@ -31,3 +31,15 @@ new gcp.serviceaccount.IAMMember("iam-infra-token", {
 	role: "roles/iam.serviceAccountTokenCreator",
 	member: getIdentityPoolMemberByOwner(githubConfig.owner),
 });
+
+new gcp.serviceaccount.IAMMember("iam-workload-bjerkio", {
+  serviceAccountId: artifactServiceAccount.id,
+  role: "roles/iam.workloadIdentityUser",
+  member: getIdentityPoolMemberByOwner("bjerkio"),
+});
+
+new gcp.serviceaccount.IAMMember("iam-infra-token-bjerkio", {
+  serviceAccountId: artifactServiceAccount.id,
+  role: "roles/iam.serviceAccountTokenCreator",
+  member: getIdentityPoolMemberByOwner("bjerkio"),
+});
