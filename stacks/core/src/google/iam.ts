@@ -17,5 +17,12 @@ developersIamMembers.map(member => {
       member,
       role: 'roles/cloudsql.client',
     }),
+
+    // cloud build roles
+    new gcp.projects.IAMMember(`cloudbuild.builds.editor-${member}`, {
+      project: googleConfig.project,
+      member,
+      role: 'roles/cloudbuild.builds.editor',
+    }),
   ];
 });
