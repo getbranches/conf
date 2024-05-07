@@ -5,17 +5,16 @@ import * as githubConfig from "./config";
 import { identityPoolProvider } from "../google/identity-pool-github";
 import { artifactRepository } from "../google/artifact-registry";
 import { artifactServiceAccount } from "../google/repository-artifact-access";
-import "./organization-secrets-bjerkio";
 
-const provider = new github.Provider("github", {
-  owner: githubConfig.owner,
+const provider = new github.Provider("bjerkio-github", {
+  owner: "bjerkio",
   token: githubConfig.token,
 });
 
 new github.ActionsOrganizationVariable(
-  "google-project",
+  "bjerkio-google-project",
   {
-    variableName: "GOOGLE_PROJECT_ID",
+    variableName: "BRANCHES_GOOGLE_PROJECT_ID",
     value: googleConfig.project,
     visibility: "private",
   },
@@ -23,9 +22,9 @@ new github.ActionsOrganizationVariable(
 );
 
 new github.ActionsOrganizationVariable(
-  "google-identity-provider",
+  "bjerkio-google-identity-provider",
   {
-    variableName: "WORKLOAD_IDENTITY_PROVIDER",
+    variableName: "BRANCHES_WORKLOAD_IDENTITY_PROVIDER",
     value: identityPoolProvider.name,
     visibility: "private",
   },
@@ -33,9 +32,9 @@ new github.ActionsOrganizationVariable(
 );
 
 new github.ActionsOrganizationVariable(
-  "google-service-account",
+  "bjerkio-google-service-account",
   {
-    variableName: "ARTIFACT_SERVICE_ACCOUNT_EMAIL",
+    variableName: "BRANCHES_ARTIFACT_SERVICE_ACCOUNT_EMAIL",
     value: artifactServiceAccount.email,
     visibility: "private",
   },
@@ -43,9 +42,9 @@ new github.ActionsOrganizationVariable(
 );
 
 new github.ActionsOrganizationVariable(
-  "google-container-repository",
+  "bjerkio-google-container-repository",
   {
-    variableName: "CONTAINER_REGISTRY",
+    variableName: "BRANCHES_CONTAINER_REGISTRY",
     value: pulumi.interpolate`${artifactRepository.location}-docker.pkg.dev/${googleConfig.project}/${artifactRepository.repositoryId}`,
     visibility: "private",
   },
