@@ -3,7 +3,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as googleConfig from "../google/config";
 import * as githubConfig from "./config";
 import { identityPoolProvider } from "../google/identity-pool-github";
-import { artifactRepository } from "../google/artifact-registry";
+import { artifactUri } from "../google/artifact-registry";
 import { artifactServiceAccount } from "../google/repository-artifact-access";
 import "../github-bjerk/organization-secrets-bjerkio";
 
@@ -46,7 +46,7 @@ new github.ActionsOrganizationVariable(
   "google-container-repository",
   {
     variableName: "CONTAINER_REGISTRY",
-    value: pulumi.interpolate`${artifactRepository.location}-docker.pkg.dev/${googleConfig.project}/${artifactRepository.repositoryId}`,
+    value: artifactUri,
     visibility: "private",
   },
   { provider }
