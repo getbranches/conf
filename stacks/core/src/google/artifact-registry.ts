@@ -16,4 +16,4 @@ export const artifactRepository = new gcp.artifactregistry.Repository(
   },
 );
 
-export const artifactUri = pulumi.interpolate`${artifactRepository.location}-docker.pkg.dev/${config.project}/${artifactRepository.repositoryId}`,
+export const artifactUri = pulumi.interpolate`${artifactRepository.location}-docker.pkg.dev/${config.project}/${artifactRepository.repositoryId}`;
