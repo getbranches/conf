@@ -24,5 +24,13 @@ developersIamMembers.map(member => {
       member,
       role: 'roles/cloudbuild.builds.editor',
     }),
+
+    // cloud dns roles
+    new gcp.projects.IAMMember(`dns.admin-${member}`, {
+      project: googleConfig.project,
+      member,
+      role: 'roles/dns.admin',
+    }),
+
   ];
 });
