@@ -64,7 +64,7 @@ resources:
           pulumi.com/skipAwait: "true"
           pulumi.com/patchForce: "true"
       spec:
-        replicas: 1
+        replicas: 3
         selector:
           matchLabels: ${appLabels}
         template:
