@@ -15,5 +15,4 @@ export const callerServiceAccount = googleConfig.require('service-account');
 
 const k8sConfig = new pulumi.Config('kubernetes');
 
-export const clusterDevelopers =
-  k8sConfig.requireObject<string[]>('cluster-developers');
+export const clusterDevelopers = k8sConfig.require('cluster-developers');
