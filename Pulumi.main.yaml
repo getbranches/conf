@@ -7,7 +7,7 @@ config:
   abax-minuba:frontend-host: abax-minuba.branches.no
   abax-minuba:minuba-api-key:
     secure: AAABAAj/ENNxytYNIdSzUpFhoot+08snrRDn+KETFHKZ5LCeLXkTnJEFbalQvL0tomO19CbgwU/Xa3qk4CM+EA==
-  abax-minuba:tag: main-874fac9
+  abax-minuba:tag: main-37d1e61
   abax-minuba:ui-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/ui
   abax-procore:host: procore-abax.branches.no
   abax-procore:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-procore/server
