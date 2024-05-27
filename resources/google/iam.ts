@@ -15,13 +15,13 @@ export const callerClusterIamBinding = new gcp.projects.IAMBinding(
 );
 
 clusterDevelopers.map(
-  value =>
+  member =>
     new gcp.projects.IAMMember(
       `cluster-developers-cluster-access`,
       {
         project: project.projectId,
         role: 'roles/container.developer',
-        member: value,
+        member,
       },
       { provider: mainClassicProvider },
     ),
