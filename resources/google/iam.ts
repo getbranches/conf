@@ -14,12 +14,12 @@ export const callerClusterIamBinding = new gcp.projects.IAMBinding(
   { provider: mainClassicProvider },
 );
 
-new gcp.projects.IAMBinding(
+new gcp.projects.IAMMember(
   `cluster-developers-cluster-access`,
   {
     project: project.projectId,
     role: 'roles/container.developer',
-    members: clusterDevelopers,
+    member: clusterDevelopers,
   },
   { provider: mainClassicProvider },
 );
