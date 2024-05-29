@@ -52,12 +52,11 @@ resources:
         annotations:
           'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
   serviceAccountIamBinding:
-    type: gcp:serviceaccount:IAMBinding
+    type: gcp:serviceaccount:IAMMember
     properties:
       serviceAccountId: ${database:serviceAccountId}
       role: roles/iam.workloadIdentityUser
-      members:
-        - serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
+      member: serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
 
   # Secrets for connecting to ABAX API
   abaxClientSecret:
