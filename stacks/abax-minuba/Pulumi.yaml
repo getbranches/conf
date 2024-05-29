@@ -1,0 +1,208 @@
+name: abax-minuba
+runtime: yaml
+description: Common Unleash server
+
+variables:
+  appLabels:
+    app: ${pulumi.project}-${pulumi.stack}
+
+resources:
+  namespace:
+    type: kubernetes:core/v1:Namespace
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+  # A database in the common database instance to be used for the Abax Minuba integration
+  database:
+    type: gcp:sql/database:Database
+    properties:
+      name: abax-minuba
+      instance: ${database:instanceName}
+  databasePassword:
+    type: random:RandomPassword
+    properties:
+      length: 16
+      special: true
+      overrideSpecial: '_%@'
+  # A user in the common database instance to be used for the Abax Minuba integration
+  databaseUser:
+    type: gcp:sql/user:User
+    properties:
+      name: abax-minuba
+      instance: ${database:instanceName}
+      password: ${databasePassword.result}
+  # A set of kubernetes secrets to be used by apps that need to connect to the database
+  databaseSecret:
+    type: kubernetes:core/v1:Secret
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}-database
+        namespace: ${namespace.metadata.name}
+      stringData:
+        DATABASE_NAME: ${database.name}
+        DATABASE_USERNAME: ${databaseUser.name}
+        DATABASE_PASSWORD: ${databasePassword.result}
+        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@$localhost:$5432/${database.name}
+  serviceAccount:
+    type: kubernetes:core/v1:ServiceAccount
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
+  serviceAccountIamBinding:
+    type: gcp:serviceaccount:IAMBinding
+    properties:
+      serviceAccountId: ${database:serviceAccountId}
+      role: roles/iam.workloadIdentityUser
+      members:
+        - serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
+
+  # Secrets for connecting to ABAX API
+  abaxClientSecret:
+    type: kubernetes:core/v1:Secret
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}-abax-client-secret
+        namespace: ${namespace.metadata.name}
+      stringData:
+        ABAX_CLIENT_ID: ${abax:client-id}
+        ABAX_CLIENT_SECRET: ${abax:client-secret}
+
+  # Secrets for connecting to Minuba API
+  minubaApiKeySecret:
+    type: kubernetes:core/v1:Secret
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}-minuba-api-key
+        namespace: ${namespace.metadata.name}
+      stringData:
+        MINUBA_API_KEY: ${minuba:api-key}
+
+  # Cronjob for running the agent, which synchronises data between ABAX and Minuba
+  cronjob:
+    type: kubernetes:batch/v1:CronJob
+    properties:
+      metadata:
+        name: abax-minuba-agent
+        annotations:
+          'pulumi.com/skipAwait': 'true'
+      spec:
+        schedule: '*/30 * * * *' # every 30 minutes
+        jobTemplate:
+          spec:
+            template:
+              spec:
+                restartPolicy: OnFailure
+                containers:
+                  - name: ${pulumi.project}-${pulumi.stack}-cronjob
+                    image: ${agent:image}:${agent:tag}
+                    envFrom:
+                      - secretRef:
+                          name: ${databaseSecret.metadata.name}
+                      - secretRef:
+                          name: ${abaxClientSecret.metadata.name}
+                      - secretRef:
+                          name: ${minubaApiKeySecret.metadata.name}
+                    env:
+                      - name: NODE_ENV
+                        value: production
+                      - name: LOG_LEVEL
+                        value: debug
+
+  # Deployment for the UI, where users can configure the integration
+  deployment:
+    type: kubernetes:apps/v1:Deployment
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          pulumi.com/skipAwait: 'true'
+          pulumi.com/patchForce: 'true'
+      spec:
+        replicas: 1
+        selector:
+          matchLabels: ${appLabels}
+        template:
+          metadata:
+            labels: ${appLabels}
+          spec:
+            serviceAccountName: ${serviceAccount.metadata.name}
+            nodeSelector:
+              'iam.gke.io/gke-metadata-server-enabled': 'true'
+            initContainers:
+              - name: migrate
+                image: ${agent:image}:${agent:tag}
+                imagePullPolicy: IfNotPresent
+                command:
+                  - pnpm
+                  - run
+                  - db:migrate:deploy
+                envFrom:
+                  - secretRef:
+                      name: ${databaseSecret.metadata.name}
+                  - secretRef:
+                      name: ${abaxClientSecret.metadata.name}
+                  - secretRef:
+                      name: ${minubaApiKeySecret.metadata.name}
+                env:
+                  - name: NODE_ENV
+                    value: production
+                  - name: LOG_LEVEL
+                    value: debug,
+            containers:
+              - name: app
+                image: ${ui:image}:${ui:tag}
+                ports:
+                  - containerPort: 8484
+                envFrom:
+                  - secretRef:
+                      name: ${databaseSecret.metadata.name}
+                  - secretRef:
+                      name: ${abaxClientSecret.metadata.name}
+                env:
+                  - name: SELF_URL
+                    value: https://${ui:host}
+              - name: cloud-sql-proxy
+                image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
+                args:
+                  - --structured-logs=true
+                  - --port=5432
+                  - ${database:connectionName}
+                securityContext:
+                  runAsNonRoot: true
+
+  service:
+    type: kubernetes:core/v1:Service
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+      spec:
+        selector: ${appLabels}
+        ports:
+          - port: 8484
+            targetPort: 8484
+  ingress:
+    type: kubernetes:networking.k8s.io/v1:Ingress
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          pulumi.com/skipAwait: 'true'
+          kubernetes.io/ingress.class: 'caddy'
+      spec:
+        rules:
+          - host: ${ui:host}
+            http:
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: ${pulumi.project}-${pulumi.stack}
+                      port:
+                        number: 8484
