@@ -42,7 +42,7 @@ resources:
         DATABASE_NAME: ${database.name}
         DATABASE_USERNAME: ${databaseUser.name}
         DATABASE_PASSWORD: ${databasePassword.result}
-        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@$localhost:5432/${database.name}
+        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@localhost:5432/${database.name}
   serviceAccount:
     type: kubernetes:core/v1:ServiceAccount
     properties:
