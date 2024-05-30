@@ -1,4 +1,5 @@
 config:
+  gcp:project: branches-org-main
   abax:client-id:
     secure: AAABAKk4157pwBBVsoW9bub4gHC/jeS/+OZ8VLMgGxz2W6aRb5RVbg/fIvu4HtnODlGKJ9PP+Vqc6iyTivtIyg==
   abax:client-secret:
@@ -11,6 +12,7 @@ config:
   ui:host: am.branches.no
   ui:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/ui
   ui:tag: main-dece72c
+
 environment:
   - kubernetes
   - common

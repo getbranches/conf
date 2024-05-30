@@ -1,6 +1,6 @@
 name: abax-minuba
 runtime: yaml
-description: Common Unleash server
+description: Abax Minuba integration
 
 variables:
   appLabels:
@@ -51,8 +51,8 @@ resources:
         namespace: ${namespace.metadata.name}
         annotations:
           'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
-  serviceAccountIamBinding:
-    type: gcp:serviceaccount:IAMMember
+  serviceAccountIamMember:
+    type: gcp:serviceAccount:IAMMember
     properties:
       serviceAccountId: ${database:serviceAccountId}
       role: roles/iam.workloadIdentityUser
@@ -89,6 +89,8 @@ resources:
           'pulumi.com/skipAwait': 'true'
       spec:
         schedule: '*/30 * * * *' # every 30 minutes
+        selector:
+          matchLabels: ${appLabels}
         jobTemplate:
           spec:
             template:
