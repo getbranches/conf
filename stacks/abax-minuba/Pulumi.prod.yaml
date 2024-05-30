@@ -3,14 +3,14 @@ config:
     secure: AAABAKk4157pwBBVsoW9bub4gHC/jeS/+OZ8VLMgGxz2W6aRb5RVbg/fIvu4HtnODlGKJ9PP+Vqc6iyTivtIyg==
   abax:client-secret:
     secure: AAABAF/kuvtrSu2dw6axE4N1MK3KaaOC3WEYbP4+dQGJ1SZ48RPH+bUb5/53GO8ceRH4JQKcSBLGIniuGNuhlw==
-  agent:image: blabla
-  agent:tag: blabla
+  agent:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/agent
+  agent:tag: main-dece72c
   kubernetes:namespace: abax-minuba
   minuba:api-key:
     secure: AAABAN4qomcASPDtdx+4m3qU6BbDNCeMDoUzh5AK6jggoGyoGG+UQYEv0qL1yyI75oPW9r5HDQati8qx+btmWA==
   ui:host: am.branches.no
-  ui:image: blabla
-  ui:tag: blabla
+  ui:image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-minuba/ui
+  ui:tag: main-dece72c
 environment:
   - kubernetes
   - common
