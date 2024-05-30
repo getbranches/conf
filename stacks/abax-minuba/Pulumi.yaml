@@ -80,11 +80,11 @@ resources:
         MINUBA_API_KEY: ${minuba:api-key}
 
   # Cronjob for running the agent, which synchronises data between ABAX and Minuba
-  cronjob:
+  agent:
     type: kubernetes:batch/v1:CronJob
     properties:
       metadata:
-        name: abax-minuba-agent
+        name: ${pulumi.project}-${pulumi.stack}-agent
         annotations:
           'pulumi.com/skipAwait': 'true'
         namespace: ${namespace.metadata.name}
@@ -113,11 +113,11 @@ resources:
                         value: debug
 
   # Deployment for the UI, where users can configure the integration
-  deployment:
+  ui:
     type: kubernetes:apps/v1:Deployment
     properties:
       metadata:
-        name: ${pulumi.project}-${pulumi.stack}
+        name: ${pulumi.project}-${pulumi.stack}-ui
         namespace: ${namespace.metadata.name}
         annotations:
           pulumi.com/skipAwait: 'true'
