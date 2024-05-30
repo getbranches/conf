@@ -143,7 +143,7 @@ resources:
                     do;
                       echo "Waiting for database to be ready...";
                       sleep 5;
-                    done;
+                    done
                 envFrom:
                   - secretRef:
                       name: ${databaseSecret.metadata.name}
