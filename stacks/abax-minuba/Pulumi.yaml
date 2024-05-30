@@ -138,10 +138,11 @@ resources:
                 image: ${agent:image}:${agent:tag}
                 imagePullPolicy: IfNotPresent
                 command:
-                  - until pnpm run db:migrate:deploy
-                  - do
-                  - echo Retrying database connection
-                  - done
+                  - |
+                    until pnpm run db:migrate:deploy
+                    do
+                      echo "Retrying database connection..."
+                    done
                 envFrom:
                   - secretRef:
                       name: ${databaseSecret.metadata.name}
