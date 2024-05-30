@@ -133,18 +133,17 @@ resources:
             serviceAccountName: ${serviceAccount.metadata.name}
             nodeSelector:
               'iam.gke.io/gke-metadata-server-enabled': 'true'
-            initContainers:
+            containers:
               - name: migrate
                 image: ${agent:image}:${agent:tag}
                 imagePullPolicy: IfNotPresent
                 command:
                   - |
-                    until pnpm run db:migrate:deploy; 
-                    do; 
-                      echo "Retrying database connection..."; 
-                      sleep 5; 
-                    done
-
+                    until pnpm run db:migrate:deploy;
+                    do;
+                      echo "Waiting for database to be ready...";
+                      sleep 5;
+                    done;
                 envFrom:
                   - secretRef:
                       name: ${databaseSecret.metadata.name}
@@ -156,8 +155,8 @@ resources:
                   - name: NODE_ENV
                     value: production
                   - name: LOG_LEVEL
-                    value: debug,
-            containers:
+                    value: debug
+
               - name: app
                 image: ${ui:image}:${ui:tag}
                 ports:
@@ -171,30 +170,6 @@ resources:
                   - name: SELF_URL
                     value: https://${ui:host}
 
-  # Deployment for the Cloud SQL proxy, which lets us connect to the Cloud SQL datbase
-  # We need this to run in the background in order to allow the agent and UI (including its init container that applies migrations)
-  # to connect to the database
-  sql-proxy:
-    type: kubernetes:apps/v1:Deployment
-    properties:
-      metadata:
-        name: ${pulumi.project}-${pulumi.stack}-sql-proxy
-        namespace: ${namespace.metadata.name}
-        annotations:
-          pulumi.com/skipAwait: 'true'
-          pulumi.com/patchForce: 'true'
-      spec:
-        replicas: 1
-        selector:
-          matchLabels: ${appLabels}
-        template:
-          metadata:
-            labels: ${appLabels}
-          spec:
-            serviceAccountName: ${serviceAccount.metadata.name}
-            nodeSelector:
-              'iam.gke.io/gke-metadata-server-enabled': 'true'
-            containers:
               - name: cloud-sql-proxy
                 image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
                 args:
