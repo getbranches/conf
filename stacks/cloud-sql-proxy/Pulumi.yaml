@@ -12,6 +12,20 @@ resources:
     properties:
       metadata:
         name: ${pulumi.project}-${pulumi.stack}
+  serviceAccount:
+    type: kubernetes:core/v1:ServiceAccount
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
+  serviceAccountIamMember:
+    type: gcp:serviceAccount:IAMMember
+    properties:
+      serviceAccountId: ${database:serviceAccountId}
+      role: roles/iam.workloadIdentityUser
+      member: serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
   service:
     type: kubernetes:core/v1:Service
     properties:
