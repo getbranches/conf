@@ -44,7 +44,7 @@ resources:
         DATABASE_NAME: ${database.name}
         DATABASE_USERNAME: ${databaseUser.name}
         DATABASE_PASSWORD: ${databasePassword.result}
-        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@localhost:5432/${database.name}
+        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@10.9.8.7:8484/${database.name}
 
   # Secrets for connecting to ABAX API
   abaxClientSecret:
