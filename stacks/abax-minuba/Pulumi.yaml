@@ -24,6 +24,7 @@ resources:
       length: 16
       special: true
       overrideSpecial: '_%@'
+
   # A user in the common database instance to be used for the Abax Minuba integration
   databaseUser:
     type: gcp:sql/user:User
@@ -31,6 +32,7 @@ resources:
       name: abax-minuba
       instance: ${database:instanceName}
       password: ${databasePassword.result}
+
   # A set of kubernetes secrets to be used by apps that need to connect to the database
   databaseSecret:
     type: kubernetes:core/v1:Secret
