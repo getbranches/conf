@@ -12,20 +12,7 @@ resources:
     properties:
       metadata:
         name: ${pulumi.project}-${pulumi.stack}
-  serviceAccount:
-    type: kubernetes:core/v1:ServiceAccount
-    properties:
-      metadata:
-        name: ${pulumi.project}-${pulumi.stack}
-        namespace: ${namespace.metadata.name}
-        annotations:
-          'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
-  serviceAccountIamMember:
-    type: gcp:serviceAccount:IAMMember
-    properties:
-      serviceAccountId: ${database:serviceAccountId}
-      role: roles/iam.workloadIdentityUser
-      member: serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
+
   service:
     type: kubernetes:core/v1:Service
     properties:
@@ -37,21 +24,7 @@ resources:
         ports:
           - port: 8484
             targetPort: 8484
-  endpointSlice:
-    type: kubernetes:discovery.k8s.io/v1beta1:EndpointSlice
-    properties:
-      metadata:
-        name: ${pulumi.project}-${pulumi.stack}-slice
-        namespace: ${namespace.metadata.name}
-        labels: ${appLabels}
-      addressType: IPv4
-      endpoints:
-        - addresses:
-            - '10.9.8.7'
-          ports:
-            - name: http
-              port: 8484
-              protocol: TCP
+
   proxy:
     type: kubernetes:apps/v1:Deployment
     properties:
@@ -69,7 +42,6 @@ resources:
           metadata:
             labels: ${appLabels}
           spec:
-            serviceAccountName: ${serviceAccount.metadata.name}
             nodeSelector:
               'iam.gke.io/gke-metadata-server-enabled': 'true'
             containers:
@@ -77,7 +49,7 @@ resources:
                 image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
                 args:
                   - --structured-logs=true
-                  - --port=5432
+                  - --port=8484
                   - ${database:connectionName}
                 securityContext:
                   runAsNonRoot: true
