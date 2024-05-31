@@ -1,0 +1,6 @@
+environment:
+  - kubernetes
+  - common
+  - database
+config:
+  kubernetes:namespace: cloud-sql-proxy

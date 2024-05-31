@@ -1,0 +1,71 @@
+name: cloud-sql-proxy
+runtime: yaml
+description: Proxy for managed Cloud SQL server
+
+variables:
+  appLabels:
+    app.kubernetes.io/name: ${pulumi.project}-${pulumi.stack}
+
+resources:
+  namespace:
+    type: kubernetes:core/v1:Namespace
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+  service:
+    type: kubernetes:core/v1:Service
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+      spec:
+        selector: ${appLabels}
+        ports:
+          - port: 8484
+            targetPort: 8484
+  endpointSlice:
+    type: kubernetes:discovery.k8s.io/v1beta1:EndpointSlice
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}-slice
+        namespace: ${namespace.metadata.name}
+        labels: ${appLabels}
+      addressType: IPv4
+      endpoints:
+        - addresses:
+            - '10.9.8.7'
+          ports:
+            - name: http
+              port: 8484
+              protocol: TCP
+
+  # Deployment for the UI, where users can configure the integration
+  proxy:
+    type: kubernetes:apps/v1:Deployment
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}-proxy
+        namespace: ${namespace.metadata.name}
+        annotations:
+          pulumi.com/skipAwait: 'true'
+          pulumi.com/patchForce: 'true'
+      spec:
+        replicas: 1
+        selector:
+          matchLabels: ${appLabels}
+        template:
+          metadata:
+            labels: ${appLabels}
+          spec:
+            serviceAccountName: ${serviceAccount.metadata.name}
+            nodeSelector:
+              'iam.gke.io/gke-metadata-server-enabled': 'true'
+            containers:
+              - name: cloud-sql-proxy
+                image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
+                args:
+                  - --structured-logs=true
+                  - --port=5432
+                  - ${database:connectionName}
+                securityContext:
+                  runAsNonRoot: true
