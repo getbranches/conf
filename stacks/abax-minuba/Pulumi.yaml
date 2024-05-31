@@ -43,20 +43,6 @@ resources:
         DATABASE_USERNAME: ${databaseUser.name}
         DATABASE_PASSWORD: ${databasePassword.result}
         DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@localhost:5432/${database.name}
-  serviceAccount:
-    type: kubernetes:core/v1:ServiceAccount
-    properties:
-      metadata:
-        name: ${pulumi.project}-${pulumi.stack}
-        namespace: ${namespace.metadata.name}
-        annotations:
-          'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
-  serviceAccountIamMember:
-    type: gcp:serviceAccount:IAMMember
-    properties:
-      serviceAccountId: ${database:serviceAccountId}
-      role: roles/iam.workloadIdentityUser
-      member: serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
 
   # Secrets for connecting to ABAX API
   abaxClientSecret:
@@ -130,33 +116,9 @@ resources:
           metadata:
             labels: ${appLabels}
           spec:
-            serviceAccountName: ${serviceAccount.metadata.name}
             nodeSelector:
               'iam.gke.io/gke-metadata-server-enabled': 'true'
             containers:
-              - name: migrate
-                image: ${agent:image}:${agent:tag}
-                imagePullPolicy: IfNotPresent
-                command:
-                  - |
-                    until pnpm run db:migrate:deploy;
-                    do;
-                      echo "Waiting for database to be ready...";
-                      sleep 5;
-                    done
-                envFrom:
-                  - secretRef:
-                      name: ${databaseSecret.metadata.name}
-                  - secretRef:
-                      name: ${abaxClientSecret.metadata.name}
-                  - secretRef:
-                      name: ${minubaApiKeySecret.metadata.name}
-                env:
-                  - name: NODE_ENV
-                    value: production
-                  - name: LOG_LEVEL
-                    value: debug
-
               - name: app
                 image: ${ui:image}:${ui:tag}
                 ports:
@@ -169,16 +131,6 @@ resources:
                 env:
                   - name: SELF_URL
                     value: https://${ui:host}
-
-              - name: cloud-sql-proxy
-                image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
-                args:
-                  - --structured-logs=true
-                  - --port=5432
-                  - ${database:connectionName}
-                securityContext:
-                  runAsNonRoot: true
-
   service:
     type: kubernetes:core/v1:Service
     properties:
