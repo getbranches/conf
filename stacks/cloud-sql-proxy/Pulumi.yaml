@@ -52,8 +52,6 @@ resources:
             - name: http
               port: 8484
               protocol: TCP
-
-  # Deployment for the UI, where users can configure the integration
   proxy:
     type: kubernetes:apps/v1:Deployment
     properties:
