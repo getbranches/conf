@@ -13,6 +13,22 @@ resources:
       metadata:
         name: ${pulumi.project}-${pulumi.stack}
 
+  serviceAccount:
+    type: kubernetes:core/v1:ServiceAccount
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
+
+  serviceAccountIamBinding:
+    type: gcp:serviceAccount:IAMMember
+    properties:
+      serviceAccountId: ${database:serviceAccountId}
+      role: roles/iam.workloadIdentityUser
+      member: serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
+
   service:
     type: kubernetes:core/v1:Service
     properties:
@@ -29,7 +45,7 @@ resources:
     type: kubernetes:apps/v1:Deployment
     properties:
       metadata:
-        name: ${pulumi.project}-${pulumi.stack}-proxy
+        name: ${pulumi.project}-${pulumi.stack}
         namespace: ${namespace.metadata.name}
         annotations:
           pulumi.com/skipAwait: 'true'
@@ -42,6 +58,7 @@ resources:
           metadata:
             labels: ${appLabels}
           spec:
+            serviceAccountName: ${serviceAccount.metadata.name}
             nodeSelector:
               'iam.gke.io/gke-metadata-server-enabled': 'true'
             containers:
