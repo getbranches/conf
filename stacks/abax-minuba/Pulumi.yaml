@@ -44,7 +44,7 @@ resources:
         DATABASE_NAME: ${database.name}
         DATABASE_USERNAME: ${databaseUser.name}
         DATABASE_PASSWORD: ${databasePassword.result}
-        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@10.12.195.219:8484/${database.name}
+        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@10.12.195.219:5432/${database.name}
 
   # Secrets for connecting to ABAX API
   abaxClientSecret:
@@ -145,7 +145,7 @@ resources:
               - name: app
                 image: ${ui:image}:${ui:tag}
                 ports:
-                  - containerPort: 8484
+                  - containerPort: 3000
                 envFrom:
                   - secretRef:
                       name: ${databaseSecret.metadata.name}
@@ -164,7 +164,7 @@ resources:
         selector: ${appLabels}
         ports:
           - port: 8484
-            targetPort: 8484
+            targetPort: 3000
   ingress:
     type: kubernetes:networking.k8s.io/v1:Ingress
     properties:
