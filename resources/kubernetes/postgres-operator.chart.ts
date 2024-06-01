@@ -32,7 +32,7 @@ new k8s.helm.v3.Chart(
   {
     chart: 'postgres-operator',
     // renovate: depName=postgres-operator packageName=postgres-operator registryUrl=https://opensource.zalando.com/postgres-operator/charts/postgres-operator
-    version: '1.10.1',
+    version: '1.12.0',
     fetchOpts: {
       repo: 'https://opensource.zalando.com/postgres-operator/charts/postgres-operator',
     },
