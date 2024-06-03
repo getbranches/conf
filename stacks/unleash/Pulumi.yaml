@@ -21,8 +21,7 @@ resources:
     type: random:RandomPassword
     properties:
       length: 16
-      special: true
-      overrideSpecial: "_%@"
+      special: false
   databaseUser:
     type: gcp:sql/user:User
     properties:
