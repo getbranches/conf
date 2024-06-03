@@ -5,6 +5,8 @@ description: Abax Minuba integration
 variables:
   appLabels:
     app: ${pulumi.project}-${pulumi.stack}
+  proxyLabels:
+    app: cloud-sql-proxy
 
 resources:
   namespace:
@@ -41,10 +43,7 @@ resources:
         name: ${pulumi.project}-${pulumi.stack}-database
         namespace: ${namespace.metadata.name}
       stringData:
-        DATABASE_NAME: ${database.name}
-        DATABASE_USERNAME: ${databaseUser.name}
-        DATABASE_PASSWORD: ${databasePassword.result}
-        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@10.12.195.219:5432/${database.name}
+        DATABASE_URL: postgres://${databaseUser.name}:${databasePassword.result}@10.12.203.198:5432/${database.name}
 
   # Secrets for connecting to ABAX API
   abaxClientSecret:
@@ -186,3 +185,61 @@ resources:
                       name: ${pulumi.project}-${pulumi.stack}
                       port:
                         number: 8484
+  serviceAccount:
+    type: kubernetes:core/v1:ServiceAccount
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
+
+  serviceAccountIamBinding:
+    type: gcp:serviceAccount:IAMBinding
+    properties:
+      serviceAccountId: ${database:serviceAccountId}
+      role: roles/iam.workloadIdentityUser
+      members:
+        - serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
+
+  proxyService:
+    type: kubernetes:core/v1:Service
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}-proxy
+        namespace: ${namespace.metadata.name}
+      spec:
+        selector: ${proxyLabels}
+        ports:
+          - port: 5432
+            targetPort: 2345
+
+  proxy:
+    type: kubernetes:apps/v1:Deployment
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}-proxy
+        namespace: ${namespace.metadata.name}
+        annotations:
+          pulumi.com/skipAwait: 'true'
+          pulumi.com/patchForce: 'true'
+      spec:
+        replicas: 1
+        selector:
+          matchLabels: ${proxyLabels}
+        template:
+          metadata:
+            labels: ${proxyLabels}
+          spec:
+            serviceAccountName: ${serviceAccount.metadata.name}
+            nodeSelector:
+              'iam.gke.io/gke-metadata-server-enabled': 'true'
+            containers:
+              - name: cloud-sql-proxy
+                image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
+                args:
+                  - --structured-logs=true
+                  - --port=2345
+                  - ${database:connectionName}876tt67
+                securityContext:
+                  runAsNonRoot: true
