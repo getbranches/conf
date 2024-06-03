@@ -47,13 +47,12 @@ resources:
         namespace: ${namespace.metadata.name}
         annotations:
           "iam.gke.io/gcp-service-account": ${database:serviceAccountEmail}
-  serviceAccountIamBinding:
-    type: gcp:serviceaccount:IAMBinding
+  serviceAccountIamMember:
+    type: gcp:serviceaccount:IAMMember
     properties:
       serviceAccountId: ${database:serviceAccountId}
       role: roles/iam.workloadIdentityUser
-      members:
-        - serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
+      member: serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
   deployment:
     type: kubernetes:apps/v1:Deployment
     properties:
