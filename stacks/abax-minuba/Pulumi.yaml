@@ -24,8 +24,7 @@ resources:
     type: random:RandomPassword
     properties:
       length: 16
-      special: true
-      overrideSpecial: '_%@'
+      special: false
 
   # A user in the common database instance to be used for the Abax Minuba integration
   databaseUser:
