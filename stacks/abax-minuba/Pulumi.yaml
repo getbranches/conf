@@ -210,7 +210,7 @@ resources:
         selector: ${proxyLabels}
         ports:
           - port: 5432
-            targetPort: 2345
+            targetPort: 5432
 
   proxy:
     type: kubernetes:apps/v1:Deployment
@@ -237,7 +237,7 @@ resources:
                 image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
                 args:
                   - --structured-logs=true
-                  - --port=2345
+                  - --port=5432
                   - ${database:connectionName}876tt67
                 securityContext:
                   runAsNonRoot: true
