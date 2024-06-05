@@ -47,7 +47,7 @@ resources:
         annotations:
           "iam.gke.io/gcp-service-account": ${database:serviceAccountEmail}
   serviceAccountIamMember:
-    type: gcp:serviceaccount:IAMMember
+    type: gcp:serviceAccount:IAMMember
     properties:
       serviceAccountId: ${database:serviceAccountId}
       role: roles/iam.workloadIdentityUser
@@ -90,9 +90,9 @@ resources:
               - name: cloud-sql-proxy
                 image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
                 args:
-                 - --structured-logs=true
-                 - --port=5432
-                 - ${database:connectionName}
+                  - --structured-logs=true
+                  - --port=5432
+                  - ${database:connectionName}
                 securityContext:
                   runAsNonRoot: true
   service:
@@ -129,4 +129,4 @@ resources:
                         number: 8484
 variables:
   appLabels:
-    app: ${pulumi.project}-${pulumi.stack} 
+    app: ${pulumi.project}-${pulumi.stack}
