@@ -194,7 +194,7 @@ resources:
           'iam.gke.io/gcp-service-account': ${database:serviceAccountEmail}
 
   serviceAccountIamMember:
-    type: gcp:serviceAccount:IAMMember
+    type: gcp:serviceaccount:IAMMember
     properties:
       serviceAccountId: ${database:serviceAccountId}
       role: roles/iam.workloadIdentityUser
