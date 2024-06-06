@@ -68,7 +68,7 @@ jobs:
 
       - name: Set up Docker Buildx 🔨
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and push to Artifact Registry 🛠
         uses: docker/build-push-action@v4
