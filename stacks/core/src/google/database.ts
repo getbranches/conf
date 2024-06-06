@@ -29,3 +29,10 @@ new gcp.projects.IAMMember("databaseaccess", {
   role: "roles/cloudsql.client",
   member: pulumi.interpolate`serviceAccount:${gcpServiceAccount.email}`,
 });
+
+// Give developers@bjerk.io admin access to the service account
+new gcp.serviceaccount.IAMMember("databaseaccess", {
+  serviceAccountId: gcpServiceAccount.name,
+  role: "roles/iam.serviceAccountAdmin",
+  member: "group:developers@bjerk.io",
+});
