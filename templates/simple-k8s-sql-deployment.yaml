@@ -6,6 +6,8 @@ config:
     type: string
   image:
     type: string
+  tag:
+    type: string
 resources:
   namespace:
     type: kubernetes:core/v1:Namespace
@@ -74,7 +76,7 @@ resources:
               "iam.gke.io/gke-metadata-server-enabled": "true"
             containers:
               - name: app
-                image: ${image}
+                image: ${image}:${tag}
                 ports:
                   - containerPort: 8484
                 envFrom:
