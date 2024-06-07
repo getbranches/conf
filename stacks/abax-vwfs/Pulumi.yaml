@@ -1,0 +1,135 @@
+name: abax-vwfs
+runtime: yaml
+description: Abax-VWFS integration
+config:
+  host:
+    type: string
+  portal-image:
+    type: string
+  tag:
+    type: string
+resources:
+  namespace:
+    type: kubernetes:core/v1:Namespace
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+  database:
+    type: gcp:sql/database:Database
+    properties:
+      name: abax_vwfs
+      instance: ${database:instanceName}
+  databasePassword:
+    type: random:RandomPassword
+    properties:
+      length: 16
+      special: true
+      overrideSpecial: "_%@"
+  databaseUser:
+    type: gcp:sql/user:User
+    properties:
+      name: abax_vwfs
+      instance: ${database:instanceName}
+      password: ${databasePassword.result}
+  databaseSecret:
+    type: kubernetes:core/v1:Secret
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}-database
+        namespace: ${namespace.metadata.name}
+      stringData:
+        DATABASE_NAME: ${database.name}
+        DATABASE_USERNAME: ${databaseUser.name}
+        DATABASE_PASSWORD: ${databasePassword.result}
+  serviceAccount:
+    type: kubernetes:core/v1:ServiceAccount
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          "iam.gke.io/gcp-service-account": ${database:serviceAccountEmail}
+  serviceAccountIamBinding:
+    type: gcp:serviceaccount:IAMBinding
+    properties:
+      serviceAccountId: ${database:serviceAccountId}
+      role: roles/iam.workloadIdentityUser
+      members:
+        - serviceAccount:${gcp:project}.svc.id.goog[${namespace.metadata.name}/${serviceAccount.metadata.name}]
+  deployment:
+    type: kubernetes:apps/v1:Deployment
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          pulumi.com/skipAwait: "true"
+          pulumi.com/patchForce: "true"
+      spec:
+        replicas: 1
+        selector:
+          matchLabels: ${appLabels}
+        template:
+          metadata:
+            labels: ${appLabels}
+          spec:
+            serviceAccountName: ${serviceAccount.metadata.name}
+            nodeSelector:
+              "iam.gke.io/gke-metadata-server-enabled": "true"
+            containers:
+              - name: app
+                image: ${portal-image}:${tag}
+                ports:
+                  - containerPort: 8484
+                envFrom:
+                  - secretRef:
+                      name: ${databaseSecret.metadata.name}
+                env:
+                  - name: DATABASE_SSL
+                    value: "false"
+                  - name: HTTP_PORT
+                    value: "8484"
+              - name: cloud-sql-proxy
+                image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.8.0
+                args:
+                  - --structured-logs=true
+                  - --port=5432
+                  - ${database:connectionName}
+                securityContext:
+                  runAsNonRoot: true
+
+  service:
+    type: kubernetes:core/v1:Service
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+      spec:
+        selector: ${appLabels}
+        ports:
+          - port: 5173
+            targetPort: 5173
+  ingress:
+    type: kubernetes:networking.k8s.io/v1:Ingress
+    properties:
+      metadata:
+        name: ${pulumi.project}-${pulumi.stack}
+        namespace: ${namespace.metadata.name}
+        annotations:
+          pulumi.com/skipAwait: "true"
+          kubernetes.io/ingress.class: "caddy"
+      spec:
+        rules:
+          - host: ${host}
+            http:
+              paths:
+                - path: /
+                  pathType: Prefix
+                  backend:
+                    service:
+                      name: ${pulumi.project}-${pulumi.stack}
+                      port:
+                        number: 5173
+variables:
+  appLabels:
+    app: ${pulumi.project}-${pulumi.stack}

@@ -1,0 +1,6 @@
+environment:
+  - abax-vwfs-prod
+config:
+  portal-image: europe-north1-docker.pkg.dev/branches-org-main/branches-org-main/abax-vwfs/portal
+  tag: main-3e4a710
+  host: abax-vwfs.branches.no
