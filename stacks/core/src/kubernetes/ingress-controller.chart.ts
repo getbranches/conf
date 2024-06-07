@@ -16,7 +16,7 @@ export const ingress = new k8s.helm.v3.Chart(
   {
     chart: 'caddy-ingress-controller',
     // renovate: depName=caddy-ingress-controller packageName=caddy-ingress-controller registryUrl=https://caddyserver.github.io/ingress/
-    version: '1.0.5',
+    version: '1.1.0',
     fetchOpts: {
       repo: 'https://caddyserver.github.io/ingress/',
     },
