@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@pulumi/gcp':
-    specifier: ^7.4.0
-    version: 7.16.0
+    specifier: ^8.0.0
+    version: 8.0.0
   '@pulumi/github':
     specifier: ^6.0.0
     version: 6.2.0
@@ -513,8 +513,8 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@pulumi/gcp@7.16.0:
-    resolution: {integrity: sha512-mpWUKAHRci6vllzLfoRZ6inIx2/AemtRjWkKyj8+X3nrouF0O/Q6DDBKg/OcwF8l8f7a++0t+BkU18SKilCMmQ==}
+  /@pulumi/gcp@8.0.0:
+    resolution: {integrity: sha512-1Y+uobcw2IdHqmdnBj1G977ZLXQzpPcexlL23gCi413MNbli+TxNmPYyDOaqLFIha8YthYDqiAzYiPo2/fCuFA==}
     dependencies:
       '@pulumi/pulumi': 3.112.0
       '@types/express': 4.17.21
@@ -1214,6 +1214,7 @@ packages:
 
   /glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
     dependencies:
       fs.realpath: 1.0.0
       inflight: 1.0.6
@@ -1335,6 +1336,7 @@ packages:
 
   /inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
     dependencies:
       once: 1.4.0
       wrappy: 1.0.2
@@ -1998,6 +2000,7 @@ packages:
 
   /read-package-json@2.1.2:
     resolution: {integrity: sha512-D1KmuLQr6ZSJS0tW8hf3WGpRlwszJOXZ3E8Yd/DNRaM5d+1wVRZdHlpGBLAuovjr28LbWvjpWkBHMxpRGGjzNA==}
+    deprecated: This package is no longer supported. Please use @npmcli/package-json instead.
     dependencies:
       glob: 7.2.3
       json-parse-even-better-errors: 2.3.1
@@ -2008,6 +2011,7 @@ packages:
   /read-package-json@7.0.0:
     resolution: {integrity: sha512-uL4Z10OKV4p6vbdvIXB+OzhInYtIozl/VxUBPgNkBuUi2DeRonnuspmaVAMcrkmfjKGNmRndyQAbE7/AmzGwFg==}
     engines: {node: ^16.14.0 || >=18.0.0}
+    deprecated: This package is no longer supported. Please use @npmcli/package-json instead.
     dependencies:
       glob: 10.3.12
       json-parse-even-better-errors: 3.0.1
